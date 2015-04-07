@@ -38,7 +38,7 @@ public class ClientEvents extends CommonEvents {
 		if ( !hoodFlag  && eagleVisionFlag ) {
 			UsefulMethods.deactivateEagleVision(mc);
 		}
-			
+			//blah blah
 	}
 	
     @SubscribeEvent
