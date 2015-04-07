@@ -1,0 +1,19 @@
+[
+{
+  "modid" : "usefulthings",
+  "name" : "Useful Things",
+  "version" : "1.8-1.0",
+  "url" : "",
+  "credits" : "",
+  "authors": "Himself12794",
+  "description": "Basically for me to figure out modding",
+  "logoFile" : "",
+  "updateUrl" : "",
+  "parent" : "",
+  "screenshots": [
+  ],
+  "dependancies": [
+    "Forge"
+  ]
+}
+]
