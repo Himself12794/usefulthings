@@ -39,7 +39,6 @@ public class ClientEvents extends CommonEvents {
 			UsefulMethods.deactivateEagleVision(mc);
 		}
 			
-		
 	}
 	
     @SubscribeEvent
