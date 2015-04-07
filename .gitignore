@@ -1,0 +1,13 @@
+/bin/
+/build/
+/common/
+/gradle/
+/jars/
+/lib/
+/build.gradle
+/forge-1.8-11.14.1.1334-changelog.txt
+/gradlew
+/gradlew.bat
+/settings.gradle
+/.gradle/
+/eclipse/
