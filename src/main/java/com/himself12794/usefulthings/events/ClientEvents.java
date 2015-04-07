@@ -50,5 +50,17 @@ public class ClientEvents extends CommonEvents {
         	}
         }
     }
+	
+	//Adds assassin boots jump boost
+	@SubscribeEvent
+	public void assassinBootsJumpBoost( LivingJumpEvent event ) {
+		if ( event.entityLiving instanceof EntityPlayer ) {
+	        ItemStack[] aitemstack = event.entityLiving.getInventory();
+	        if (aitemstack[0] != null && aitemstack[0].getItem() == ModItems.assassinBoots) {
+				event.entityLiving.motionY += ((AssassinBoots)ModItems.assassinBoots).jumpBoost;
+	        }
+
+		}
+	}
 
 }
