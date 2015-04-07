@@ -12,6 +12,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
+import net.minecraftforge.event.entity.living.LivingFallEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingJumpEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -60,6 +61,21 @@ public class ClientEvents extends CommonEvents {
 				event.entityLiving.motionY += ((AssassinBoots)ModItems.assassinBoots).jumpBoost;
 	        }
 
+		}
+	}
+	
+	//Adds crash cushion for assassin boots
+	@SubscribeEvent
+	public void assassinBootsCushionFall( LivingFallEvent event ) {
+		if ( event.entityLiving instanceof EntityPlayer ) {
+			if (((EntityPlayer)event.entityLiving).inventory.armorItemInSlot(0) == null ? false : ((EntityPlayer)event.entityLiving).inventory.armorItemInSlot(0).getItem() == ModItems.assassinBoots) {
+			
+				if ( event.distance <= 5.0F ) event.distance -= 2.0F;
+				if ( event.distance > 5.0F ){
+					event.distance -= 2.0F;
+					event.damageMultiplier *= 0.5F;
+				}
+			}
 		}
 	}
 

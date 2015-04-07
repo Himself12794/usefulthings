@@ -23,7 +23,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 public class AssassinBoots extends AssassinArmor {
 	
 	private static final String name = "assassinBoots";
-	public static final double jumpBoost = 0.15D;
+	public static final double jumpBoost = 0.14D;
 	
 	public AssassinBoots() {
 		super(3);

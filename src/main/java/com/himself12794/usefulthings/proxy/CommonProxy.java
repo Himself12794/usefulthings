@@ -7,6 +7,7 @@ import com.himself12794.usefulthings.items.ModItems;
 import com.himself12794.usefulthings.worldgen.WorldGen;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.server.MinecraftServer;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;

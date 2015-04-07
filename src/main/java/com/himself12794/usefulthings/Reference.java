@@ -22,4 +22,8 @@ public class Reference {
         IBlockState iblockstate1 = worldIn.getBlockState(pos);
     	return iblockstate1.getBlock();
     }
+    
+    /*public static double distanceBetweenLocation( BlockPos a, BlockPos b) {
+    	return sqrt((b.distanceSq(toX, toY, toZ)x2 - x1)^2 + (y2 - y1)^2 + (z2 - z1)^2) 
+    }*/
 }

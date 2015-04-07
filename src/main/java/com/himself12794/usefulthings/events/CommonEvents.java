@@ -6,8 +6,12 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.util.BlockPos;
+import net.minecraftforge.event.entity.living.LivingFallEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingJumpEvent;
+import net.minecraftforge.event.entity.living.LivingSetAttackTargetEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.PlayerTickEvent;
 
@@ -37,5 +41,21 @@ public class CommonEvents {
 		}
 		
 	}
+	
+	/*
+	@SubscribeEvent
+	public void assassinArmorStealth( LivingSetAttackTargetEvent event ) {
+		//System.out.println("someoe wants to attack someone");
+		if ( event.target instanceof EntityPlayer ) {
+			long time = MinecraftServer.getCurrentTimeMillis();
+			float distance = event.entityLiving.getDistanceToEntity(event.target);
+			if ( distance >= 8 ) {
+				((EntityPlayer)event.target).setInvisible(true);
+			} else {
+				((EntityPlayer)event.target).setInvisible(false);
+			}
+			//if (event.isCancelable()) {event.setCanceled(true);System.out.println("they cannot see you!");}
+		}
+	}*/
 
 }
