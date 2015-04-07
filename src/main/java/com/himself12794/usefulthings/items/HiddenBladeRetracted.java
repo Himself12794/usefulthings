@@ -15,7 +15,7 @@ import net.minecraftforge.common.util.EnumHelper;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
 import com.google.common.collect.Multimap;
-import com.himself12794.usefulthings.Reference;
+import com.himself12794.usefulthings.util.Reference;
 
 public class HiddenBladeRetracted extends ItemSword {
 	

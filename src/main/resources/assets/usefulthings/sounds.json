@@ -1,0 +1,4 @@
+{
+"eagleVisionActivate":{"sounds":[{"name":"eagleVisionActivate","stream":false}],"category":"player"},
+"eagleVisionDeactivate":{"sounds":[{"name":"eagleVisionDeactivate","stream":false}],"category":"player"}
+}

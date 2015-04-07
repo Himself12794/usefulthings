@@ -3,7 +3,7 @@ package com.himself12794.usefulthings.items;
 import java.util.Iterator;
 import java.util.List;
 
-import com.himself12794.usefulthings.Reference;
+import com.himself12794.usefulthings.util.Reference;
 
 import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;

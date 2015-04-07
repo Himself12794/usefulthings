@@ -1,9 +1,9 @@
 package com.himself12794.usefulthings.proxy;
 
-import com.himself12794.usefulthings.KeyBindings;
 import com.himself12794.usefulthings.blocks.ModBlocks;
 import com.himself12794.usefulthings.events.ClientEvents;
 import com.himself12794.usefulthings.items.ModItems;
+import com.himself12794.usefulthings.util.KeyBindings;
 
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.common.MinecraftForge;

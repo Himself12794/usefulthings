@@ -1,9 +1,10 @@
 package com.himself12794.usefulthings.events;
 
-import com.himself12794.usefulthings.KeyBindings;
-import com.himself12794.usefulthings.Reference;
 import com.himself12794.usefulthings.items.ModItems;
 import com.himself12794.usefulthings.items.armor.AssassinBoots;
+import com.himself12794.usefulthings.util.KeyBindings;
+import com.himself12794.usefulthings.util.Reference;
+import com.himself12794.usefulthings.util.UsefulMethods;
 
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
@@ -11,6 +12,7 @@ import net.minecraft.client.settings.GameSettings.Options;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.Potion;
 import net.minecraftforge.event.entity.living.LivingFallEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
@@ -29,25 +31,29 @@ public class ClientEvents extends CommonEvents {
 	
 	@SubscribeEvent
 	public void assassinHoodEagleVisionDisable( PlayerTickEvent event ) {
-			boolean flag = event.player.inventory.armorItemInSlot(3) == null ? false : event.player.inventory.armorItemInSlot(3).getItem() == ModItems.assassinHood;
+		NBTTagCompound playerData = event.player.getEntityData();
+		boolean eagleVisionFlag = playerData.getBoolean("eagleVision"); 
+		boolean hoodFlag = event.player.inventory.armorItemInSlot(3) == null ? false : event.player.inventory.armorItemInSlot(3).getItem() == ModItems.assassinHood;
+
+		if ( !hoodFlag  && eagleVisionFlag ) {
+			UsefulMethods.deactivateEagleVision(mc);
+		}
 			
-			if ( !flag && event.player.getActivePotionEffect(Potion.nightVision) == null && mc.gameSettings.gammaSetting >= 10000.0F) {
-				mc.gameSettings.setOptionFloatValue(Options.GAMMA, 0.0F);
-			}
-				
 		
 	}
 	
     @SubscribeEvent
     public void onKeyInput(InputEvent.KeyInputEvent event) {
     	
+    	//Setting eagle vision flag
         if(KeyBindings.eagleVision.isPressed()) {
+			NBTTagCompound playerData = mc.thePlayer.getEntityData(); 
 			boolean hoodFlag = mc.thePlayer.inventory.armorItemInSlot(3) == null ? false : mc.thePlayer.inventory.armorItemInSlot(3).getItem() == ModItems.assassinHood;
-			boolean potionFlag = mc.thePlayer.getActivePotionEffect(Potion.nightVision) == null;
-        	if (hoodFlag && potionFlag && mc.gameSettings.gammaSetting < 10000.0F ) {
-				mc.gameSettings.setOptionFloatValue(Options.GAMMA, 10000.0F);
-        	} else if (mc.gameSettings.gammaSetting >= 10000.0F) {
-        		mc.gameSettings.setOptionFloatValue(Options.GAMMA, 0.0F);
+			boolean eagleVisionFlag = playerData.getBoolean("eagleVision");
+        	if ( hoodFlag && !eagleVisionFlag ) {
+        		UsefulMethods.activateEagleVision(mc);
+        	} else if ( eagleVisionFlag ) {
+        		UsefulMethods.deactivateEagleVision(mc);
         	}
         }
     }
@@ -70,7 +76,7 @@ public class ClientEvents extends CommonEvents {
 		if ( event.entityLiving instanceof EntityPlayer ) {
 			if (((EntityPlayer)event.entityLiving).inventory.armorItemInSlot(0) == null ? false : ((EntityPlayer)event.entityLiving).inventory.armorItemInSlot(0).getItem() == ModItems.assassinBoots) {
 			
-				if ( event.distance <= 5.0F ) event.distance -= 2.0F;
+				if ( event.distance <= 5.0F ) event.distance = 0.0F;
 				if ( event.distance > 5.0F ){
 					event.distance -= 2.0F;
 					event.damageMultiplier *= 0.5F;

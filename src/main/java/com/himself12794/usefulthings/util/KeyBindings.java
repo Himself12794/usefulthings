@@ -1,4 +1,4 @@
-package com.himself12794.usefulthings;
+package com.himself12794.usefulthings.util;
 import org.lwjgl.input.Keyboard;
 
 import net.minecraftforge.fml.client.registry.ClientRegistry;

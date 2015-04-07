@@ -1,9 +1,9 @@
 package com.himself12794.usefulthings.items.armor;
 
 import com.google.common.collect.Multimap;
-import com.himself12794.usefulthings.Reference;
 import com.himself12794.usefulthings.UsefulThings;
 import com.himself12794.usefulthings.items.AssassinArmor;
+import com.himself12794.usefulthings.util.Reference;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.SharedMonsterAttributes;

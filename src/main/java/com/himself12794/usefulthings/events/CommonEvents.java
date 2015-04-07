@@ -1,6 +1,7 @@
 package com.himself12794.usefulthings.events;
 
 import net.minecraft.block.Block;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.settings.GameSettings.Options;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
@@ -15,16 +16,17 @@ import net.minecraftforge.event.entity.living.LivingSetAttackTargetEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.PlayerTickEvent;
 
-import com.himself12794.usefulthings.Reference;
 import com.himself12794.usefulthings.items.ModItems;
 import com.himself12794.usefulthings.items.armor.AssassinBoots;
+import com.himself12794.usefulthings.util.Reference;
+import com.himself12794.usefulthings.util.UsefulMethods;
 
 public class CommonEvents {
 	
 	@SubscribeEvent
 	public void noHayFallDamage(LivingHurtEvent event) {
 		if (event.source.getDamageType() == "fall") {
-			Block block = Reference.getBlockAtPos(event.entityLiving.getPosition().down(),event.entityLiving.worldObj);
+			Block block = UsefulMethods.getBlockAtPos(event.entityLiving.getPosition().down(),event.entityLiving.worldObj);
 			if ( block == Blocks.hay_block) {
 				event.setCanceled(true);
 			}

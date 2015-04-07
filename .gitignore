@@ -17,3 +17,11 @@
 /world/
 /banned-ips.json
 /banned-players.json
+/crash-reports/
+/saves/
+/ops.json
+/options.txt
+/server.properties
+/usercache.json
+/usernamecache.json
+/whitelist.json

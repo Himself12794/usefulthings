@@ -27,6 +27,7 @@ import com.himself12794.usefulthings.blocks.ModBlocks;
 import com.himself12794.usefulthings.items.ModItems;
 import com.himself12794.usefulthings.proxy.CommonProxy;
 import com.himself12794.usefulthings.renderer.HiddenBladeRender;
+import com.himself12794.usefulthings.util.Reference;
 import com.himself12794.usefulthings.worldgen.WorldGen;
 
 @Mod(modid = Reference.MODID, version = Reference.VERSION, name = Reference.NAME)

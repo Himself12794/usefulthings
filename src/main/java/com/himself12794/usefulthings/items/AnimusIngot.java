@@ -2,7 +2,7 @@ package com.himself12794.usefulthings.items;
 
 import java.util.List;
 
-import com.himself12794.usefulthings.Reference;
+import com.himself12794.usefulthings.util.Reference;
 
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;

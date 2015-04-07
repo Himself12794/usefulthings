@@ -2,8 +2,8 @@ package com.himself12794.usefulthings.blocks;
 
 import java.util.Random;
 
-import com.himself12794.usefulthings.Reference;
 import com.himself12794.usefulthings.items.ModItems;
+import com.himself12794.usefulthings.util.Reference;
 
 import net.minecraft.block.BlockOre;
 import net.minecraft.block.state.IBlockState;

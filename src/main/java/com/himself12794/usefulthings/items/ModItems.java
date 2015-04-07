@@ -7,10 +7,10 @@ import net.minecraft.item.Item;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.relauncher.Side;
 
-import com.himself12794.usefulthings.Reference;
 import com.himself12794.usefulthings.items.armor.AssassinBoots;
 import com.himself12794.usefulthings.items.armor.AssassinHood;
 import com.himself12794.usefulthings.items.armor.AssassinPants;
+import com.himself12794.usefulthings.util.Reference;
 
 public class ModItems {
 	

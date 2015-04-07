@@ -1,7 +1,5 @@
 package com.himself12794.usefulthings.renderer;
 
-import com.himself12794.usefulthings.Reference;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.inventory.GuiContainerCreative;
 import net.minecraft.client.gui.inventory.GuiInventory;
@@ -17,6 +15,7 @@ import org.lwjgl.opengl.GL11;
 
 import com.himself12794.usefulthings.items.ModItems;
 import com.himself12794.usefulthings.models.HiddenBladeModel;
+import com.himself12794.usefulthings.util.Reference;
 
 //import cpw.mods.fml.client.TextureHelper;
 
