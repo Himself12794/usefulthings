@@ -1,4 +1,4 @@
-package com.himself12794.usefulthings;
+/*package com.himself12794.usefulthings;
 
 import java.util.List;
 import java.util.ListIterator;
@@ -94,7 +94,7 @@ public class UsefulThingsEventHandler {
     //@SideOnly(Side.CLIENT)
     public void onKeyInput(InputEvent.KeyInputEvent event) {
     	
-        if(KeyBindings.ping.isPressed()) {
+        if(KeyBindings.eagleVision.isPressed()) {
 			boolean hoodFlag = mc.thePlayer.inventory.armorItemInSlot(3) == null ? false : mc.thePlayer.inventory.armorItemInSlot(3).getItem() == ModItems.assassinHood;
 			boolean potionFlag = mc.thePlayer.getActivePotionEffect(Potion.nightVision) == null;
         	if (hoodFlag && potionFlag && mc.gameSettings.gammaSetting < 10000.0F ) {
@@ -104,4 +104,4 @@ public class UsefulThingsEventHandler {
         	}
         }
     }
-}
+}*/

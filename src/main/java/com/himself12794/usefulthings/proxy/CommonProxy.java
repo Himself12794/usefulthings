@@ -1,7 +1,6 @@
 package com.himself12794.usefulthings.proxy;
 
 import com.himself12794.usefulthings.ModRecipes;
-import com.himself12794.usefulthings.UsefulThingsEventHandler;
 import com.himself12794.usefulthings.blocks.ModBlocks;
 import com.himself12794.usefulthings.events.CommonEvents;
 import com.himself12794.usefulthings.items.ModItems;

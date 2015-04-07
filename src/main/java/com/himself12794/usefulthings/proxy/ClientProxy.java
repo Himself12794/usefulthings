@@ -1,7 +1,6 @@
 package com.himself12794.usefulthings.proxy;
 
 import com.himself12794.usefulthings.KeyBindings;
-import com.himself12794.usefulthings.UsefulThingsEventHandler;
 import com.himself12794.usefulthings.blocks.ModBlocks;
 import com.himself12794.usefulthings.events.ClientEvents;
 import com.himself12794.usefulthings.items.ModItems;
