@@ -43,21 +43,5 @@ public class CommonEvents {
 		}
 		
 	}
-	
-	/*
-	@SubscribeEvent
-	public void assassinArmorStealth( LivingSetAttackTargetEvent event ) {
-		//System.out.println("someoe wants to attack someone");
-		if ( event.target instanceof EntityPlayer ) {
-			long time = MinecraftServer.getCurrentTimeMillis();
-			float distance = event.entityLiving.getDistanceToEntity(event.target);
-			if ( distance >= 8 ) {
-				((EntityPlayer)event.target).setInvisible(true);
-			} else {
-				((EntityPlayer)event.target).setInvisible(false);
-			}
-			//if (event.isCancelable()) {event.setCanceled(true);System.out.println("they cannot see you!");}
-		}
-	}*/
 
 }
