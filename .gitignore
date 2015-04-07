@@ -11,3 +11,9 @@
 /settings.gradle
 /.gradle/
 /eclipse/
+/logs/
+/config/
+/eula.txt
+/world/
+/banned-ips.json
+/banned-players.json
