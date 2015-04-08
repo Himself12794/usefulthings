@@ -1,5 +1,9 @@
 package com.himself12794.usefulthings.util;
 
+import com.himself12794.usefulthings.UsefulThings;
+import com.himself12794.usefulthings.items.ModItems;
+import com.himself12794.usefulthings.network.SaveEagleVisionServer;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
@@ -33,10 +37,12 @@ public class UsefulMethods {
     public static void activateEagleVision( Minecraft mc ) {
     	
     	NBTTagCompound playerData = mc.thePlayer.getEntityData();
+    	mc.thePlayer.getEntityData().setBoolean("eagleVision", playerData.getBoolean("eagleVision"));
 		mc.gameSettings.setOptionFloatValue(Options.GAMMA, 1000.0F);
 		mc.thePlayer.playSound(Reference.MODID + ":eagleVisionActivate", 1, 1);
 		playerData.setBoolean("eagleVision", true);
-		mc.thePlayer.writeToNBT(playerData);
+		UsefulThings.proxy.network.sendToServer(new SaveEagleVisionServer(playerData));
+		//mc.thePlayer.writeToNBT(playerData);
     	
     }
 
@@ -52,8 +58,30 @@ public class UsefulMethods {
 		mc.gameSettings.setOptionFloatValue(Options.GAMMA, 0.0F);
 		mc.thePlayer.playSound(Reference.MODID + ":eagleVisionDeactivate", 1, 1);
 		playerData.setBoolean("eagleVision", false);
-		mc.thePlayer.writeToNBT(playerData);
+		UsefulThings.proxy.network.sendToServer(new SaveEagleVisionServer(playerData));
+		//mc.thePlayer.writeToNBT(playerData);
 		
+	}
+	
+	public static boolean canActivateEagleVision( EntityPlayer player ) {
+		return (Boolean) (player.inventory.armorItemInSlot(0) == null ? false : player.inventory.armorItemInSlot(3).getItem() == ModItems.assassinHood);
+		
+	}
+	
+	public static void setEagleVision(boolean state, boolean playSound ) {
+		Minecraft mc = Minecraft.getMinecraft();
+		NBTTagCompound playerData = mc.thePlayer.getEntityData();
+		if (state) {
+			mc.gameSettings.setOptionFloatValue(Options.GAMMA, 1000.0F);
+			if (playSound) mc.thePlayer.playSound(Reference.MODID + ":eagleVisionActivate", 1, 1);
+			playerData.setBoolean("eagleVision", true);
+			UsefulThings.proxy.network.sendToServer(new SaveEagleVisionServer(playerData));
+		} else {
+			mc.gameSettings.setOptionFloatValue(Options.GAMMA, 0.0F);
+			if (playSound) mc.thePlayer.playSound(Reference.MODID + ":eagleVisionDeactivate", 1, 1);
+			playerData.setBoolean("eagleVision", false);
+			UsefulThings.proxy.network.sendToServer(new SaveEagleVisionServer(playerData));			
+		}
 	}
 
 }
