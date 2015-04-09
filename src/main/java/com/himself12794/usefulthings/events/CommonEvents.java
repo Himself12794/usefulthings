@@ -7,9 +7,12 @@ import java.io.FileOutputStream;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.settings.GameSettings.Options;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.passive.EntityWolf;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompressedStreamTools;
 import net.minecraft.nbt.NBTTagCompound;
@@ -20,10 +23,13 @@ import net.minecraftforge.event.entity.living.LivingFallEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingJumpEvent;
 import net.minecraftforge.event.entity.living.LivingSetAttackTargetEvent;
+import net.minecraftforge.event.entity.player.EntityInteractEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.PlayerTickEvent;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import com.himself12794.usefulthings.UsefulThings;
 import com.himself12794.usefulthings.items.ModItems;
@@ -76,5 +82,12 @@ public class CommonEvents {
 	public void loading(PlayerEvent.SaveToFile event) {
 		System.out.println("saving data for " + event.entityPlayer.getName() + " " + event.entityPlayer.getEntityData().getBoolean("eagleVision"));
 	}*/
+	
+	@SubscribeEvent
+	public void usePoweredOilToTame( EntityInteractEvent event ) {
+		if (event.target instanceof EntityWolf ) {
+			((EntityWolf) event.target).interact(event.entityPlayer);
+		}
+	}
 
 }
