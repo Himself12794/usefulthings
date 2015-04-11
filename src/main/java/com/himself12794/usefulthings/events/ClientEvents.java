@@ -27,7 +27,7 @@ import net.minecraftforge.fml.common.gameevent.TickEvent.PlayerTickEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ClientEvents extends CommonEvents {
+public class ClientEvents {
 	
 	private Minecraft mc;
 	
@@ -54,13 +54,9 @@ public class ClientEvents extends CommonEvents {
 	//Adds assassin boots jump boost
 	@SubscribeEvent
 	public void assassinBootsJumpBoost( LivingJumpEvent event ) {
-		if ( event.entityLiving instanceof EntityPlayer ) {
-	        ItemStack[] aitemstack = event.entityLiving.getInventory();
-	        if (aitemstack[0] != null && aitemstack[0].getItem() == ModItems.assassinBoots) {
-				event.entityLiving.motionY += ((AssassinBoots)ModItems.assassinBoots).jumpBoost;
-	        }
-
-		}
+        if (UsefulMethods.hasEquipped(event.entityLiving, ModItems.assassinBoots)) {
+			event.entityLiving.motionY += ((AssassinBoots)ModItems.assassinBoots).jumpBoost;
+        }
 	}
 	
 	//Adds crash cushion for assassin boots

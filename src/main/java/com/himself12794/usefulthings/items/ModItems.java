@@ -7,14 +7,12 @@ import net.minecraft.item.Item;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.relauncher.Side;
 
-import com.himself12794.usefulthings.items.armor.AssassinBoots;
-import com.himself12794.usefulthings.items.armor.AssassinHood;
-import com.himself12794.usefulthings.items.armor.AssassinPants;
+import com.himself12794.usefulthings.items.armor.*;
 import com.himself12794.usefulthings.util.Reference;
 
 public class ModItems {
 	
-	public static final int NUMBER = 4;
+	public static final int NUMBER = 10;
 	public static Item coalBall;
 	public static Item coalDust;
 	public static Item hiddenBlade;
@@ -23,6 +21,7 @@ public class ModItems {
 	public static Item strangeMirror;
 	public static Item assassinBoots;
 	public static Item assassinPants;
+	public static Item assassinRobes;
 	public static Item assassinHood;
 	public static Item poweredOil;
 	
@@ -35,6 +34,7 @@ public class ModItems {
 		strangeMirror = new StrangeMirror();
 		assassinBoots = new AssassinBoots();
 		assassinPants = new AssassinPants();
+		assassinRobes = new AssassinRobes();
 		assassinHood = new AssassinHood();
 		poweredOil = new PoweredOil();
 	}
@@ -52,6 +52,7 @@ public class ModItems {
 		    renderItem.getItemModelMesher().register(strangeMirror, 0, new ModelResourceLocation(Reference.MODID + ":" + ((StrangeMirror) strangeMirror).getName(), "inventory"));
 		    renderItem.getItemModelMesher().register(assassinBoots, 0, new ModelResourceLocation(Reference.MODID + ":" + ((AssassinBoots) assassinBoots).getName(), "inventory"));
 		    renderItem.getItemModelMesher().register(assassinPants, 0, new ModelResourceLocation(Reference.MODID + ":" + ((AssassinPants) assassinPants).getName(), "inventory"));
+		    renderItem.getItemModelMesher().register(assassinRobes, 0, new ModelResourceLocation(Reference.MODID + ":" + ((AssassinRobes) assassinRobes).getName(), "inventory"));
 		    renderItem.getItemModelMesher().register(assassinHood, 0, new ModelResourceLocation(Reference.MODID + ":" + ((AssassinHood) assassinHood).getName(), "inventory"));
 		    renderItem.getItemModelMesher().register(poweredOil, 0, new ModelResourceLocation(Reference.MODID + ":" + ((PoweredOil) poweredOil).getName(), "inventory"));
 		    

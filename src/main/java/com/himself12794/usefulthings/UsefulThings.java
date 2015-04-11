@@ -26,7 +26,6 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import com.himself12794.usefulthings.blocks.ModBlocks;
 import com.himself12794.usefulthings.items.ModItems;
 import com.himself12794.usefulthings.proxy.CommonProxy;
-import com.himself12794.usefulthings.renderer.HiddenBladeRender;
 import com.himself12794.usefulthings.util.Reference;
 import com.himself12794.usefulthings.worldgen.WorldGen;
 
@@ -58,40 +57,19 @@ public class UsefulThings {
     public void preinit(FMLPreInitializationEvent event) {
     	
     	proxy.preinit(event);
-    	/*//MinecraftForgeClient.registerItemRenderer(ModItems.hiddenBlade, (IItemRenderer)new HiddenBladeRender());
-    	// adding events
-        //network = NetworkRegistry.INSTANCE.newSimpleChannel("MyChannel");
-        //network.registerMessage(MyMessage.Handler.class, MyMessage.class, 0, Side.SERVER);
-    	FMLCommonHandler.instance().bus().register(handler);
-    	FMLCommonHandler.instance().bus().register(handler);
-    	MinecraftForge.EVENT_BUS.register(handler);
-    	MinecraftForge.TERRAIN_GEN_BUS.register(handler);
-    	MinecraftForge.ORE_GEN_BUS.register(handler);
-    	
-    	
-    	
+    	  	
     	// adding items
         System.out.println("Adding [" + ModItems.NUMBER + "] New Items");
     	ModItems.addItems();
     	
     	// adding blocks
         System.out.println("Adding [" + ModBlocks.NUMBER + "] New Blocks");
-        ModBlocks.addBlocks();*/
+        ModBlocks.addBlocks();
     }
     
     @EventHandler
     public void init(FMLInitializationEvent event) {
     	proxy.init(event);
-    	/*// register textures
-    	ModItems.registerTextures(event);
-    	ModBlocks.registerTextures(event);
-    	KeyBindings.init();
-    	
-		// adding recipes
-        System.out.println("Adding [" + ModRecipes.NUMBER + "] New Recipes");
-        ModRecipes.addRecipes();*/
-        
-        // adding world generator
         
     }
 }
