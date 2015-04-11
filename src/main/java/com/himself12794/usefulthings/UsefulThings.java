@@ -57,14 +57,6 @@ public class UsefulThings {
     public void preinit(FMLPreInitializationEvent event) {
     	
     	proxy.preinit(event);
-    	  	
-    	// adding items
-        System.out.println("Adding [" + ModItems.NUMBER + "] New Items");
-    	ModItems.addItems();
-    	
-    	// adding blocks
-        System.out.println("Adding [" + ModBlocks.NUMBER + "] New Blocks");
-        ModBlocks.addBlocks();
     }
     
     @EventHandler
