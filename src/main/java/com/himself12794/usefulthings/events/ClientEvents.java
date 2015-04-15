@@ -17,6 +17,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.Potion;
 import net.minecraft.server.MinecraftServer;
+import net.minecraftforge.client.event.EntityViewRenderEvent;
 import net.minecraftforge.event.entity.living.LivingFallEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingJumpEvent;
@@ -34,22 +35,6 @@ public class ClientEvents {
 	public ClientEvents( Minecraft mc ) {
 		this.mc = mc;
 	}
-	
-    @SubscribeEvent
-    public void onKeyInput(InputEvent.KeyInputEvent event) {
-    	
-    	//Setting eagle vision flag
-        if(KeyBindings.eagleVision.isPressed()) {
-			NBTTagCompound playerData = mc.thePlayer.getEntityData();
-			
-			boolean eagleVisionFlag = playerData.getBoolean("eagleVision");
-        	if ( UsefulMethods.canActivateEagleVision(mc.thePlayer) && !eagleVisionFlag ) {
-        		UsefulMethods.setEagleVision(true,true);
-        	} else if ( eagleVisionFlag ) {
-        		UsefulMethods.setEagleVision(false,true);
-        	}
-        }
-    }
 	
 	//Adds assassin boots jump boost
 	@SubscribeEvent
@@ -72,5 +57,13 @@ public class ClientEvents {
 			}
 		}
 	}
+	
+	/*@SubscribeEvent
+	public void renderingStuff(EntityViewRenderEvent event) {
+		//event.renderer.disableLightmap();
+		//event.renderer.anaglyphField;
+		//event.renderer.itemRenderer.
+		System.out.println("The entity view render event is happening");
+	}*/
 
 }

@@ -24,6 +24,7 @@ public class ModItems {
 	public static Item assassinRobes;
 	public static Item assassinHood;
 	public static Item poweredOil;
+	public static Item memorySeal;
 	
 	public static void addItems() {
 		coalBall = new CoalBall();
@@ -37,6 +38,7 @@ public class ModItems {
 		assassinRobes = new AssassinRobes();
 		assassinHood = new AssassinHood();
 		poweredOil = new PoweredOil();
+		memorySeal = new MemorySeal();
 	}
 	
 	public static void registerTextures( FMLInitializationEvent event ) {
@@ -55,6 +57,8 @@ public class ModItems {
 		    renderItem.getItemModelMesher().register(assassinRobes, 0, new ModelResourceLocation(Reference.MODID + ":" + ((AssassinRobes) assassinRobes).getName(), "inventory"));
 		    renderItem.getItemModelMesher().register(assassinHood, 0, new ModelResourceLocation(Reference.MODID + ":" + ((AssassinHood) assassinHood).getName(), "inventory"));
 		    renderItem.getItemModelMesher().register(poweredOil, 0, new ModelResourceLocation(Reference.MODID + ":" + ((PoweredOil) poweredOil).getName(), "inventory"));
+		    renderItem.getItemModelMesher().register(memorySeal, 0, new ModelResourceLocation(Reference.MODID + ":" + ((MemorySeal) memorySeal).getName(), "inventory"));
+		    renderItem.getItemModelMesher().register(memorySeal, 1, new ModelResourceLocation(Reference.MODID + ":" + ((MemorySeal) memorySeal).getName(), "inventory"));
 		    
 		}
 	}

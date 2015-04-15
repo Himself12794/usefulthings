@@ -23,6 +23,7 @@ import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.util.IChatComponent;
 import net.minecraft.world.EnumSkyBlock;
+import net.minecraftforge.client.event.RenderPlayerEvent;
 import net.minecraftforge.event.entity.living.LivingFallEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingJumpEvent;
@@ -65,20 +66,6 @@ public class CommonEvents {
 
 		}
 		
-	}
-	
-	@SubscribeEvent
-	public void eagleVisionHandler( PlayerTickEvent event ) {
-		if ( !UsefulMethods.hasEquipped(event.player, ModItems.assassinHood)  && UsefulMethods.isEagleVisionActive(event.player) ) {
-			UsefulMethods.setEagleVision(false,false);
-		} else if (event.side.isClient() && Minecraft.getMinecraft().gameSettings.gammaSetting < 0 ) {
-			UsefulMethods.setEagleVision(false,false);
-		}
-	}
-	
-	@SubscribeEvent
-	public void applySavedChanges( PlayerLoggedInEvent event ) {
-		UsefulThings.proxy.network.sendTo(new SaveEagleVisionClient(event.player.getEntityData()), (EntityPlayerMP) event.player);
 	}
 	
 	@SubscribeEvent

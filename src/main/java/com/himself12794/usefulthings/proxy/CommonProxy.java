@@ -7,6 +7,7 @@ import com.himself12794.usefulthings.items.ModItems;
 import com.himself12794.usefulthings.worldgen.WorldGen;
 import com.himself12794.usefulthings.network.SaveEagleVisionClient;
 import com.himself12794.usefulthings.network.SaveEagleVisionServer;
+import com.himself12794.usefulthings.player.EagleVision;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.server.MinecraftServer;
@@ -34,10 +35,13 @@ public class CommonProxy {
 
 	public void init(FMLInitializationEvent event){
 		CommonEvents handler = new CommonEvents();
+		EagleVision eagleVision = new EagleVision();
 		
     	//FMLCommonHandler.instance().bus().register(handler);
     	FMLCommonHandler.instance().bus().register(handler);
+    	FMLCommonHandler.instance().bus().register(eagleVision);
     	MinecraftForge.EVENT_BUS.register(handler);
+    	MinecraftForge.EVENT_BUS.register(eagleVision);
     	//MinecraftForge.TERRAIN_GEN_BUS.register(handler);
     	//MinecraftForge.ORE_GEN_BUS.register(handler);
 		 

@@ -71,26 +71,18 @@ public class UsefulMethods {
 		
 	}*/
 	
-	public static boolean canActivateEagleVision( EntityPlayer player ) {
-		return (Boolean) (player.inventory.armorItemInSlot(0) == null ? false : player.inventory.armorItemInSlot(3).getItem() == ModItems.assassinHood);
-		
-	}
-	
-	public static void setEagleVision(boolean state, boolean playSound ) {
-		Minecraft mc = Minecraft.getMinecraft();
-		NBTTagCompound playerData = mc.thePlayer.getEntityData();
+	/*public static void setEagleVision(boolean state, boolean playSound ) {
+		EntityPlayer player = Minecraft.getMinecraft().thePlayer;
 		if (state) {
-			mc.gameSettings.setOptionFloatValue(Options.GAMMA, 1000.0F);
-			if (playSound) mc.thePlayer.playSound(Reference.MODID + ":eagleVisionActivate", 1, 1);
-			playerData.setBoolean("eagleVision", true);
-			UsefulThings.proxy.network.sendToServer(new SaveEagleVisionServer(playerData));
+			player.getEntityData().setBoolean("eagleVision", true);
+			if (playSound) player.playSound(Reference.MODID + ":eagleVisionActivate", 1, 1);
+			if (player.worldObj.isRemote) UsefulThings.proxy.network.sendToServer(new SaveEagleVisionServer(player.getEntityData())); 
 		} else {
-			mc.gameSettings.setOptionFloatValue(Options.GAMMA, 0.0F);
-			if (playSound) mc.thePlayer.playSound(Reference.MODID + ":eagleVisionDeactivate", 1, 1);
-			playerData.setBoolean("eagleVision", false);
-			UsefulThings.proxy.network.sendToServer(new SaveEagleVisionServer(playerData));			
+			player.getEntityData().setBoolean("eagleVision", false);
+			if (playSound) player.playSound(Reference.MODID + ":eagleVisionActivate", 1, 1);
+			if (player.worldObj.isRemote) UsefulThings.proxy.network.sendToServer(new SaveEagleVisionServer(player.getEntityData())); 
 		}
-	}
+	}*/
 	
 	public static void playTameEffect(boolean outcome, Entity entity) {
         EnumParticleTypes enumparticletypes = EnumParticleTypes.HEART;

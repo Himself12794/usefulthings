@@ -3,17 +3,23 @@ package com.himself12794.usefulthings.items;
 import java.util.List;
 
 import com.himself12794.usefulthings.UsefulThings;
+import com.himself12794.usefulthings.player.Teleporto;
 import com.himself12794.usefulthings.util.Reference;
 
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.effect.EntityLightningBolt;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldServer;
 import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class StrangeMirror extends Item {
 	private final String name = "strangeMirror";
@@ -45,8 +51,34 @@ public class StrangeMirror extends Item {
 	}
 	
 	@Override
+	//@SideOnly(Side.SERVER)
+	public ItemStack onItemRightClick(ItemStack var1, World var2, EntityPlayer player) {
+		/*System.out.println("You used the mirror");
+		if (var3 instanceof EntityPlayerMP)	{
+			WorldServer worldserver = (WorldServer)var2;
+			EntityPlayerMP var4 = (EntityPlayerMP)var3;
+			if (var3.ridingEntity == null && var3.riddenByEntity == null && var3 instanceof EntityPlayer && var4.dimension != 0) {
+				System.out.println("You used the mirror");
+				var4.mcServer.getConfigurationManager().transferPlayerToDimension(var4, -1, new Teleporto(worldserver));
+			}
+		}
+		return var1;*/
+		teleport(var2,player);
+		return var1;
+		
+	}
+	
+	@Override
     public ItemStack onItemUseFinish(ItemStack stack, World world, EntityPlayer player)
     {
+		/*System.out.println("You used the mirror");
+		if (player instanceof EntityPlayerMP)	{
+			WorldServer worldserver = (WorldServer)world;
+			EntityPlayerMP var4 = (EntityPlayerMP)player;
+			if (player.ridingEntity == null && player.riddenByEntity == null && player instanceof EntityPlayer && var4.dimension != 0) {
+				var4.mcServer.getConfigurationManager().transferPlayerToDimension(var4, -1, new Teleporto(worldserver));
+			}
+		}*/
 
     	world.addWeatherEffect(new EntityLightningBolt(world, player.posX, player.posY, player.posZ));
     	if (player.dimension != 0 ) {
@@ -59,7 +91,32 @@ public class StrangeMirror extends Item {
     	
     	return stack;
 
-     }    
+     }	
+	public void teleport(World par1World,  Entity par5Entity)
+	{
+		if ((par5Entity.ridingEntity == null) && (par5Entity.riddenByEntity == null) && ((par5Entity instanceof EntityPlayerMP)))
+		{
+			EntityPlayerMP player = (EntityPlayerMP) par5Entity;
+	 
+			MinecraftServer mServer = MinecraftServer.getServer();
+	 
+			if (player.timeUntilPortal > 0)
+			{
+				player.timeUntilPortal = 10;
+			}
+			else if (player.dimension != -1)
+			{
+				player.timeUntilPortal = 10;
+	 
+				player.mcServer.getConfigurationManager().transferPlayerToDimension(player, -1, new Teleporto(mServer.worldServerForDimension(-1)));
+			}
+			else
+			{
+				player.timeUntilPortal = 10;
+				player.mcServer.getConfigurationManager().transferPlayerToDimension(player, 0, new Teleporto(mServer.worldServerForDimension(1)));
+			}
+		}
+	}
     
 	/*@Override
     public ItemStack onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn)

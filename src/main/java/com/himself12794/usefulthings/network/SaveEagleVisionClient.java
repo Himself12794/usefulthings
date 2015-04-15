@@ -1,6 +1,7 @@
 package com.himself12794.usefulthings.network;
 
 import com.himself12794.usefulthings.items.ModItems;
+import com.himself12794.usefulthings.player.EagleVision;
 import com.himself12794.usefulthings.util.UsefulMethods;
 
 import net.minecraft.client.Minecraft;
@@ -40,9 +41,9 @@ public class SaveEagleVisionClient implements IMessage {
         	Minecraft mc = Minecraft.getMinecraft();
         	boolean isEagleVisionActivated = message.value.getBoolean("eagleVision");
         	if (/*UsefulMethods.canActivateEagleVision(mc.thePlayer) &&*/ isEagleVisionActivated ) {
-        		UsefulMethods.setEagleVision(true,false);
+        		EagleVision.setEagleVision(true,false);
         	}
-        	else if (isEagleVisionActivated && !UsefulMethods.canActivateEagleVision(mc.thePlayer)) UsefulMethods.setEagleVision(false,false);
+        	else if (isEagleVisionActivated && !EagleVision.canActivateEagleVision(mc.thePlayer)) EagleVision.setEagleVision(false,false);
             return null;
         }
     }

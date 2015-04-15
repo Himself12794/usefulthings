@@ -1,0 +1,28 @@
+{
+    "textures": {
+        "layer0": "blocks/bed_feet_top"
+    },
+    "elements": [
+        {   "from": [ 0, 0, 0 ],
+            "to": [ 16, 9, 16 ],
+            "faces": {
+                "up":    { "uv": [  0, 16, 16,  0 ], "texture": "#layer0", "rotation": 90 },
+                "north": { "uv": [  0,  7, 16, 16 ], "texture": "#layer0" },
+                "west":  { "uv": [  0,  7, 16, 16 ], "texture": "#layer0" },
+                "east":  { "uv": [ 16,  7,  0, 16 ], "texture": "#layer0" }
+            }
+        }
+    ],
+    "display": {
+        "thirdperson": {
+            "rotation": [0, 90, 45],
+            "translation": [0.5, 0.5, 0],
+            "scale": [0.55, 0.55, 0.55 ]
+        },
+        "firstperson": {
+            "rotation": [0, 90, 0 ],
+            "translation": [0, 0, 0 ],
+            "scale": [1, 1, 1]
+        }
+    }
+}
