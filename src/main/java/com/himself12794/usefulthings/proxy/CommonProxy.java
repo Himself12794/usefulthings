@@ -5,8 +5,8 @@ import com.himself12794.usefulthings.blocks.ModBlocks;
 import com.himself12794.usefulthings.events.CommonEvents;
 import com.himself12794.usefulthings.items.ModItems;
 import com.himself12794.usefulthings.worldgen.WorldGen;
-import com.himself12794.usefulthings.network.SaveEagleVisionClient;
-import com.himself12794.usefulthings.network.SaveEagleVisionServer;
+import com.himself12794.usefulthings.network.MessageClient;
+import com.himself12794.usefulthings.network.MessageServer;
 import com.himself12794.usefulthings.player.EagleVision;
 
 import net.minecraft.client.Minecraft;
@@ -26,8 +26,8 @@ public class CommonProxy {
 	public void preinit(FMLPreInitializationEvent event) {
 
        network = NetworkRegistry.INSTANCE.newSimpleChannel("MyChannel");
-       network.registerMessage(SaveEagleVisionServer.Handler.class, SaveEagleVisionServer.class, 0, Side.SERVER);
-       network.registerMessage(SaveEagleVisionClient.Handler.class, SaveEagleVisionClient.class, 1, Side.CLIENT);
+       network.registerMessage(MessageServer.Handler.class, MessageServer.class, 0, Side.SERVER);
+       network.registerMessage(MessageClient.Handler.class, MessageClient.class, 1, Side.CLIENT);
 		// register stuff
 		ModItems.addItems();
 		ModBlocks.addBlocks();
@@ -39,9 +39,9 @@ public class CommonProxy {
 		
     	//FMLCommonHandler.instance().bus().register(handler);
     	FMLCommonHandler.instance().bus().register(handler);
-    	FMLCommonHandler.instance().bus().register(eagleVision);
+    	//FMLCommonHandler.instance().bus().register(eagleVision);
     	MinecraftForge.EVENT_BUS.register(handler);
-    	MinecraftForge.EVENT_BUS.register(eagleVision);
+    	//MinecraftForge.EVENT_BUS.register(eagleVision);
     	//MinecraftForge.TERRAIN_GEN_BUS.register(handler);
     	//MinecraftForge.ORE_GEN_BUS.register(handler);
 		 

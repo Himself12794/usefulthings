@@ -29,8 +29,8 @@ public class ClientProxy extends CommonProxy
     	super.init(event);    	
     	
     	FMLCommonHandler.instance().bus().register(handler);
-    	FMLCommonHandler.instance().bus().register(eagleVision);
-    	MinecraftForge.EVENT_BUS.register(eagleVision);
+    	//FMLCommonHandler.instance().bus().register(eagleVision);
+    	//MinecraftForge.EVENT_BUS.register(eagleVision);
     	MinecraftForge.EVENT_BUS.register(handler);
 
         // do client-specific stuff

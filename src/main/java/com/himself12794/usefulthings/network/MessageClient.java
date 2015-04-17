@@ -1,8 +1,10 @@
 package com.himself12794.usefulthings.network;
 
+import com.himself12794.usefulthings.items.ModItems;
+import com.himself12794.usefulthings.player.EagleVision;
 import com.himself12794.usefulthings.util.UsefulMethods;
 
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
@@ -11,14 +13,15 @@ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import io.netty.buffer.ByteBuf;
 
 
-public class SaveEagleVisionServer implements IMessage {
+public class MessageClient implements IMessage {
    
     private NBTTagCompound value;
 
-    public SaveEagleVisionServer() { }
+    public MessageClient() { }
 
-    public SaveEagleVisionServer(NBTTagCompound value) {
+    public MessageClient(NBTTagCompound value) {
         this.value = value;
+        //System.out.println("This is what's getting sent to the server: " + value.getBoolean("eagleVision"));
     }
 
     @Override
@@ -31,14 +34,16 @@ public class SaveEagleVisionServer implements IMessage {
         ByteBufUtils.writeTag(buf, value);
     }
 
-    public static class Handler implements IMessageHandler<SaveEagleVisionServer, IMessage> {
+    public static class Handler implements IMessageHandler<MessageClient, IMessage> {
        
         @Override
-        public IMessage onMessage(SaveEagleVisionServer message, MessageContext ctx) {
+        public IMessage onMessage(MessageClient message, MessageContext ctx) {
+        	Minecraft mc = Minecraft.getMinecraft();
         	boolean isEagleVisionActivated = message.value.getBoolean("eagleVision");
-        	EntityPlayer player = ctx.getServerHandler().playerEntity;
-        	player.getEntityData().setBoolean("eagleVision", isEagleVisionActivated);
-            return null; // no response in this case
+        	boolean canUseEagleVision = message.value.getBoolean("canUseEagleVision");
+        	EagleVision.setEagleVision(isEagleVisionActivated,false);
+        	mc.thePlayer.getEntityData().setBoolean("canUseEagleVision", canUseEagleVision);
+            return null;
         }
     }
 }

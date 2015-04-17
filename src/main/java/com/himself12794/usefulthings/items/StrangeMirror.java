@@ -108,7 +108,7 @@ public class StrangeMirror extends Item {
 			{
 				player.timeUntilPortal = 10;
 	 
-				player.mcServer.getConfigurationManager().transferPlayerToDimension(player, -1, new Teleporto(mServer.worldServerForDimension(-1)));
+				player.mcServer.getConfigurationManager().transferPlayerToDimension(player, 2, new Teleporto(mServer.worldServerForDimension(2)));
 			}
 			else
 			{

@@ -40,8 +40,8 @@ import com.himself12794.usefulthings.UsefulThings;
 import com.himself12794.usefulthings.items.AssassinArmor;
 import com.himself12794.usefulthings.items.ModItems;
 import com.himself12794.usefulthings.items.armor.AssassinBoots;
-import com.himself12794.usefulthings.network.SaveEagleVisionClient;
-import com.himself12794.usefulthings.network.SaveEagleVisionServer;
+import com.himself12794.usefulthings.network.MessageClient;
+import com.himself12794.usefulthings.network.MessageServer;
 import com.himself12794.usefulthings.util.Reference;
 import com.himself12794.usefulthings.util.UsefulMethods;
 
@@ -55,6 +55,11 @@ public class CommonEvents {
 				event.setCanceled(true);
 			}
 		}
+	}
+	
+	@SubscribeEvent
+	public void applySavedChanges( PlayerLoggedInEvent event ) {
+		UsefulThings.proxy.network.sendTo(new MessageClient(event.player.getEntityData()), (EntityPlayerMP) event.player);
 	}
 	
 	//Cleans up Strange Mirror Flying

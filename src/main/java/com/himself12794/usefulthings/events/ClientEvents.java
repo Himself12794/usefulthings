@@ -3,7 +3,7 @@ package com.himself12794.usefulthings.events;
 import com.himself12794.usefulthings.UsefulThings;
 import com.himself12794.usefulthings.items.ModItems;
 import com.himself12794.usefulthings.items.armor.AssassinBoots;
-import com.himself12794.usefulthings.network.SaveEagleVisionServer;
+import com.himself12794.usefulthings.network.MessageServer;
 import com.himself12794.usefulthings.util.KeyBindings;
 import com.himself12794.usefulthings.util.Reference;
 import com.himself12794.usefulthings.util.UsefulMethods;
