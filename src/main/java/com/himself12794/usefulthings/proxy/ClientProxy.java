@@ -36,7 +36,7 @@ public class ClientProxy extends CommonProxy
         // do client-specific stuff
     	ModItems.registerTextures(event);
     	ModBlocks.registerTextures(event);
-    	KeyBindings.init();
+    	//KeyBindings.init();
     }
 }
 
