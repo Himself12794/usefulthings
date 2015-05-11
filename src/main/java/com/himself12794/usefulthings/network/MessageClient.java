@@ -5,7 +5,9 @@ import com.himself12794.usefulthings.items.ModItems;
 import com.himself12794.usefulthings.util.UsefulMethods;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.EnumParticleTypes;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
@@ -43,6 +45,11 @@ public class MessageClient implements IMessage {
         	boolean canUseEagleVision = message.value.getBoolean("canUseEagleVision");
         	//EagleVision.setEagleVision(isEagleVisionActivated,false);
         	mc.thePlayer.getEntityData().setBoolean("canUseEagleVision", canUseEagleVision);
+        	
+        	if (message.value.getBoolean("doSmoke")) {
+        		EntityPlayerSP p = mc.thePlayer;
+        		mc.theWorld.spawnParticle(EnumParticleTypes.EXPLOSION_HUGE, p.posX, p.posY + (double)(p.height / 2.0F), p.posZ, 0.0D, 0.0D, 0.0D, new int[0]);
+        	}
             return null;
         }
     }

@@ -93,17 +93,13 @@ public class CommonEvents {
 	@SubscribeEvent
 	public void avoidDamage(LivingAttackEvent event) {
 		EntityLivingBase dodger = event.entityLiving;
-		if (UsefulMethods.hasEquipped(dodger, ModItems.assassinRobes)) {
-			//if (!event.entityLiving.worldObj.isRemote)
-			System.out.println("you are at: x:" + dodger.posX + " y:" + dodger.posY + " z:" + dodger.posZ);
-			event.entityLiving.worldObj.spawnParticle(EnumParticleTypes.EXPLOSION_HUGE, dodger.posX, dodger.posY /*+ (double)(event.entityLiving.height / 2.0F)*/, dodger.posZ, 0.0D, 0.0D, 0.0D, new int[0]);
-			//System.out.println("Smoke should have appeared");
-			int noDamageChance = event.entityLiving.worldObj.rand.nextInt(4);
-			noDamageChance = 1;
-			if (noDamageChance == 1) {
+		if (UsefulMethods.hasEquipped(dodger, ModItems.assassinRobes) && dodger instanceof EntityPlayerMP) {
+			if (event.entityLiving.worldObj.rand.nextInt(4) == 1) {
 				event.setCanceled(true);
-				//if (event.entityLiving.worldObj.isRemote)
-				//	event.entityLiving.worldObj.spawnParticle(EnumParticleTypes.EXPLOSION_NORMAL, event.entityLiving.posX, event.entityLiving.posY+1, event.entityLiving.posZ, 0.0D, 0.0D, 0.0D);
+				event.entityLiving.worldObj.spawnParticle(EnumParticleTypes.EXPLOSION_HUGE, dodger.posX, dodger.posY + (double)(event.entityLiving.height / 2.0F), dodger.posZ, 0.0D, 0.0D, 0.0D, new int[0]);
+				NBTTagCompound data = new NBTTagCompound();
+				data.setBoolean("doSmoke", true);
+				UsefulThings.proxy.network.sendTo(new MessageClient(data), (EntityPlayerMP) dodger);
 			}
 		}
 	}

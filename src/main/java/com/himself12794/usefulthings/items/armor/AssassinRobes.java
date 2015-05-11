@@ -36,7 +36,7 @@ public class AssassinRobes extends AssassinArmor {
 	@Override
 	public void addInformation(ItemStack stack, EntityPlayer player, List info, boolean par4) {
 		info.add("Assassins are able to");
-		info.add("deceive enemies.");
+		info.add("evade enemies.");
 	}    
 	
 	public String getName() {
