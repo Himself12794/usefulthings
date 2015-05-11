@@ -50,7 +50,7 @@ public class StrangeMirror extends Item {
 		return 32;
 	}
 	
-	@Override
+	/*@Override
 	//@SideOnly(Side.SERVER)
 	public ItemStack onItemRightClick(ItemStack var1, World var2, EntityPlayer player) {
 		/*System.out.println("You used the mirror");
@@ -62,11 +62,11 @@ public class StrangeMirror extends Item {
 				var4.mcServer.getConfigurationManager().transferPlayerToDimension(var4, -1, new Teleporto(worldserver));
 			}
 		}
-		return var1;*/
+		return var1;
 		teleport(var2,player);
 		return var1;
 		
-	}
+	}*/
 	
 	@Override
     public ItemStack onItemUseFinish(ItemStack stack, World world, EntityPlayer player)
@@ -127,7 +127,7 @@ public class StrangeMirror extends Item {
         return itemStackIn;
      }*/
 	
-	@Override
+	/*@Override
 	public void onUpdate(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
 	
 		EntityPlayer player = (EntityPlayer) entityIn;
@@ -143,9 +143,9 @@ public class StrangeMirror extends Item {
 				
 		}
 		
-	}
+	}*/
 	
-	@Override
+	/*@Override
     public boolean onDroppedByPlayer(ItemStack item, EntityPlayer player)
     {
 		if (!player.capabilities.isCreativeMode) {
@@ -153,7 +153,7 @@ public class StrangeMirror extends Item {
 			player.capabilities.allowFlying = false;
 		}
 		return true;
-    }
+    }*/
 
 	
 	public String getName() {

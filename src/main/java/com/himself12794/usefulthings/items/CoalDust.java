@@ -12,7 +12,7 @@ public class CoalDust extends Item {
 	public CoalDust() {
 		GameRegistry.registerItem(this, name);
 		setUnlocalizedName(Reference.MODID + "_" + name);
-		setCreativeTab(CreativeTabs.tabMisc);
+		setCreativeTab(CreativeTabs.tabMaterials);
 	}
 	
 	public String getName() {

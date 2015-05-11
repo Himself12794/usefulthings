@@ -24,6 +24,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import com.himself12794.usefulthings.blocks.ModBlocks;
+import com.himself12794.usefulthings.events.EagleVision;
 import com.himself12794.usefulthings.items.ModItems;
 import com.himself12794.usefulthings.proxy.CommonProxy;
 import com.himself12794.usefulthings.util.Reference;
@@ -61,6 +62,9 @@ public class UsefulThings {
     
     @EventHandler
     public void init(FMLInitializationEvent event) {
+    	
+    	
+    	//MinecraftForge.EVENT_BUS.register(new EagleVision());
     	proxy.init(event);
         
     }

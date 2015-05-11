@@ -3,7 +3,7 @@ package com.himself12794.usefulthings.items;
 import java.util.List;
 
 import com.himself12794.usefulthings.UsefulThings;
-import com.himself12794.usefulthings.player.EagleVision;
+import com.himself12794.usefulthings.events.EagleVision;
 import com.himself12794.usefulthings.util.Reference;
 import com.himself12794.usefulthings.util.UsefulMethods;
 
@@ -46,12 +46,12 @@ public class MemorySeal extends Item {
     
     @Override
     public ItemStack onItemRightClick(ItemStack memorySeal, World worldIn, EntityPlayer playerIn){
-		if (!EagleVision.canActivateEagleVision(playerIn) && memorySeal.getMetadata() == 1) {
+		/*if (!EagleVision.canActivateEagleVision(playerIn) && memorySeal.getMetadata() == 1) {
 	    	System.out.println("Can Activate: " + EagleVision.canActivateEagleVision(playerIn));
 	    	System.out.println("World is remote: " + worldIn.isRemote);
 			playerIn.setItemInUse(memorySeal, getMaxItemUseDuration(memorySeal));
 			playerIn.playSound("mob.guardian.idle", 1, 1);
-		} //else playerIn.getEntityData().setBoolean("canUseEagleVision",false);    	
+		} //else playerIn.getEntityData().setBoolean("canUseEagleVision",false);*/    	
     	return memorySeal;
     }    
 	
@@ -68,14 +68,14 @@ public class MemorySeal extends Item {
     
     @Override
     public ItemStack onItemUseFinish(ItemStack stack, World world, EntityPlayer player){
-    	if (stack.getMetadata() == 1 && !EagleVision.canActivateEagleVision(player)) {
+    	/*if (stack.getMetadata() == 1 && !EagleVision.canActivateEagleVision(player)) {
     		//EagleVision.allowEagleVision(player);
     		player.getEntityData().setBoolean("canUseEagleVision", true);
     		EagleVision.setEagleVision(true, true);
 	    	System.out.println("Can Activate: " + EagleVision.canActivateEagleVision(player));
 	    	System.out.println("World is remote: " + world.isRemote);
     		if (!player.capabilities.isCreativeMode) --stack.stackSize;
-    	}
+    	}*/
     	return stack;
     }
     

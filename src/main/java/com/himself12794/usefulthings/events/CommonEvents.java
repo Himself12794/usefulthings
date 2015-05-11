@@ -7,6 +7,7 @@ import java.io.FileOutputStream;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.settings.GameSettings.Options;
+import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.passive.EntityWolf;
 import net.minecraft.entity.player.EntityPlayer;
@@ -21,9 +22,11 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.ChatComponentTranslation;
+import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.IChatComponent;
 import net.minecraft.world.EnumSkyBlock;
 import net.minecraftforge.client.event.RenderPlayerEvent;
+import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingFallEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingJumpEvent;
@@ -62,16 +65,18 @@ public class CommonEvents {
 		UsefulThings.proxy.network.sendTo(new MessageClient(event.player.getEntityData()), (EntityPlayerMP) event.player);
 	}
 	
-	//Cleans up Strange Mirror Flying
+	
+	
+	/*//Cleans up Strange Mirror Flying
 	@SubscribeEvent
 	public void strangeMirrorCancelFlying( PlayerTickEvent event ){
-		if ( !event.player.inventory.hasItem(ModItems.strangeMirror) && !event.player.capabilities.isCreativeMode && event.player.capabilities.allowFlying) {
+		if ( !event.player.inventory.hasItem(ModItems.strangeMirror) && !event.player.capabilities.isCreativeMode && !event.player.capabilities.&& event.player.capabilities.allowFlying) {
 			event.player.capabilities.isFlying = false;
 			event.player.capabilities.allowFlying = false;
 
 		}
 		
-	}
+	}*/
 	
 	@SubscribeEvent
 	public void stealth(PlayerTickEvent event) {
@@ -79,6 +84,28 @@ public class CommonEvents {
 			event.player.setInvisible(true);
 		else if (!event.player.isSneaking() && event.player.isInvisible() && event.player.getActivePotionEffect(Potion.invisibility) == null )
 			event.player.setInvisible(false);
+	}
+	
+	/**
+	 * Gives an entity wearing assassin robes a chance to dodge an enemy attack,
+	 *  or to confuse an enemy, preventing them from attacking at all.
+	 */
+	@SubscribeEvent
+	public void avoidDamage(LivingAttackEvent event) {
+		EntityLivingBase dodger = event.entityLiving;
+		if (UsefulMethods.hasEquipped(dodger, ModItems.assassinRobes)) {
+			//if (!event.entityLiving.worldObj.isRemote)
+			System.out.println("you are at: x:" + dodger.posX + " y:" + dodger.posY + " z:" + dodger.posZ);
+			event.entityLiving.worldObj.spawnParticle(EnumParticleTypes.EXPLOSION_HUGE, dodger.posX, dodger.posY /*+ (double)(event.entityLiving.height / 2.0F)*/, dodger.posZ, 0.0D, 0.0D, 0.0D, new int[0]);
+			//System.out.println("Smoke should have appeared");
+			int noDamageChance = event.entityLiving.worldObj.rand.nextInt(4);
+			noDamageChance = 1;
+			if (noDamageChance == 1) {
+				event.setCanceled(true);
+				//if (event.entityLiving.worldObj.isRemote)
+				//	event.entityLiving.worldObj.spawnParticle(EnumParticleTypes.EXPLOSION_NORMAL, event.entityLiving.posX, event.entityLiving.posY+1, event.entityLiving.posZ, 0.0D, 0.0D, 0.0D);
+			}
+		}
 	}
 	
 	@SubscribeEvent

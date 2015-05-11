@@ -12,7 +12,7 @@ public class CoalBall extends Item {
 	public CoalBall() {
 		GameRegistry.registerItem(this, name);
 		setUnlocalizedName(Reference.MODID + "_" + name);
-		setCreativeTab(CreativeTabs.tabMisc);
+		setCreativeTab(CreativeTabs.tabMaterials);
 	}
 	
 	public String getName() {

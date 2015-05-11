@@ -1,5 +1,6 @@
 package com.himself12794.usefulthings.items;
 
+import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.RenderItem;
 import net.minecraft.client.resources.model.ModelResourceLocation;
@@ -26,6 +27,8 @@ public class ModItems {
 	public static Item poweredOil;
 	public static Item memorySeal;
 	public static Item lightningGun;
+	public static Item gunBarrel;
+	public static Item gunStock;
 	
 	public static void addItems() {
 		coalBall = new CoalBall();
@@ -41,6 +44,8 @@ public class ModItems {
 		poweredOil = new PoweredOil();
 		memorySeal = new MemorySeal();
 		lightningGun = new LightningGun();
+		gunBarrel = new GunBarrel();
+		gunStock = new GunStock();
 	}
 	
 	public static void registerTextures( FMLInitializationEvent event ) {
@@ -62,6 +67,8 @@ public class ModItems {
 		    renderItem.getItemModelMesher().register(memorySeal, 0, new ModelResourceLocation(Reference.MODID + ":" + ((MemorySeal) memorySeal).getName(), "inventory"));
 		    renderItem.getItemModelMesher().register(memorySeal, 1, new ModelResourceLocation(Reference.MODID + ":" + ((MemorySeal) memorySeal).getName(), "inventory"));
 		    renderItem.getItemModelMesher().register(lightningGun, 0, new ModelResourceLocation(Reference.MODID + ":" + ((LightningGun) lightningGun).getName(), "inventory"));
+		    renderItem.getItemModelMesher().register(gunBarrel, 0, new ModelResourceLocation(Reference.MODID + ":" + ((GunBarrel) gunBarrel).getName(), "inventory"));
+		    renderItem.getItemModelMesher().register(gunStock, 0, new ModelResourceLocation(Reference.MODID + ":" + ((GunStock) gunStock).getName(), "inventory"));
 		    
 		}
 	}

@@ -1,7 +1,7 @@
 package com.himself12794.usefulthings.network;
 
+import com.himself12794.usefulthings.events.EagleVision;
 import com.himself12794.usefulthings.items.ModItems;
-import com.himself12794.usefulthings.player.EagleVision;
 import com.himself12794.usefulthings.util.UsefulMethods;
 
 import net.minecraft.client.Minecraft;
@@ -41,7 +41,7 @@ public class MessageClient implements IMessage {
         	Minecraft mc = Minecraft.getMinecraft();
         	boolean isEagleVisionActivated = message.value.getBoolean("eagleVision");
         	boolean canUseEagleVision = message.value.getBoolean("canUseEagleVision");
-        	EagleVision.setEagleVision(isEagleVisionActivated,false);
+        	//EagleVision.setEagleVision(isEagleVisionActivated,false);
         	mc.thePlayer.getEntityData().setBoolean("canUseEagleVision", canUseEagleVision);
             return null;
         }

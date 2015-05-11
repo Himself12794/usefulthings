@@ -32,8 +32,8 @@ public class ClientEvents {
 	
 	private Minecraft mc;
 	
-	public ClientEvents( Minecraft mc ) {
-		this.mc = mc;
+	public ClientEvents() {
+		this.mc = Minecraft.getMinecraft();
 	}
 	
 	//Adds assassin boots jump boost
