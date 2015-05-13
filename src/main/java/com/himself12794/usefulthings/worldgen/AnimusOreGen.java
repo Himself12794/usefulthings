@@ -19,7 +19,7 @@ public class AnimusOreGen implements IWorldGenerator
 	public static final int maxZCoordChunk = 16;
 	public static final int minYCoord = 16;
 	public static final int maxYCoord = 50;
-	public static final int minVeinSize = 1;
+	public static final int minVeinSize = 4;
 	public static final int maxVeinSizeVariance = 2;
 	public static final int spawnRate = 4;
 	

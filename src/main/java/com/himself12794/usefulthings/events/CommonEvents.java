@@ -87,14 +87,23 @@ public class CommonEvents {
 	}
 	
 	/**
-	 * Gives an entity wearing assassin robes a chance to dodge an enemy attack,
-	 *  or to confuse an enemy, preventing them from attacking at all.
+	 * Gives a player wearing assassin robes a 1/4 chance to dodge an enemy attack.
+	 * Wearing the full assassin armor increases the chance to 1/2.
 	 */
 	@SubscribeEvent
 	public void avoidDamage(LivingAttackEvent event) {
 		EntityLivingBase dodger = event.entityLiving;
-		if (UsefulMethods.hasEquipped(dodger, ModItems.assassinRobes) && dodger instanceof EntityPlayerMP) {
-			if (event.entityLiving.worldObj.rand.nextInt(4) == 1) {
+		boolean flag = event.source.isProjectile()
+				|| event.source.getDamageType() == "mob"
+				|| event.source.getDamageType() == "player";
+		
+		if (UsefulMethods.hasEquipped(dodger, ModItems.assassinRobes) && dodger instanceof EntityPlayerMP && flag) {
+			
+			int chance = 0;
+			if (UsefulMethods.isArmorSetEquipped((EntityPlayer) dodger, AssassinArmor.assassinMaterial)) chance = event.entityLiving.worldObj.rand.nextInt(2);
+			else chance = event.entityLiving.worldObj.rand.nextInt(4);
+			
+			if (chance == 0) {
 				event.setCanceled(true);
 				event.entityLiving.worldObj.spawnParticle(EnumParticleTypes.EXPLOSION_HUGE, dodger.posX, dodger.posY + (double)(event.entityLiving.height / 2.0F), dodger.posZ, 0.0D, 0.0D, 0.0D, new int[0]);
 				NBTTagCompound data = new NBTTagCompound();

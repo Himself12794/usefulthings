@@ -46,21 +46,11 @@ public class HiddenBlade extends ItemSword {
 	}
 	
     public ItemStack onItemRightClick(ItemStack hiddenBlade, World worldIn, EntityPlayer playerIn)
-    {
-    	/*NBTTagCompound tags = hiddenBlade.getTagCompound();
-    	if (tags != null) {
-	    	if (!tags.hasKey("retracted")) tags.setBoolean("retracted", false);
-	    	tags.setBoolean("retracted", !tags.getBoolean("retracted"));
-    	}*/
-    	
+    {    	
     	ItemStack hiddenBladeRetracted = new ItemStack(ModItems.hiddenBladeRetracted);
-    	if ( hiddenBlade.isItemEnchanted()) {
-    		hiddenBladeRetracted.setTagCompound(hiddenBlade.getTagCompound());
-    		
-    	}    	
+   		hiddenBladeRetracted.setTagCompound(hiddenBlade.getTagCompound()); 	
     	hiddenBladeRetracted.setItemDamage(hiddenBlade.getItemDamage());
         return hiddenBladeRetracted;
-    	//return hiddenBlade;
     }
     
     public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean par4){
@@ -68,22 +58,6 @@ public class HiddenBlade extends ItemSword {
 		list.add("Useless when retracted, ");    	
 		list.add("deadly when extended.");
     }
-	
-    /*@Override
-    @SideOnly(Side.CLIENT)
-    public ModelResourceLocation getModel(ItemStack stack, EntityPlayer player, int useRemaining)
-    {
-    	ModelResourceLocation model;
-    	//System.out.println(stack.getTagCompound().getBoolean("retracted"));
-    	if (stack.getTagCompound() != null) {
-	    	if (stack.getTagCompound().getBoolean("retracted")) 
-	    		model = new ModelResourceLocation(Reference.MODID + ":models/item/hiddenBladeRetracted");
-	    	else //if (stack.getTagCompound().hasKey("retracted") && !stack.getTagCompound().getBoolean("retracted"))
-	    		model = new ModelResourceLocation(Reference.MODID + ":models/item/hiddenBlade");
-    	}
-		model = new ModelResourceLocation(Reference.MODID + ":models/item/hiddenBlade");
-    	return model;
-    }*/
 
 	public String getName() {
 		return name;

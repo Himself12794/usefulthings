@@ -41,11 +41,13 @@ public class MessageClient implements IMessage {
         @Override
         public IMessage onMessage(MessageClient message, MessageContext ctx) {
         	Minecraft mc = Minecraft.getMinecraft();
-        	boolean isEagleVisionActivated = message.value.getBoolean("eagleVision");
-        	boolean canUseEagleVision = message.value.getBoolean("canUseEagleVision");
-        	//EagleVision.setEagleVision(isEagleVisionActivated,false);
-        	mc.thePlayer.getEntityData().setBoolean("canUseEagleVision", canUseEagleVision);
         	
+        	//Eagle vision handler
+        	if (message.value.getBoolean("activateEagleVision")) {
+        		mc.thePlayer.getEntityData().setBoolean("canUseEagleVision", message.value.getBoolean("canUseEagleVision"));
+        	}
+        	
+        	//Smoke cloud handler
         	if (message.value.getBoolean("doSmoke")) {
         		EntityPlayerSP p = mc.thePlayer;
         		mc.theWorld.spawnParticle(EnumParticleTypes.EXPLOSION_HUGE, p.posX, p.posY + (double)(p.height / 2.0F), p.posZ, 0.0D, 0.0D, 0.0D, new int[0]);
