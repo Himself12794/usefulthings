@@ -113,7 +113,7 @@ public class CommonEvents {
 		}
 	}
 	
-	@SubscribeEvent
+	/*@SubscribeEvent
 	public void usePoweredOilToTame( EntityInteractEvent event ) {
 		if (event.target instanceof EntityWolf ) {
 			EntityWolf wolf = (EntityWolf) event.target;
@@ -137,6 +137,6 @@ public class CommonEvents {
                 UsefulMethods.removeOneCurrentItem(event.entityPlayer);
             }
 		}
-	}
+	}*/
 
 }
