@@ -3,7 +3,7 @@ package com.himself12794.usefulthings.proxy;
 import com.himself12794.usefulthings.ModRecipes;
 import com.himself12794.usefulthings.UsefulThings;
 import com.himself12794.usefulthings.blocks.ModBlocks;
-import com.himself12794.usefulthings.entity.EntityBurnBolt;
+import com.himself12794.usefulthings.entity.EntitySpellHitScan;
 import com.himself12794.usefulthings.events.CommonEvents;
 import com.himself12794.usefulthings.events.EagleVision;
 import com.himself12794.usefulthings.items.ModItems;
@@ -34,7 +34,7 @@ public class CommonProxy {
 		// register stuff
 		ModItems.addItems();
 		ModBlocks.addBlocks();
-		EntityRegistry.registerModEntity(EntityBurnBolt.class, "burnBolt", 1, UsefulThings.instance, 80, 3, true);
+		EntityRegistry.registerModEntity(EntitySpellHitScan.class, "spellHitscan", 1, UsefulThings.instance, 80, 3, true);
 	}
 
 	public void init(FMLInitializationEvent event){
