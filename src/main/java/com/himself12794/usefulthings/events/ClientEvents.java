@@ -44,20 +44,6 @@ public class ClientEvents {
         }
 	}
 	
-	//Adds crash cushion for assassin boots
-	@SubscribeEvent
-	public void assassinBootsCushionFall( LivingFallEvent event ) {
-		if ( event.entityLiving instanceof EntityPlayer ) {
-			if (((EntityPlayer)event.entityLiving).inventory.armorItemInSlot(0) == null ? false : ((EntityPlayer)event.entityLiving).inventory.armorItemInSlot(0).getItem() == ModItems.assassinBoots) {
-				if ( event.distance <= 5.0F ) event.distance = 0.0F;
-				if ( event.distance > 5.0F ){
-					event.distance -= 2.0F;
-					event.damageMultiplier *= 0.5F;
-				}
-			}
-		}
-	}
-	
 	/*@SubscribeEvent
 	public void renderingStuff(EntityViewRenderEvent event) {
 		//event.renderer.disableLightmap();

@@ -1,7 +1,9 @@
 package com.himself12794.usefulthings.proxy;
 
 import com.himself12794.usefulthings.ModRecipes;
+import com.himself12794.usefulthings.UsefulThings;
 import com.himself12794.usefulthings.blocks.ModBlocks;
+import com.himself12794.usefulthings.entity.EntityBurnBolt;
 import com.himself12794.usefulthings.events.CommonEvents;
 import com.himself12794.usefulthings.events.EagleVision;
 import com.himself12794.usefulthings.items.ModItems;
@@ -17,6 +19,7 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
+import net.minecraftforge.fml.common.registry.EntityRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 
 public class CommonProxy {
@@ -31,6 +34,7 @@ public class CommonProxy {
 		// register stuff
 		ModItems.addItems();
 		ModBlocks.addBlocks();
+		EntityRegistry.registerModEntity(EntityBurnBolt.class, "burnBolt", 1, UsefulThings.instance, 80, 3, true);
 	}
 
 	public void init(FMLInitializationEvent event){

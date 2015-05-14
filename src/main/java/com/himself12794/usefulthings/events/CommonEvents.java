@@ -26,6 +26,7 @@ import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.IChatComponent;
 import net.minecraft.world.EnumSkyBlock;
 import net.minecraftforge.client.event.RenderPlayerEvent;
+import net.minecraftforge.event.entity.EntityStruckByLightningEvent;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingFallEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
@@ -65,19 +66,6 @@ public class CommonEvents {
 		UsefulThings.proxy.network.sendTo(new MessageClient(event.player.getEntityData()), (EntityPlayerMP) event.player);
 	}
 	
-	
-	
-	/*//Cleans up Strange Mirror Flying
-	@SubscribeEvent
-	public void strangeMirrorCancelFlying( PlayerTickEvent event ){
-		if ( !event.player.inventory.hasItem(ModItems.strangeMirror) && !event.player.capabilities.isCreativeMode && !event.player.capabilities.&& event.player.capabilities.allowFlying) {
-			event.player.capabilities.isFlying = false;
-			event.player.capabilities.allowFlying = false;
-
-		}
-		
-	}*/
-	
 	@SubscribeEvent
 	public void stealth(PlayerTickEvent event) {
 		if (event.player.isSneaking() && !event.player.isInvisible() && UsefulMethods.isArmorSetEquipped(event.player, AssassinArmor.assassinMaterial))//UsefulMethods.hasEquipped(event.player, ModItems.assassinRobes))
@@ -94,8 +82,8 @@ public class CommonEvents {
 	public void avoidDamage(LivingAttackEvent event) {
 		EntityLivingBase dodger = event.entityLiving;
 		boolean flag = event.source.isProjectile()
-				|| event.source.getDamageType() == "mob"
-				|| event.source.getDamageType() == "player";
+				|| "mob".equals(event.source.getDamageType())
+				|| "player".equals(event.source.getDamageType());
 		
 		if (UsefulMethods.hasEquipped(dodger, ModItems.assassinRobes) && dodger instanceof EntityPlayerMP && flag) {
 			
@@ -113,30 +101,27 @@ public class CommonEvents {
 		}
 	}
 	
-	/*@SubscribeEvent
-	public void usePoweredOilToTame( EntityInteractEvent event ) {
-		if (event.target instanceof EntityWolf ) {
-			EntityWolf wolf = (EntityWolf) event.target;
-			if (UsefulMethods.isCurrentItem(event.entityPlayer, ModItems.poweredOil) && !wolf.worldObj.isRemote && !wolf.isTamed()) {
-                if (wolf.worldObj.rand.nextInt(3) == 0)
-                {
-                    wolf.setTamed(true);
-                    wolf.getNavigator().clearPathEntity();
-                    wolf.setAttackTarget((EntityLivingBase)null);
-                    wolf.setSitting(true);
-                    wolf.setHealth(20.0F);
-                    wolf.setOwnerId(event.entityPlayer.getUniqueID().toString());
-                    UsefulMethods.playTameEffect(true, wolf);
-                    wolf.worldObj.setEntityState(wolf, (byte)7);
-                }
-                else
-                {
-                    UsefulMethods.playTameEffect(false,wolf);
-                    wolf.worldObj.setEntityState(wolf, (byte)6);
-                }
-                UsefulMethods.removeOneCurrentItem(event.entityPlayer);
-            }
+	@SubscribeEvent
+	public void lightningGunImmunity(EntityStruckByLightningEvent event){
+		if (event.lightning.getEntityData().hasKey("shooter")) {
+			if (event.lightning.getEntityData().getString("shooter").equals(event.entity.getUniqueID().toString())) {
+				event.setCanceled(true);
+			}
 		}
-	}*/
-
+	}
+	
+	//Adds crash cushion for assassin boots
+	@SubscribeEvent
+	public void assassinBootsCushionFall( LivingFallEvent event ) {
+		if ( event.entityLiving instanceof EntityPlayer ) {
+			if (((EntityPlayer)event.entityLiving).inventory.armorItemInSlot(0) == null ? false : ((EntityPlayer)event.entityLiving).inventory.armorItemInSlot(0).getItem() == ModItems.assassinBoots) {
+				if ( event.distance <= 5.0F ) event.distance = 0.0F;
+				if ( event.distance > 5.0F ){
+					event.distance -= 2.0F;
+					event.damageMultiplier *= 0.5F;
+				}
+			}
+		}
+	}
+	
 }

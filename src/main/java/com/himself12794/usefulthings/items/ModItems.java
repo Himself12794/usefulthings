@@ -24,11 +24,11 @@ public class ModItems {
 	public static Item assassinPants;
 	public static Item assassinRobes;
 	public static Item assassinHood;
-	//public static Item poweredOil;
-	//public static Item memorySeal;
+	public static Item memorySeal;
 	public static Item lightningGun;
 	public static Item gunBarrel;
 	public static Item gunStock;
+	public static Item spellBook;
 	
 	public static void addItems() {
 		coalBall = new CoalBall();
@@ -41,11 +41,11 @@ public class ModItems {
 		assassinPants = new AssassinPants();
 		assassinRobes = new AssassinRobes();
 		assassinHood = new AssassinHood();
-		//poweredOil = new PoweredOil();
-		//memorySeal = new MemorySeal();
+		memorySeal = new MemorySeal();
 		lightningGun = new LightningGun();
 		gunBarrel = new GunBarrel();
 		gunStock = new GunStock();
+		spellBook = new SpellBook();
 	}
 	
 	public static void registerTextures( FMLInitializationEvent event ) {
@@ -63,8 +63,7 @@ public class ModItems {
 		    renderItem.getItemModelMesher().register(assassinPants, 0, new ModelResourceLocation(Reference.MODID + ":" + ((AssassinPants) assassinPants).getName(), "inventory"));
 		    renderItem.getItemModelMesher().register(assassinRobes, 0, new ModelResourceLocation(Reference.MODID + ":" + ((AssassinRobes) assassinRobes).getName(), "inventory"));
 		    renderItem.getItemModelMesher().register(assassinHood, 0, new ModelResourceLocation(Reference.MODID + ":" + ((AssassinHood) assassinHood).getName(), "inventory"));
-		    //renderItem.getItemModelMesher().register(poweredOil, 0, new ModelResourceLocation(Reference.MODID + ":" + ((PoweredOil) poweredOil).getName(), "inventory"));
-		    //renderItem.getItemModelMesher().register(memorySeal, 0, new ModelResourceLocation(Reference.MODID + ":" + ((MemorySeal) memorySeal).getName(), "inventory"));
+		    renderItem.getItemModelMesher().register(memorySeal, 0, new ModelResourceLocation(Reference.MODID + ":" + ((MemorySeal) memorySeal).getName(), "inventory"));
 		    //renderItem.getItemModelMesher().register(memorySeal, 1, new ModelResourceLocation(Reference.MODID + ":" + ((MemorySeal) memorySeal).getName(), "inventory"));
 		    renderItem.getItemModelMesher().register(lightningGun, 0, new ModelResourceLocation(Reference.MODID + ":" + ((LightningGun) lightningGun).getName(), "inventory"));
 		    renderItem.getItemModelMesher().register(gunBarrel, 0, new ModelResourceLocation(Reference.MODID + ":" + ((GunBarrel) gunBarrel).getName(), "inventory"));

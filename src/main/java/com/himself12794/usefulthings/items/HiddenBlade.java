@@ -36,7 +36,6 @@ public class HiddenBlade extends ItemSword {
 		super( attributes );
 		GameRegistry.registerItem(this, name);
 		setUnlocalizedName(Reference.MODID + "_" + name);
-		//setCreativeTab(CreativeTabs.tabMisc);
 	}
 	
 	@Override

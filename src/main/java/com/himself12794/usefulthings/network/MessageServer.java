@@ -4,6 +4,7 @@ import com.himself12794.usefulthings.util.UsefulMethods;
 
 import net.minecraft.entity.effect.EntityLightningBolt;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.projectile.EntitySmallFireball;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.storage.WorldInfo;
@@ -42,11 +43,27 @@ public class MessageServer implements IMessage {
         		double x = message.value.getDouble("x");
         		double y = message.value.getDouble("y");
         		double z = message.value.getDouble("z");
-        		ctx.getServerHandler().playerEntity.worldObj.addWeatherEffect(new EntityLightningBolt(ctx.getServerHandler().playerEntity.worldObj, x, y, z));
+        		EntityLightningBolt bolt = new EntityLightningBolt(ctx.getServerHandler().playerEntity.worldObj, x, y, z);
+        		bolt.getEntityData().setString("shooter", ctx.getServerHandler().playerEntity.getUniqueID().toString());
+        		System.out.println("fired by id: " + bolt.getEntityData().getString("shooter"));
+        		ctx.getServerHandler().playerEntity.worldObj.addWeatherEffect(bolt);
+        	}
+        	
+        	if (message.value.getBoolean("incinerate")) {
+        		System.out.println("incinerate!");
+        		double x = message.value.getDouble("x");
+        		double y = message.value.getDouble("y");
+        		double z = message.value.getDouble("z");
+        		EntitySmallFireball incinerate = new EntitySmallFireball(ctx.getServerHandler().playerEntity.worldObj);
+        		incinerate.setPosition(x, y, z);
+        		ctx.getServerHandler().playerEntity.worldObj.spawnEntityInWorld(incinerate);
+        		
         	}
         	boolean isEagleVisionActivated = message.value.getBoolean("eagleVision");
-        	EntityPlayer player = ctx.getServerHandler().playerEntity;
-        	player.getEntityData().setBoolean("eagleVision", isEagleVisionActivated);
+	        if (isEagleVisionActivated) {
+	        	EntityPlayer player = ctx.getServerHandler().playerEntity;
+	        	player.getEntityData().setBoolean("eagleVision", isEagleVisionActivated);
+        	}
             return null; // no response in this case
         }
     }
