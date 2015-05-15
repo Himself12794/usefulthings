@@ -45,7 +45,6 @@ public class MessageServer implements IMessage {
         		double z = message.value.getDouble("z");
         		EntityLightningBolt bolt = new EntityLightningBolt(ctx.getServerHandler().playerEntity.worldObj, x, y, z);
         		bolt.getEntityData().setString("shooter", ctx.getServerHandler().playerEntity.getUniqueID().toString());
-        		System.out.println("fired by id: " + bolt.getEntityData().getString("shooter"));
         		ctx.getServerHandler().playerEntity.worldObj.addWeatherEffect(bolt);
         	}
         	
@@ -59,6 +58,7 @@ public class MessageServer implements IMessage {
         		ctx.getServerHandler().playerEntity.worldObj.spawnEntityInWorld(incinerate);
         		
         	}
+        	
         	boolean isEagleVisionActivated = message.value.getBoolean("eagleVision");
 	        if (isEagleVisionActivated) {
 	        	EntityPlayer player = ctx.getServerHandler().playerEntity;

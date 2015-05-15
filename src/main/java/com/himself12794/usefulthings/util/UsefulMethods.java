@@ -3,15 +3,19 @@ package com.himself12794.usefulthings.util;
 import com.himself12794.usefulthings.UsefulThings;
 import com.himself12794.usefulthings.items.ModItems;
 import com.himself12794.usefulthings.items.armor.AssassinBoots;
+import com.himself12794.usefulthings.network.MessageClient;
 import com.himself12794.usefulthings.network.MessageServer;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.client.settings.GameSettings.Options;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.effect.EntityLightningBolt;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemArmor.ArmorMaterial;
@@ -174,5 +178,24 @@ public class UsefulMethods {
 		}
 		
 		return true;
+	}
+
+	public static void lightningStrike(World world, EntityPlayer player, double x, double y, double z) {
+		
+		EntityLightningBolt bolt = new EntityLightningBolt(world, x, y, z);
+		bolt.getEntityData().setString("shooter", player.getUniqueID().toString());
+		world.addWeatherEffect(bolt);				
+		NBTTagCompound msg = new NBTTagCompound();
+		msg.setBoolean("lightning", true);
+		msg.setDouble("x", x);
+		msg.setDouble("y", y);
+		msg.setDouble("z", z);
+		
+		if (world.isRemote){
+			UsefulThings.proxy.network.sendToServer(new MessageServer(msg));
+		} else {
+			UsefulThings.proxy.network.sendTo(new MessageClient(msg), (EntityPlayerMP) player);
+		}
+		
 	}
 }

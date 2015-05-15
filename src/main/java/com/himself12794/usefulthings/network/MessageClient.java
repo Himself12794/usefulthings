@@ -6,6 +6,7 @@ import com.himself12794.usefulthings.util.UsefulMethods;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
+import net.minecraft.entity.effect.EntityLightningBolt;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
@@ -51,6 +52,16 @@ public class MessageClient implements IMessage {
         	if (message.value.getBoolean("doSmoke")) {
         		EntityPlayerSP p = mc.thePlayer;
         		mc.theWorld.spawnParticle(EnumParticleTypes.EXPLOSION_HUGE, p.posX, p.posY + (double)(p.height / 2.0F), p.posZ, 0.0D, 0.0D, 0.0D, new int[0]);
+        	}        	
+        	
+        	//Lightning Handler
+        	if (message.value.getBoolean("lightning")) {
+        		double x = message.value.getDouble("x");
+        		double y = message.value.getDouble("y");
+        		double z = message.value.getDouble("z");
+        		EntityLightningBolt bolt = new EntityLightningBolt(mc.theWorld, x, y, z);
+        		bolt.getEntityData().setString("shooter", mc.thePlayer.getUniqueID().toString());
+        		mc.theWorld.addWeatherEffect(bolt);
         	}
             return null;
         }
