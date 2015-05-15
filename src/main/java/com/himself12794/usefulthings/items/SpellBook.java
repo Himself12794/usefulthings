@@ -68,7 +68,6 @@ abstract class SpellBook extends Item {
     public void onPlayerStoppedUsing(ItemStack stack, World world, EntityPlayer playerIn, int timeLeft) {
     	if (getMaxItemUseDuration(stack) - timeLeft >= 20) { 
     		if( castSpell(stack, playerIn, world) ) {
-    			System.out.println("spell successfully cast");
     			stack.damageItem(1, playerIn);
     		}
     	}

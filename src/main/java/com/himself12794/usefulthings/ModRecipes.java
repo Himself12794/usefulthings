@@ -71,6 +71,8 @@ public class ModRecipes {
 		);
 		GameRegistry.addShapelessRecipe(new ItemStack(ModItems.coalDust), Items.coal, Blocks.cobblestone);
 		GameRegistry.addShapelessRecipe(new ItemStack(ModItems.lightningGun), ModItems.gunBarrel, ModItems.gunStock);
+		//GameRegistry.addShapelessRecipe(new ItemsStack(ModItems.spellBook), params);
 		GameRegistry.addSmelting(ModBlocks.oreAnimus, new ItemStack(ModItems.ingotAnimus,1), 5);
+		
 	}
 }

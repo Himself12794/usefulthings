@@ -198,4 +198,8 @@ public class UsefulMethods {
 		}
 		
 	}
+	
+	public static boolean hasSpell(ItemStack tome) {
+    	return tome.hasTagCompound() ? (tome.getTagCompound().hasKey("spells")) : false; 
+	}
 }

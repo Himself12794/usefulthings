@@ -59,9 +59,9 @@ public class MessageClient implements IMessage {
         		double x = message.value.getDouble("x");
         		double y = message.value.getDouble("y");
         		double z = message.value.getDouble("z");
-        		EntityLightningBolt bolt = new EntityLightningBolt(mc.theWorld, x, y, z);
-        		bolt.getEntityData().setString("shooter", mc.thePlayer.getUniqueID().toString());
-        		mc.theWorld.addWeatherEffect(bolt);
+        		//EntityLightningBolt bolt = new EntityLightningBolt(mc.theWorld, x, y, z);
+        		//bolt.getEntityData().setString("shooter", mc.thePlayer.getUniqueID().toString());
+        		//mc.theWorld.addWeatherEffect(bolt);
         	}
             return null;
         }
