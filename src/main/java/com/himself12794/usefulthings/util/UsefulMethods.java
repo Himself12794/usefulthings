@@ -194,7 +194,7 @@ public class UsefulMethods {
 		if (world.isRemote){
 			UsefulThings.proxy.network.sendToServer(new MessageServer(msg));
 		} else {
-			UsefulThings.proxy.network.sendTo(new MessageClient(msg), (EntityPlayerMP) player);
+			//UsefulThings.proxy.network.sendTo(new MessageClient(msg), (EntityPlayerMP) player);
 		}
 		
 	}
