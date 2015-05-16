@@ -18,6 +18,7 @@ item.usefulthings_spellBook.name=Spell Book
 item.usefulthings_spellBookIncinerate.name=Incinerate
 item.usefulthings_spellBookLightning.name=Thunder
 item.usefulthings_spellBookKill.name=Avada Kedavra
+item.usefulthings_magicTome.name=Magic Tome
 key.eagleVision=Eagle Vision
 key.categories.usefulthings=Useful Things
 itemGroup.usefulThings=Useful Things

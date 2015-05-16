@@ -1,12 +1,18 @@
 package com.himself12794.usefulthings.network;
 
+import com.himself12794.usefulthings.spells.Spell;
+import com.himself12794.usefulthings.spells.SpellRegistry;
+import com.himself12794.usefulthings.util.Reference;
 import com.himself12794.usefulthings.util.UsefulMethods;
 
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.effect.EntityLightningBolt;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntitySmallFireball;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.storage.WorldInfo;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
@@ -39,6 +45,7 @@ public class MessageServer implements IMessage {
        
         @Override
         public IMessage onMessage(MessageServer message, MessageContext ctx) {
+        	String prefix = Reference.MODID + ":";
         	if (message.value.getBoolean("lightning")) {
         		double x = message.value.getDouble("x");
         		double y = message.value.getDouble("y");
@@ -46,17 +53,16 @@ public class MessageServer implements IMessage {
         		EntityLightningBolt bolt = new EntityLightningBolt(ctx.getServerHandler().playerEntity.worldObj, x, y, z);
         		bolt.getEntityData().setString("shooter", ctx.getServerHandler().playerEntity.getUniqueID().toString());
         		ctx.getServerHandler().playerEntity.worldObj.addWeatherEffect(bolt);
-        	}
+        	} 
         	
-        	if (message.value.getBoolean("incinerate")) {
-        		System.out.println("incinerate!");
-        		double x = message.value.getDouble("x");
-        		double y = message.value.getDouble("y");
-        		double z = message.value.getDouble("z");
-        		EntitySmallFireball incinerate = new EntitySmallFireball(ctx.getServerHandler().playerEntity.worldObj);
-        		incinerate.setPosition(x, y, z);
-        		ctx.getServerHandler().playerEntity.worldObj.spawnEntityInWorld(incinerate);
-        		
+        	if (message.value.getBoolean(prefix + "hitScanSpell")) {
+        		EntityLivingBase caster = ctx.getServerHandler().playerEntity;
+        		EntityLivingBase target = (EntityLivingBase) ctx.getServerHandler().playerEntity.worldObj.getEntityByID(message.value.getInteger(prefix + "targetId"));
+        		String spellName = message.value.getString(prefix + "spellUsed");
+        		int modifier = message.value.getInteger(prefix + "spellModifier");
+        		ItemStack tome = UsefulMethods.hasSpellName(((EntityPlayer)caster).getCurrentEquippedItem(),spellName) ? ((EntityPlayer)caster).getCurrentEquippedItem() : null;
+        		Spell spell = SpellRegistry.lookupSpell(message.value.getString(prefix + "spellUsed")).getNewSpell();
+        		if (spell.onStrike(target.getEntityWorld(), new MovingObjectPosition(target), caster) && tome != null) tome.damageItem(1, caster);
         	}
         	
         	boolean isEagleVisionActivated = message.value.getBoolean("eagleVision");

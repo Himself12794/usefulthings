@@ -55,7 +55,7 @@ public class UsefulThings {
 	
 	
     @EventHandler
-    public void preinit(FMLPreInitializationEvent event) {
+    public void preinit(FMLPreInitializationEvent event) throws Exception {
     	
     	proxy.preinit(event);
     }

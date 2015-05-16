@@ -2,6 +2,8 @@ package com.himself12794.usefulthings;
 
 import com.himself12794.usefulthings.blocks.ModBlocks;
 import com.himself12794.usefulthings.items.ModItems;
+import com.himself12794.usefulthings.spells.DamagingSpells;
+import com.himself12794.usefulthings.util.UsefulMethods;
 
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
@@ -71,7 +73,7 @@ public class ModRecipes {
 		);
 		GameRegistry.addShapelessRecipe(new ItemStack(ModItems.coalDust), Items.coal, Blocks.cobblestone);
 		GameRegistry.addShapelessRecipe(new ItemStack(ModItems.lightningGun), ModItems.gunBarrel, ModItems.gunStock);
-		//GameRegistry.addShapelessRecipe(new ItemsStack(ModItems.spellBook), params);
+		GameRegistry.addShapelessRecipe(new ItemStack(ModItems.magicTome), Items.book);
 		GameRegistry.addSmelting(ModBlocks.oreAnimus, new ItemStack(ModItems.ingotAnimus,1), 5);
 		
 	}

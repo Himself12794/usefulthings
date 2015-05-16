@@ -1,10 +1,16 @@
 package com.himself12794.usefulthings.util;
 
+import java.util.List;
+
 import com.himself12794.usefulthings.UsefulThings;
 import com.himself12794.usefulthings.items.ModItems;
 import com.himself12794.usefulthings.items.armor.AssassinBoots;
 import com.himself12794.usefulthings.network.MessageClient;
 import com.himself12794.usefulthings.network.MessageServer;
+import com.himself12794.usefulthings.spells.BuffSpells;
+import com.himself12794.usefulthings.spells.DamagingSpells;
+import com.himself12794.usefulthings.spells.SpellRegistry;
+import com.himself12794.usefulthings.spells.UnregisteredSpellException;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -21,10 +27,14 @@ import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemArmor.ArmorMaterial;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.MathHelper;
+import net.minecraft.util.MovingObjectPosition;
+import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.client.FMLClientHandler;
 
 public class UsefulMethods {
 
@@ -135,36 +145,102 @@ public class UsefulMethods {
 		return player.getEntityData().getBoolean("eagleVision");
 	}
 	
-	/*public static double getEntityLightLevel(Entity entity) {
-		int coreX = MathHelper.floor_double(entity.posX);
-		int coreY = MathHelper.floor_double(entity.posY);
-		int coreZ = MathHelper.floor_double(entity.posZ);
-		System.out.println("x:" + coreX + " y:" + coreY + " z:" + coreZ);
-		int totalLight = 0;
-		int totalBlocks = 0;
-		//System.out.println(getBlockAtPos(entity.getPosition(),entity.worldObj).getLightValue());
-		for (int x = coreX - 5; x <= coreX + 5; x++)
-		{//System.out.println(x);
-			for (int y = coreY - 5; y <= coreY + 5; y++)
-			{
-				for (int z = coreZ - 5; z <= coreZ + 5; z++)
-				{
-					//System.out.println("x:" + x + " y:" + y + " z:" + z);
-					//System.out.println(getBlockAtPos(entity.getPosition(),entity.worldObj).getUseNeighborBrightness());
-					if (getBlockAtPos(entity.getPosition(),entity.worldObj).getUseNeighborBrightness())
-					{
-						//System.out.println("x:" + x + " y:" + y + " z:" + z);
-						totalLight += getBlockAtPos(entity.getPosition(),entity.worldObj).getLightValue();
-						System.out.println(totalLight);
-						totalBlocks += 1;
-					}
-				}
-			}
-		}
-		System.out.println(totalLight/totalBlocks);
-		return (double)totalLight / totalBlocks;
-		
-	}*/
+	public static MovingObjectPosition getMouseOverExtended(float dist)
+	{
+	    Minecraft mc = FMLClientHandler.instance().getClient();
+	    Entity theRenderViewEntity = mc.getRenderViewEntity();
+	    AxisAlignedBB theViewBoundingBox = new AxisAlignedBB(
+	            theRenderViewEntity.posX-0.5D,
+	            theRenderViewEntity.posY-0.0D,
+	            theRenderViewEntity.posZ-0.5D,
+	            theRenderViewEntity.posX+0.5D,
+	            theRenderViewEntity.posY+1.5D,
+	            theRenderViewEntity.posZ+0.5D
+	            );
+	    MovingObjectPosition returnMOP = null;
+	    if (mc.theWorld != null)
+	    {
+	        double var2 = dist;
+	        returnMOP = theRenderViewEntity.rayTrace(var2, 0);
+	        double calcdist = var2;
+	        Vec3 pos = theRenderViewEntity.getPositionEyes(0);
+	        var2 = calcdist;
+	        if (returnMOP != null)
+	        {
+	            calcdist = returnMOP.hitVec.distanceTo(pos);
+	        }
+	         
+	        Vec3 lookvec = theRenderViewEntity.getLook(0);
+	        Vec3 var8 = pos.addVector(lookvec.xCoord * var2, 
+	
+	              lookvec.yCoord * var2, 
+	
+	              lookvec.zCoord * var2);
+	        Entity pointedEntity = null;
+	        float var9 = 1.0F;
+	        @SuppressWarnings("unchecked")
+	        List<Entity> list = mc.theWorld.getEntitiesWithinAABBExcludingEntity(
+	
+	              theRenderViewEntity, 
+	
+	              theViewBoundingBox.addCoord(
+	
+	                    lookvec.xCoord * var2, 
+	
+	                    lookvec.yCoord * var2, 
+	
+	                    lookvec.zCoord * var2).expand(var9, var9, var9));
+	        double d = calcdist;
+	            
+	        for (Entity entity : list)
+	        {
+	            if (entity.canBeCollidedWith())
+	            {
+	                float bordersize = entity.getCollisionBorderSize();
+	                AxisAlignedBB aabb = new AxisAlignedBB(
+	
+	                      entity.posX-entity.width/2, 
+	
+	                      entity.posY, 
+	
+	                      entity.posZ-entity.width/2, 
+	
+	                      entity.posX+entity.width/2, 
+	
+	                      entity.posY+entity.height, 
+	
+	                      entity.posZ+entity.width/2);
+	                aabb.expand(bordersize, bordersize, bordersize);
+	                MovingObjectPosition mop0 = aabb.calculateIntercept(pos, var8);
+	                    
+	                if (aabb.isVecInside(pos))
+	                {
+	                    if (0.0D < d || d == 0.0D)
+	                    {
+	                        pointedEntity = entity;
+	                        d = 0.0D;
+	                    }
+	                } else if (mop0 != null)
+	                {
+	                    double d1 = pos.distanceTo(mop0.hitVec);
+	                        
+	                    if (d1 < d || d == 0.0D)
+	                    {
+	                        pointedEntity = entity;
+	                        d = d1;
+	                    }
+	                }
+	            }
+	        }
+	           
+	        if (pointedEntity != null && (d < calcdist || returnMOP == null))
+	        {
+	             returnMOP = new MovingObjectPosition(pointedEntity);
+	        }
+	
+	    }
+	    return returnMOP;
+	}
 	
 	public static boolean isArmorSetEquipped( EntityPlayer player, ArmorMaterial material ){
 		
@@ -200,6 +276,47 @@ public class UsefulMethods {
 	}
 	
 	public static boolean hasSpell(ItemStack tome) {
-    	return tome.hasTagCompound() ? (tome.getTagCompound().hasKey("spells")) : false; 
+		/*if (tome.hasTagCompound()) {
+			if (tome.getTagCompound().hasKey("spell"))
+		}*/
+    	return tome.hasTagCompound() ? (tome.getTagCompound().hasKey("spell")) : false; 
+	}
+	
+	public static boolean hasSpellName(ItemStack tome, String name) {
+		boolean flag = false;
+		if (hasSpell(tome)) {
+			flag = getSpellName(tome) == name; 
+		}
+		return flag;
+	}
+	
+	public static ItemStack setSpell(ItemStack stack, String spell) {
+		NBTTagCompound nbt = null;
+		if (!stack.hasTagCompound()) {
+			nbt = new NBTTagCompound();
+		} else {
+			nbt = stack.getTagCompound();
+		}
+		if (SpellRegistry.lookupSpell(spell) == null) {
+			try {
+				throw new UnregisteredSpellException("Spell by name \"" + spell + "\" does not exist in registry" );
+			} catch (UnregisteredSpellException e) {
+				e.printStackTrace();
+			}
+		} else {
+			System.out.println("Setting spell to " + spell);
+			nbt.setString("spell", spell);
+			stack.setTagCompound(nbt);
+		}
+		return stack;
+	}
+	
+	public static String getSpellName(ItemStack tome) {
+		String spell = null;
+		if (hasSpell(tome)) {
+			spell = tome.getTagCompound().getString("spell");
+		}
+		return spell;
+		
 	}
 }

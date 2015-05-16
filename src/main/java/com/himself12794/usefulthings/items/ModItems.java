@@ -32,6 +32,7 @@ public class ModItems {
 	public static Item spellBookIncinerate;
 	public static Item spellBookLightning;
 	public static Item spellBookKill;
+	public static Item magicTome;
 	
 	public static void addItems() {
 		coalBall = new CoalBall();
@@ -48,9 +49,7 @@ public class ModItems {
 		lightningGun = new LightningGun();
 		gunBarrel = new GunBarrel();
 		gunStock = new GunStock();
-		spellBookIncinerate = new SpellBookIncinerate();
-		spellBookLightning = new SpellBookLightning();
-		spellBookKill = new SpellBookKill();
+		magicTome = new MagicTome();
 	}
 	
 	public static void registerTextures( FMLInitializationEvent event ) {
@@ -74,9 +73,7 @@ public class ModItems {
 		    renderItem.getItemModelMesher().register(gunBarrel, 0, new ModelResourceLocation(Reference.MODID + ":" + ((GunBarrel) gunBarrel).getName(), "inventory"));
 		    renderItem.getItemModelMesher().register(gunStock, 0, new ModelResourceLocation(Reference.MODID + ":" + ((GunStock) gunStock).getName(), "inventory"));
 		    //renderItem.getItemModelMesher().register(spellBook, 0, new ModelResourceLocation(Reference.MODID + ":" + ((SpellBook) spellBook).getName(), "inventory"));
-		    renderItem.getItemModelMesher().register(spellBookIncinerate, 0, new ModelResourceLocation(Reference.MODID + ":" + ((SpellBookIncinerate) spellBookIncinerate).getName(), "inventory"));
-		    renderItem.getItemModelMesher().register(spellBookLightning, 0, new ModelResourceLocation(Reference.MODID + ":" + ((SpellBookLightning) spellBookLightning).getName(), "inventory"));
-		    renderItem.getItemModelMesher().register(spellBookKill, 0, new ModelResourceLocation(Reference.MODID + ":" + ((SpellBookKill) spellBookKill).getName(), "inventory"));
+		    renderItem.getItemModelMesher().register(magicTome, 0, new ModelResourceLocation(Reference.MODID + ":" + ((MagicTome) magicTome).getName(), "inventory"));
 		    
 		}
 	}

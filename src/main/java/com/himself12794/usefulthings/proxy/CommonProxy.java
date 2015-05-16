@@ -3,11 +3,11 @@ package com.himself12794.usefulthings.proxy;
 import com.himself12794.usefulthings.ModRecipes;
 import com.himself12794.usefulthings.UsefulThings;
 import com.himself12794.usefulthings.blocks.ModBlocks;
-import com.himself12794.usefulthings.entity.EntitySpellBolt;
-import com.himself12794.usefulthings.entity.EntitySpellHitScan;
+import com.himself12794.usefulthings.entity.EntitySpell;
 import com.himself12794.usefulthings.events.CommonEvents;
 import com.himself12794.usefulthings.events.EagleVision;
 import com.himself12794.usefulthings.items.ModItems;
+import com.himself12794.usefulthings.spells.Spells;
 import com.himself12794.usefulthings.worldgen.WorldGen;
 import com.himself12794.usefulthings.network.MessageClient;
 import com.himself12794.usefulthings.network.MessageServer;
@@ -27,7 +27,7 @@ public class CommonProxy {
 	
 	public static SimpleNetworkWrapper network;
 	
-	public void preinit(FMLPreInitializationEvent event) {
+	public void preinit(FMLPreInitializationEvent event) throws Exception {
 
        network = NetworkRegistry.INSTANCE.newSimpleChannel("MyChannel");
        network.registerMessage(MessageServer.Handler.class, MessageServer.class, 0, Side.SERVER);
@@ -35,10 +35,10 @@ public class CommonProxy {
 		// register stuff
 		ModItems.addItems();
 		ModBlocks.addBlocks();
+		Spells.registerSpells();
 		
 		// register entities
-		EntityRegistry.registerModEntity(EntitySpellHitScan.class, "spellHitscan", 1, UsefulThings.instance, 80, 3, true);
-		EntityRegistry.registerModEntity(EntitySpellBolt.class, "spellBolt", 1, UsefulThings.instance, 80, 3, true);
+		EntityRegistry.registerModEntity(EntitySpell.class, "spell", 1, UsefulThings.instance, 80, 3, true);
 	}
 
 	public void init(FMLInitializationEvent event){
