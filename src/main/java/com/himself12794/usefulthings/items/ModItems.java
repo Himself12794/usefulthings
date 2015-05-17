@@ -13,13 +13,12 @@ import com.himself12794.usefulthings.util.Reference;
 
 public class ModItems {
 	
-	public static final int NUMBER = 10;
+	public static final int NUMBER = 14;
 	public static Item coalBall;
 	public static Item coalDust;
 	public static Item hiddenBlade;
 	public static Item hiddenBladeRetracted;
 	public static Item ingotAnimus;
-	//public static Item strangeMirror;
 	public static Item assassinBoots;
 	public static Item assassinPants;
 	public static Item assassinRobes;
@@ -28,10 +27,6 @@ public class ModItems {
 	public static Item lightningGun;
 	public static Item gunBarrel;
 	public static Item gunStock;
-	//public static Item spellBook;
-	public static Item spellBookIncinerate;
-	public static Item spellBookLightning;
-	public static Item spellBookKill;
 	public static Item magicTome;
 	
 	public static void addItems() {
@@ -40,7 +35,6 @@ public class ModItems {
 		hiddenBlade = new HiddenBlade();
 		hiddenBladeRetracted = new HiddenBladeRetracted();
 		ingotAnimus = new AnimusIngot();
-		//strangeMirror = new StrangeMirror();
 		assassinBoots = new AssassinBoots();
 		assassinPants = new AssassinPants();
 		assassinRobes = new AssassinRobes();
@@ -62,17 +56,14 @@ public class ModItems {
 		    renderItem.getItemModelMesher().register(hiddenBlade, 0, new ModelResourceLocation(Reference.MODID + ":" + ((HiddenBlade) hiddenBlade).getName(), "inventory"));
 		    renderItem.getItemModelMesher().register(hiddenBladeRetracted, 0, new ModelResourceLocation(Reference.MODID + ":" + ((HiddenBladeRetracted) hiddenBladeRetracted).getName(), "inventory"));
 		    renderItem.getItemModelMesher().register(ingotAnimus, 0, new ModelResourceLocation(Reference.MODID + ":" + ((AnimusIngot) ingotAnimus).getName(), "inventory"));
-		    //renderItem.getItemModelMesher().register(strangeMirror, 0, new ModelResourceLocation(Reference.MODID + ":" + ((StrangeMirror) strangeMirror).getName(), "inventory"));
 		    renderItem.getItemModelMesher().register(assassinBoots, 0, new ModelResourceLocation(Reference.MODID + ":" + ((AssassinBoots) assassinBoots).getName(), "inventory"));
 		    renderItem.getItemModelMesher().register(assassinPants, 0, new ModelResourceLocation(Reference.MODID + ":" + ((AssassinPants) assassinPants).getName(), "inventory"));
 		    renderItem.getItemModelMesher().register(assassinRobes, 0, new ModelResourceLocation(Reference.MODID + ":" + ((AssassinRobes) assassinRobes).getName(), "inventory"));
 		    renderItem.getItemModelMesher().register(assassinHood, 0, new ModelResourceLocation(Reference.MODID + ":" + ((AssassinHood) assassinHood).getName(), "inventory"));
 		    renderItem.getItemModelMesher().register(memorySeal, 0, new ModelResourceLocation(Reference.MODID + ":" + ((MemorySeal) memorySeal).getName(), "inventory"));
-		    //renderItem.getItemModelMesher().register(memorySeal, 1, new ModelResourceLocation(Reference.MODID + ":" + ((MemorySeal) memorySeal).getName(), "inventory"));
 		    renderItem.getItemModelMesher().register(lightningGun, 0, new ModelResourceLocation(Reference.MODID + ":" + ((LightningGun) lightningGun).getName(), "inventory"));
 		    renderItem.getItemModelMesher().register(gunBarrel, 0, new ModelResourceLocation(Reference.MODID + ":" + ((GunBarrel) gunBarrel).getName(), "inventory"));
 		    renderItem.getItemModelMesher().register(gunStock, 0, new ModelResourceLocation(Reference.MODID + ":" + ((GunStock) gunStock).getName(), "inventory"));
-		    //renderItem.getItemModelMesher().register(spellBook, 0, new ModelResourceLocation(Reference.MODID + ":" + ((SpellBook) spellBook).getName(), "inventory"));
 		    renderItem.getItemModelMesher().register(magicTome, 0, new ModelResourceLocation(Reference.MODID + ":" + ((MagicTome) magicTome).getName(), "inventory"));
 		    
 		}

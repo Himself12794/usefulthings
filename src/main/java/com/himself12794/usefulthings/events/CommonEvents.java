@@ -101,14 +101,14 @@ public class CommonEvents {
 		}
 	}
 	
-	@SubscribeEvent
+	/*@SubscribeEvent
 	public void lightningGunImmunity(EntityStruckByLightningEvent event){
 		if (event.lightning.getEntityData().hasKey("shooter")) {
 			if (event.lightning.getEntityData().getString("shooter").equals(event.entity.getUniqueID().toString())) {
 				event.setCanceled(true);
 			}
 		}
-	}
+	}*/
 	
 	//Adds crash cushion for assassin boots
 	@SubscribeEvent

@@ -17,7 +17,7 @@ public class ClientProxy extends CommonProxy
 	public ClientEvents handler = new ClientEvents();
 	
     @Override
-    public void preinit(FMLPreInitializationEvent event) throws Exception {
+    public void preinit(FMLPreInitializationEvent event) {
     	super.preinit(event);
     }
 

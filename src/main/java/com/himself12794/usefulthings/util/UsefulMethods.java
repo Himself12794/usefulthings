@@ -2,26 +2,12 @@ package com.himself12794.usefulthings.util;
 
 import java.util.List;
 
-import com.himself12794.usefulthings.UsefulThings;
-import com.himself12794.usefulthings.items.ModItems;
-import com.himself12794.usefulthings.items.armor.AssassinBoots;
-import com.himself12794.usefulthings.network.MessageClient;
-import com.himself12794.usefulthings.network.MessageServer;
-import com.himself12794.usefulthings.spells.BuffSpells;
-import com.himself12794.usefulthings.spells.DamagingSpells;
-import com.himself12794.usefulthings.spells.SpellRegistry;
-import com.himself12794.usefulthings.spells.UnregisteredSpellException;
-
 import net.minecraft.block.Block;
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.multiplayer.WorldClient;
-import net.minecraft.client.settings.GameSettings.Options;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.effect.EntityLightningBolt;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemArmor.ArmorMaterial;
@@ -30,11 +16,13 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumParticleTypes;
-import net.minecraft.util.MathHelper;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.client.FMLClientHandler;
+
+import com.himself12794.usefulthings.UsefulThings;
+import com.himself12794.usefulthings.network.MessageServer;
 
 public class UsefulMethods {
 
@@ -49,54 +37,6 @@ public class UsefulMethods {
     	
         return worldIn.getBlockState(pos).getBlock();
     }
-    
-   /* /**
-     * Activates eagle vision for the specified player
-     * 
-     * @param mc The minecraft instance to which we are applying this
-     *
-    
-    public static void activateEagleVision( Minecraft mc ) {
-    	
-    	NBTTagCompound playerData = mc.thePlayer.getEntityData();
-    	mc.thePlayer.getEntityData().setBoolean("eagleVision", playerData.getBoolean("eagleVision"));
-		mc.gameSettings.setOptionFloatValue(Options.GAMMA, 1000.0F);
-		mc.thePlayer.playSound(Reference.MODID + ":eagleVisionActivate", 1, 1);
-		playerData.setBoolean("eagleVision", true);
-		UsefulThings.proxy.network.sendToServer(new SaveEagleVisionServer(playerData));
-		//mc.thePlayer.writeToNBT(playerData);
-    	
-    }
-
-	/**
-	 * Deactivates eagle vision for the specified player
-	 * 
-	 * @param mc The minecraft instance to which we are applying this
-	 *
-	
-	public static void deactivateEagleVision( Minecraft mc ) {
-		
-		NBTTagCompound playerData = mc.thePlayer.getEntityData();
-		mc.gameSettings.setOptionFloatValue(Options.GAMMA, 0.0F);
-		mc.thePlayer.playSound(Reference.MODID + ":eagleVisionDeactivate", 1, 1);
-		playerData.setBoolean("eagleVision", false);
-		UsefulThings.proxy.network.sendToServer(new SaveEagleVisionServer(playerData));
-		//mc.thePlayer.writeToNBT(playerData);
-		
-	}*/
-	
-	/*public static void setEagleVision(boolean state, boolean playSound ) {
-		EntityPlayer player = Minecraft.getMinecraft().thePlayer;
-		if (state) {
-			player.getEntityData().setBoolean("eagleVision", true);
-			if (playSound) player.playSound(Reference.MODID + ":eagleVisionActivate", 1, 1);
-			if (player.worldObj.isRemote) UsefulThings.proxy.network.sendToServer(new SaveEagleVisionServer(player.getEntityData())); 
-		} else {
-			player.getEntityData().setBoolean("eagleVision", false);
-			if (playSound) player.playSound(Reference.MODID + ":eagleVisionActivate", 1, 1);
-			if (player.worldObj.isRemote) UsefulThings.proxy.network.sendToServer(new SaveEagleVisionServer(player.getEntityData())); 
-		}
-	}*/
 	
 	public static void playTameEffect(boolean outcome, Entity entity) {
         EnumParticleTypes enumparticletypes = EnumParticleTypes.HEART;
@@ -139,10 +79,6 @@ public class UsefulMethods {
 	        	return true;
 	        }
 		return false;
-	}
-	
-	public static boolean isEagleVisionActive(EntityPlayer player ) {
-		return player.getEntityData().getBoolean("eagleVision");
 	}
 	
 	public static MovingObjectPosition getMouseOverExtended(float dist)
@@ -272,51 +208,6 @@ public class UsefulMethods {
 		} else {
 			//UsefulThings.proxy.network.sendTo(new MessageClient(msg), (EntityPlayerMP) player);
 		}
-		
-	}
-	
-	public static boolean hasSpell(ItemStack tome) {
-		/*if (tome.hasTagCompound()) {
-			if (tome.getTagCompound().hasKey("spell"))
-		}*/
-    	return tome.hasTagCompound() ? (tome.getTagCompound().hasKey("spell")) : false; 
-	}
-	
-	public static boolean hasSpellName(ItemStack tome, String name) {
-		boolean flag = false;
-		if (hasSpell(tome)) {
-			flag = getSpellName(tome) == name; 
-		}
-		return flag;
-	}
-	
-	public static ItemStack setSpell(ItemStack stack, String spell) {
-		NBTTagCompound nbt = null;
-		if (!stack.hasTagCompound()) {
-			nbt = new NBTTagCompound();
-		} else {
-			nbt = stack.getTagCompound();
-		}
-		if (SpellRegistry.lookupSpell(spell) == null) {
-			try {
-				throw new UnregisteredSpellException("Spell by name \"" + spell + "\" does not exist in registry" );
-			} catch (UnregisteredSpellException e) {
-				e.printStackTrace();
-			}
-		} else {
-			System.out.println("Setting spell to " + spell);
-			nbt.setString("spell", spell);
-			stack.setTagCompound(nbt);
-		}
-		return stack;
-	}
-	
-	public static String getSpellName(ItemStack tome) {
-		String spell = null;
-		if (hasSpell(tome)) {
-			spell = tome.getTagCompound().getString("spell");
-		}
-		return spell;
 		
 	}
 }

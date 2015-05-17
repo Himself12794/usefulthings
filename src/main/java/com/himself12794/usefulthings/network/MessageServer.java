@@ -56,13 +56,26 @@ public class MessageServer implements IMessage {
         	} 
         	
         	if (message.value.getBoolean(prefix + "hitScanSpell")) {
-        		EntityLivingBase caster = ctx.getServerHandler().playerEntity;
-        		EntityLivingBase target = (EntityLivingBase) ctx.getServerHandler().playerEntity.worldObj.getEntityByID(message.value.getInteger(prefix + "targetId"));
-        		String spellName = message.value.getString(prefix + "spellUsed");
-        		int modifier = message.value.getInteger(prefix + "spellModifier");
-        		ItemStack tome = UsefulMethods.hasSpellName(((EntityPlayer)caster).getCurrentEquippedItem(),spellName) ? ((EntityPlayer)caster).getCurrentEquippedItem() : null;
-        		Spell spell = SpellRegistry.lookupSpell(message.value.getString(prefix + "spellUsed")).getNewSpell();
-        		if (spell.onStrike(target.getEntityWorld(), new MovingObjectPosition(target), caster) && tome != null) tome.damageItem(1, caster);
+        		boolean valid = false;
+        		
+	        	EntityLivingBase caster = ctx.getServerHandler().playerEntity;
+	        	EntityLivingBase target = (EntityLivingBase) ctx.getServerHandler().playerEntity.worldObj.getEntityByID(message.value.getInteger(prefix + "targetId"));
+	        	String spellName = message.value.getString(prefix + "spellUsed");
+	        	int modifier = message.value.getInteger(prefix + "spellModifier");
+	        	
+	        	valid = (caster != null && target != null && spellName != ""  );
+	        		
+        		ItemStack currentItem = ((EntityPlayer)caster).getCurrentEquippedItem();
+        		boolean hasSpell = SpellRegistry.isSpellOnStack(currentItem, spellName);
+        		
+        		Spell spell = SpellRegistry.lookupSpell(spellName);
+        		
+        		valid = valid && hasSpell && (spell != null);
+        		
+        		if(valid) valid = spell.onStrike(target.getEntityWorld(), new MovingObjectPosition(target), caster, modifier);
+        		
+        		
+        		caster.getEntityData().setBoolean("hitScanOutcome", valid);
         	}
         	
         	boolean isEagleVisionActivated = message.value.getBoolean("eagleVision");
@@ -70,7 +83,7 @@ public class MessageServer implements IMessage {
 	        	EntityPlayer player = ctx.getServerHandler().playerEntity;
 	        	player.getEntityData().setBoolean("eagleVision", isEagleVisionActivated);
         	}
-            return null; // no response in this case
+            return null; 
         }
     }
 }

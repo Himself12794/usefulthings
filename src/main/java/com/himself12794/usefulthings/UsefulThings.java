@@ -1,5 +1,7 @@
 package com.himself12794.usefulthings;
 
+import org.apache.logging.log4j.Logger;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.main.GameConfiguration;
 import net.minecraft.client.settings.GameSettings;
@@ -35,9 +37,9 @@ public class UsefulThings {
 
 	@Instance(value = Reference.MODID)
 	public static UsefulThings instance;
-	//public static UsefulThingsEventHandler handler = new UsefulThingsEventHandler(Minecraft.getMinecraft());
-
-	//public static SimpleNetworkWrapper network;
+	
+	public static Logger logger;
+	
 	public static CreativeTabs usefulThings = new CreativeTabs("usefulThings") {
 	    @Override
 	    @SideOnly(Side.CLIENT)
@@ -55,8 +57,9 @@ public class UsefulThings {
 	
 	
     @EventHandler
-    public void preinit(FMLPreInitializationEvent event) throws Exception {
+    public void preinit(FMLPreInitializationEvent event) {
     	
+    	logger = event.getModLog();
     	proxy.preinit(event);
     }
     

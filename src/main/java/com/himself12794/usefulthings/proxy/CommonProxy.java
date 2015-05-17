@@ -8,6 +8,7 @@ import com.himself12794.usefulthings.events.CommonEvents;
 import com.himself12794.usefulthings.events.EagleVision;
 import com.himself12794.usefulthings.items.ModItems;
 import com.himself12794.usefulthings.spells.Spells;
+import com.himself12794.usefulthings.util.Reference;
 import com.himself12794.usefulthings.worldgen.WorldGen;
 import com.himself12794.usefulthings.network.MessageClient;
 import com.himself12794.usefulthings.network.MessageServer;
@@ -27,18 +28,26 @@ public class CommonProxy {
 	
 	public static SimpleNetworkWrapper network;
 	
-	public void preinit(FMLPreInitializationEvent event) throws Exception {
+	public void preinit(FMLPreInitializationEvent event) {
 
-       network = NetworkRegistry.INSTANCE.newSimpleChannel("MyChannel");
+       network = NetworkRegistry.INSTANCE.newSimpleChannel("[" + Reference.MODID + "] NetChannel");
        network.registerMessage(MessageServer.Handler.class, MessageServer.class, 0, Side.SERVER);
        network.registerMessage(MessageClient.Handler.class, MessageClient.class, 1, Side.CLIENT);
-		// register stuff
-		ModItems.addItems();
-		ModBlocks.addBlocks();
-		Spells.registerSpells();
 		
-		// register entities
-		EntityRegistry.registerModEntity(EntitySpell.class, "spell", 1, UsefulThings.instance, 80, 3, true);
+       // register items
+       ModItems.addItems();
+       if (ModItems.NUMBER > 0) UsefulThings.logger.info("Added [" + ModItems.NUMBER + "] new items");
+       
+       // register blocks
+       ModBlocks.addBlocks();
+       if (ModBlocks.NUMBER > 0) UsefulThings.logger.info("Added [" + ModBlocks.NUMBER + "] new blocks");
+       
+       // register spells
+       Spells.registerSpells();
+		
+       // register entities
+       EntityRegistry.registerModEntity(EntitySpell.class, "spell", 1, UsefulThings.instance, 80, 3, true);
+       UsefulThings.logger.info("Registered [1] new entity");
 	}
 
 	public void init(FMLInitializationEvent event){
