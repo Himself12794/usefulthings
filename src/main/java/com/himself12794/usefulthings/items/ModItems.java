@@ -17,7 +17,7 @@ public class ModItems {
 	public static Item coalBall;
 	public static Item coalDust;
 	public static Item hiddenBlade;
-	public static Item hiddenBladeRetracted;
+	//public static Item hiddenBladeRetracted;
 	public static Item ingotAnimus;
 	public static Item assassinBoots;
 	public static Item assassinPants;
@@ -33,7 +33,7 @@ public class ModItems {
 		coalBall = new CoalBall();
 		coalDust = new CoalDust();
 		hiddenBlade = new HiddenBlade();
-		hiddenBladeRetracted = new HiddenBladeRetracted();
+		//hiddenBladeRetracted = new HiddenBladeRetracted();
 		ingotAnimus = new AnimusIngot();
 		assassinBoots = new AssassinBoots();
 		assassinPants = new AssassinPants();
@@ -54,7 +54,7 @@ public class ModItems {
 		    renderItem.getItemModelMesher().register(coalBall, 0, new ModelResourceLocation(Reference.MODID + ":" + ((CoalBall) coalBall).getName(), "inventory"));
 		    renderItem.getItemModelMesher().register(coalDust, 0, new ModelResourceLocation(Reference.MODID + ":" + ((CoalDust) coalDust).getName(), "inventory"));
 		    renderItem.getItemModelMesher().register(hiddenBlade, 0, new ModelResourceLocation(Reference.MODID + ":" + ((HiddenBlade) hiddenBlade).getName(), "inventory"));
-		    renderItem.getItemModelMesher().register(hiddenBladeRetracted, 0, new ModelResourceLocation(Reference.MODID + ":" + ((HiddenBladeRetracted) hiddenBladeRetracted).getName(), "inventory"));
+		    //renderItem.getItemModelMesher().register(hiddenBladeRetracted, 0, new ModelResourceLocation(Reference.MODID + ":" + ((HiddenBladeRetracted) hiddenBladeRetracted).getName(), "inventory"));
 		    renderItem.getItemModelMesher().register(ingotAnimus, 0, new ModelResourceLocation(Reference.MODID + ":" + ((AnimusIngot) ingotAnimus).getName(), "inventory"));
 		    renderItem.getItemModelMesher().register(assassinBoots, 0, new ModelResourceLocation(Reference.MODID + ":" + ((AssassinBoots) assassinBoots).getName(), "inventory"));
 		    renderItem.getItemModelMesher().register(assassinPants, 0, new ModelResourceLocation(Reference.MODID + ":" + ((AssassinPants) assassinPants).getName(), "inventory"));

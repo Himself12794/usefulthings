@@ -14,6 +14,7 @@ import com.himself12794.usefulthings.network.MessageClient;
 import com.himself12794.usefulthings.network.MessageServer;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.item.ItemStack;
 import net.minecraft.server.MinecraftServer;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.FMLCommonHandler;
@@ -27,9 +28,12 @@ import net.minecraftforge.fml.relauncher.Side;
 public class CommonProxy {
 	
 	public static SimpleNetworkWrapper network;
+	public static Side side;
 	
 	public void preinit(FMLPreInitializationEvent event) {
 
+		side = Side.SERVER;
+		
        network = NetworkRegistry.INSTANCE.newSimpleChannel("[" + Reference.MODID + "] NetChannel");
        network.registerMessage(MessageServer.Handler.class, MessageServer.class, 0, Side.SERVER);
        network.registerMessage(MessageClient.Handler.class, MessageClient.class, 1, Side.CLIENT);
@@ -65,5 +69,14 @@ public class CommonProxy {
 		ModRecipes.addRecipes();
         WorldGen.addOreGenerators();
 
+	}
+
+	public double getReverseRendering(ItemStack stack) {
+		return 2.0D;
+		
+	}
+
+	public boolean showDamage(ItemStack stack) {
+		return false;
 	}
 }

@@ -20,6 +20,7 @@ item.usefulthings_magicTome.spell.spellIncinerate.name=Incinerate
 item.usefulthings_magicTome.spell.spellLightning.name=Lightning
 item.usefulthings_magicTome.spell.spellHeal.name=Heal
 item.usefulthings_magicTome.spell.spellDeath.name=Death
+item.usefulthings_magicTome.spell.spellDummy.name=Dummy
 key.eagleVision=Eagle Vision
 key.categories.usefulthings=Useful Things
 itemGroup.usefulThings=Useful Things

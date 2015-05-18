@@ -10,9 +10,11 @@ import net.minecraft.entity.effect.EntityLightningBolt;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemArmor;
+import net.minecraft.item.ItemBow;
 import net.minecraft.item.ItemArmor.ArmorMaterial;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.stats.StatList;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumParticleTypes;
@@ -209,5 +211,31 @@ public class UsefulMethods {
 			//UsefulThings.proxy.network.sendTo(new MessageClient(msg), (EntityPlayerMP) player);
 		}
 		
+	}
+	
+	public static ItemStack setStackOwner(ItemStack stack, Entity entity) {
+		NBTTagCompound nbt = null;
+    	int newOwnerId = entity.getEntityId();
+    	
+    	if (stack.getTagCompound() == null ) {
+    		nbt = new NBTTagCompound();
+    	} else nbt = stack.getTagCompound();
+    	
+    	int currentOwnerId = nbt.getInteger(Reference.MODID + ".spell.owner");
+		if ( newOwnerId != currentOwnerId ) {
+			UsefulThings.print("Stack owner for stack " + stack.toString() + " is now entity with id: " + newOwnerId);
+			nbt.setInteger(Reference.MODID + ".spell.owner", newOwnerId);
+			
+		}
+		
+		stack.setTagCompound(nbt);
+		return stack;
+	}
+	
+	public static int getStackOwner(ItemStack stack) {
+		if (stack.getTagCompound() != null) {
+			return stack.getTagCompound().getInteger(Reference.MODID + ".spell.owner");
+		}
+		return 0;
 	}
 }

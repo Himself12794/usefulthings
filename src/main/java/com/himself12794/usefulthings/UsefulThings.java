@@ -39,12 +39,15 @@ public class UsefulThings {
 	public static UsefulThings instance;
 	
 	public static Logger logger;
+	public static void print(Object msg) {
+		logger.info(msg);
+	}
 	
 	public static CreativeTabs usefulThings = new CreativeTabs("usefulThings") {
 	    @Override
 	    @SideOnly(Side.CLIENT)
 	    public Item getTabIconItem() {
-	        return ModItems.hiddenBladeRetracted;
+	        return ModItems.hiddenBlade;
 	    }
 	};
 	

@@ -1,6 +1,5 @@
 package com.himself12794.usefulthings.entity;
 
-import com.himself12794.usefulthings.spells.DamagingSpells;
 import com.himself12794.usefulthings.spells.Spell;
 import com.himself12794.usefulthings.spells.SpellType;
 import com.himself12794.usefulthings.spells.Spells;

@@ -3,6 +3,7 @@ package com.himself12794.usefulthings.events;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.util.Iterator;
 
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
@@ -28,6 +29,7 @@ import net.minecraft.world.EnumSkyBlock;
 import net.minecraftforge.client.event.RenderPlayerEvent;
 import net.minecraftforge.event.entity.EntityStruckByLightningEvent;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
+import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.event.entity.living.LivingFallEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingJumpEvent;
@@ -46,6 +48,8 @@ import com.himself12794.usefulthings.items.ModItems;
 import com.himself12794.usefulthings.items.armor.AssassinBoots;
 import com.himself12794.usefulthings.network.MessageClient;
 import com.himself12794.usefulthings.network.MessageServer;
+import com.himself12794.usefulthings.spells.Spell;
+import com.himself12794.usefulthings.spells.Spells;
 import com.himself12794.usefulthings.util.Reference;
 import com.himself12794.usefulthings.util.UsefulMethods;
 
@@ -101,14 +105,34 @@ public class CommonEvents {
 		}
 	}
 	
-	/*@SubscribeEvent
-	public void lightningGunImmunity(EntityStruckByLightningEvent event){
-		if (event.lightning.getEntityData().hasKey("shooter")) {
-			if (event.lightning.getEntityData().getString("shooter").equals(event.entity.getUniqueID().toString())) {
-				event.setCanceled(true);
+	@SubscribeEvent
+	public void handleSpellCoolDown(LivingUpdateEvent event) {
+		if (event.entityLiving instanceof EntityPlayer) {
+			EntityPlayer player = (EntityPlayer)event.entityLiving;
+			
+			//UsefulThings.print(Spells.getCooldowns(player));
+			
+			ItemStack[] itemStacks = player.inventory.mainInventory;
+			
+			for (ItemStack stack : itemStacks) {
+				if (stack != null && Spells.hasSpell(stack) ) {
+					Spell spell = Spells.getSpell(stack);
+					//UsefulThings.print("Updating cooldown timer on " + player.getName() + " for spell " + spell.getUnlocalizedName());
+					int remaining = 0;
+					if (spell.getCoolDown() > 0) {
+						
+						remaining  = Spells.getCoolDownRemaining(player, spell);
+						if (remaining > 0 && remaining <= spell.getCoolDown()) --remaining;
+						
+						Spells.setCoolDown(player, spell, remaining);
+					}
+				}
+					
 			}
+			
+			
 		}
-	}*/
+	}
 	
 	//Adds crash cushion for assassin boots
 	@SubscribeEvent

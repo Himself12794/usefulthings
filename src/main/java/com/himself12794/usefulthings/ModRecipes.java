@@ -1,15 +1,14 @@
 package com.himself12794.usefulthings;
 
-import com.himself12794.usefulthings.blocks.ModBlocks;
-import com.himself12794.usefulthings.items.ModItems;
-import com.himself12794.usefulthings.spells.DamagingSpells;
-import com.himself12794.usefulthings.util.UsefulMethods;
-
-import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.registry.GameRegistry;
+
+import com.himself12794.usefulthings.blocks.ModBlocks;
+import com.himself12794.usefulthings.items.ModItems;
+import com.himself12794.usefulthings.spells.SpellRegistry;
+import com.himself12794.usefulthings.spells.Spells;
 
 public class ModRecipes {
 	public final static int NUMBER = 4;
@@ -26,7 +25,7 @@ public class ModRecipes {
 			"CCC",
 			'C', ModItems.coalBall, 'O',Blocks.obsidian
 		);
-		GameRegistry.addRecipe( new ItemStack( ModItems.hiddenBladeRetracted ),
+		GameRegistry.addRecipe( new ItemStack( ModItems.hiddenBlade ),
 			" I ",
 			"LIL",
 			"LSL",
@@ -73,7 +72,7 @@ public class ModRecipes {
 		);
 		GameRegistry.addShapelessRecipe(new ItemStack(ModItems.coalDust), Items.coal, Blocks.cobblestone);
 		GameRegistry.addShapelessRecipe(new ItemStack(ModItems.lightningGun), ModItems.gunBarrel, ModItems.gunStock);
-		GameRegistry.addShapelessRecipe(new ItemStack(ModItems.magicTome), Items.book);
+		GameRegistry.addShapelessRecipe(SpellRegistry.setSpell((new ItemStack(ModItems.magicTome)), Spells.dummy), Items.book);
 		GameRegistry.addSmelting(ModBlocks.oreAnimus, new ItemStack(ModItems.ingotAnimus,1), 5);
 		
 	}
