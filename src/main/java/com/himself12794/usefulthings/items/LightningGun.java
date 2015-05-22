@@ -44,7 +44,7 @@ public class LightningGun extends ItemBow {
 		
 	}
 	
-	@Override
+	/*@Override
 	public void onPlayerStoppedUsing(ItemStack stack, World worldIn, EntityPlayer playerIn, int timeLeft) {
 		if (this.getMaxItemUseDuration(stack) - timeLeft >= 24) {
 			if (worldIn.isRemote) {
@@ -78,7 +78,7 @@ public class LightningGun extends ItemBow {
 			}
 			if (!playerIn.capabilities.isCreativeMode) stack.damageItem(1, playerIn);
 		}
-	}
+	}*/
     
     public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean par4){
 

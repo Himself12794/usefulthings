@@ -194,7 +194,7 @@ public class UsefulMethods {
 		return true;
 	}
 
-	public static void lightningStrike(World world, EntityPlayer player, double x, double y, double z) {
+	/*public static void lightningStrike(World world, EntityPlayer player, double x, double y, double z) {
 		
 		EntityLightningBolt bolt = new EntityLightningBolt(world, x, y, z);
 		bolt.getEntityData().setString("shooter", player.getUniqueID().toString());
@@ -211,7 +211,7 @@ public class UsefulMethods {
 			//UsefulThings.proxy.network.sendTo(new MessageClient(msg), (EntityPlayerMP) player);
 		}
 		
-	}
+	}*/
 	
 	public static ItemStack setStackOwner(ItemStack stack, Entity entity) {
 		NBTTagCompound nbt = null;

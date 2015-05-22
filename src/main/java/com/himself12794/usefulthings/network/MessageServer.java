@@ -1,7 +1,7 @@
 package com.himself12794.usefulthings.network;
 
-import com.himself12794.usefulthings.spells.Spell;
-import com.himself12794.usefulthings.spells.SpellRegistry;
+import com.himself12794.usefulthings.spell.Spell;
+import com.himself12794.usefulthings.spell.SpellRegistry;
 import com.himself12794.usefulthings.util.Reference;
 import com.himself12794.usefulthings.util.UsefulMethods;
 

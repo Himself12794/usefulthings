@@ -37,19 +37,20 @@ import net.minecraftforge.event.entity.living.LivingSetAttackTargetEvent;
 import net.minecraftforge.event.entity.player.EntityInteractEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
+import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.PlayerTickEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import com.himself12794.usefulthings.Spells;
 import com.himself12794.usefulthings.UsefulThings;
 import com.himself12794.usefulthings.items.AssassinArmor;
 import com.himself12794.usefulthings.items.ModItems;
 import com.himself12794.usefulthings.items.armor.AssassinBoots;
 import com.himself12794.usefulthings.network.MessageClient;
 import com.himself12794.usefulthings.network.MessageServer;
-import com.himself12794.usefulthings.spells.Spell;
-import com.himself12794.usefulthings.spells.Spells;
+import com.himself12794.usefulthings.spell.Spell;
 import com.himself12794.usefulthings.util.Reference;
 import com.himself12794.usefulthings.util.UsefulMethods;
 
@@ -65,10 +66,10 @@ public class CommonEvents {
 		}
 	}
 	
-	@SubscribeEvent
+	/*@SubscribeEvent
 	public void applySavedChanges( PlayerLoggedInEvent event ) {
 		UsefulThings.proxy.network.sendTo(new MessageClient(event.player.getEntityData()), (EntityPlayerMP) event.player);
-	}
+	}*/
 	
 	@SubscribeEvent
 	public void stealth(PlayerTickEvent event) {
@@ -102,36 +103,7 @@ public class CommonEvents {
 				data.setBoolean("doSmoke", true);
 				UsefulThings.proxy.network.sendTo(new MessageClient(data), (EntityPlayerMP) dodger);
 			}
-		}
-	}
-	
-	@SubscribeEvent
-	public void handleSpellCoolDown(LivingUpdateEvent event) {
-		if (event.entityLiving instanceof EntityPlayer) {
-			EntityPlayer player = (EntityPlayer)event.entityLiving;
-			
-			//UsefulThings.print(Spells.getCooldowns(player));
-			
-			ItemStack[] itemStacks = player.inventory.mainInventory;
-			
-			for (ItemStack stack : itemStacks) {
-				if (stack != null && Spells.hasSpell(stack) ) {
-					Spell spell = Spells.getSpell(stack);
-					//UsefulThings.print("Updating cooldown timer on " + player.getName() + " for spell " + spell.getUnlocalizedName());
-					int remaining = 0;
-					if (spell.getCoolDown() > 0) {
-						
-						remaining  = Spells.getCoolDownRemaining(player, spell);
-						if (remaining > 0 && remaining <= spell.getCoolDown()) --remaining;
-						
-						Spells.setCoolDown(player, spell, remaining);
-					}
-				}
-					
-			}
-			
-			
-		}
+		} //else if (event.entityLiving.getActivePotionEffect(Potion.resistance) != null) event.setCanceled(true);
 	}
 	
 	//Adds crash cushion for assassin boots
@@ -147,5 +119,4 @@ public class CommonEvents {
 			}
 		}
 	}
-	
 }

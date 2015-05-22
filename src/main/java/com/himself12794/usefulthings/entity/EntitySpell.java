@@ -1,8 +1,8 @@
 package com.himself12794.usefulthings.entity;
 
-import com.himself12794.usefulthings.spells.Spell;
-import com.himself12794.usefulthings.spells.SpellType;
-import com.himself12794.usefulthings.spells.Spells;
+import com.himself12794.usefulthings.Spells;
+import com.himself12794.usefulthings.spell.Spell;
+import com.himself12794.usefulthings.spell.SpellType;
 
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.projectile.EntityEgg;
