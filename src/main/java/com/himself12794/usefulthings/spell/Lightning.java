@@ -14,7 +14,6 @@ public class Lightning extends Spell {
 		setCoolDown(10);
 		setDuration(0);
 		setUnlocalizedName("lightning");
-		SpellRegistry.registerSpell(this);
 	}
 	
 	@Override

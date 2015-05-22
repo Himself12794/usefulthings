@@ -7,7 +7,6 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 
 import com.himself12794.usefulthings.blocks.ModBlocks;
 import com.himself12794.usefulthings.items.ModItems;
-import com.himself12794.usefulthings.spell.SpellRegistry;
 
 public class ModRecipes {
 	public final static int NUMBER = 4;

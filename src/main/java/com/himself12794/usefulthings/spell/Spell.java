@@ -1,5 +1,7 @@
 package com.himself12794.usefulthings.spell;
 
+import java.util.Map;
+
 import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -10,11 +12,9 @@ import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 
+import com.google.common.collect.Maps;
 import com.himself12794.usefulthings.UsefulThings;
-import com.himself12794.usefulthings.entity.EntitySpell;
-import com.himself12794.usefulthings.network.MessageServer;
 import com.himself12794.usefulthings.util.Reference;
-import com.himself12794.usefulthings.util.UsefulMethods;
 
 public class Spell {
 	
@@ -169,19 +169,6 @@ public class Spell {
 		return null;
 	}
 	
-	public static void registerSpells() {
-
-		Spell damage = new Damage();		
-		Spell incinerate = new Incinerate();
-		Spell lightning = new Lightning();
-		Spell heal = new Heal();
-		Spell death = new Death();
-		Spell dummy = new Dummy();
-		
-		UsefulThings.logger.info("Registered [" + SpellRegistry.getSpellCount() + "] spells");
-		
-	}
-	
 	public final ItemStack setSpell(ItemStack stack) {
 		NBTTagCompound nbt = null;
 		String spell = getUnlocalizedName();
@@ -199,8 +186,61 @@ public class Spell {
 		return stack;
 	}
 	
+	/*================================= Begin Spell Registration Section ===============================*/ 
+	
+	private static Map<String, Spell> spellRegistry = Maps.newHashMap();
+	private static int spells = 0;
+	
+	public static void registerSpells() {
+
+		registerSpell(new Spell().setUnlocalizedName("damage"));	
+		registerSpell(new Spell().setUnlocalizedName("death").setDuration(100).setPower(1000.0F).setCoolDown(178));	
+		registerSpell(new Incinerate());
+		registerSpell(new Lightning());
+		registerSpell(new Heal());
+		registerSpell(new Dummy());
+		
+		UsefulThings.logger.info("Registered [" + Spell.getSpellCount() + "] spells");
+		
+	}
+	
+	public static Spell lookupSpell(ItemStack stack) {
+		if (Spell.hasSpell(stack)) {
+			return spellRegistry.get(stack.getTagCompound().getString( Reference.MODID + ".spell.currentSpell"));
+		}
+		return null;
+	}
+	
+	public static Spell lookupSpell(String spell) {
+		if (Spell.spellExists(spell)) return (Spell)spellRegistry.get(spell);
+		return null;
+	}
+	
+	public static boolean isSpellOnStack(ItemStack stack, String spell) {
+		return Spell.hasSpell(stack) && lookupSpell(stack).getUnlocalizedName().equals(spell);
+	}
+	
+	public static Map<String, Spell> getSpells() {
+		return spellRegistry;
+	}
+	
+	private static void registerSpell(Spell spell) {
+		String name = spell.getUnlocalizedName();
+		if (!Spell.spellExists(name)) {
+			spellRegistry.put(name, spell);
+			UsefulThings.print("Registered spell " + name);
+			++spells;
+		} else {
+			UsefulThings.logger.error("Could not register spell " + spell + " under name \"" + name + "\", name has already been registered for " + lookupSpell(name));
+		}
+	}
+
+	public static int getSpellCount() {
+		return spells;
+	}
+	
 	public static boolean spellExists(String unlocalizedName) {
-		return SpellRegistry.getSpells().containsKey(unlocalizedName);
+		return Spell.getSpells().containsKey(unlocalizedName);
 	}
 	
 	public final boolean canCastSpell( EntityPlayer player ) {
@@ -234,7 +274,7 @@ public class Spell {
 	}
 	
 	public static Spell getSpell(ItemStack stack) {
-		return SpellRegistry.lookupSpell(stack);
+		return Spell.lookupSpell(stack);
 	}
 	
 	public static NBTTagCompound getCooldowns(EntityPlayer player) {

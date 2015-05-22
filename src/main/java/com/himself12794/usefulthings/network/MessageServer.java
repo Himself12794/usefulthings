@@ -1,24 +1,19 @@
 package com.himself12794.usefulthings.network;
 
-import com.himself12794.usefulthings.spell.Spell;
-import com.himself12794.usefulthings.spell.SpellRegistry;
-import com.himself12794.usefulthings.util.Reference;
-import com.himself12794.usefulthings.util.UsefulMethods;
-
+import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.effect.EntityLightningBolt;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.projectile.EntitySmallFireball;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.MovingObjectPosition;
-import net.minecraft.world.storage.WorldInfo;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
-import io.netty.buffer.ByteBuf;
+
+import com.himself12794.usefulthings.spell.Spell;
+import com.himself12794.usefulthings.util.Reference;
 
 
 public class MessageServer implements IMessage {
@@ -66,9 +61,9 @@ public class MessageServer implements IMessage {
 	        	valid = (caster != null && target != null && spellName != ""  );
 	        		
         		ItemStack currentItem = ((EntityPlayer)caster).getCurrentEquippedItem();
-        		boolean hasSpell = SpellRegistry.isSpellOnStack(currentItem, spellName);
+        		boolean hasSpell = Spell.isSpellOnStack(currentItem, spellName);
         		
-        		Spell spell = SpellRegistry.lookupSpell(spellName);
+        		Spell spell = Spell.lookupSpell(spellName);
         		
         		valid = valid && hasSpell && (spell != null);
         		

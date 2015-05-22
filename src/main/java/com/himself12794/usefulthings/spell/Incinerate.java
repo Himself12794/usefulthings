@@ -16,7 +16,6 @@ public class Incinerate extends Spell {
 		setCoolDown(60);
 		setDuration(15);
 		setUnlocalizedName("incinerate");
-		SpellRegistry.registerSpell(this);
 	}
 	
 	@Override

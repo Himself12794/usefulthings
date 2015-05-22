@@ -14,7 +14,6 @@ public class Dummy extends Spell {
 		setDuration(0);
 		setType(SpellType.RANGED);
 		setUnlocalizedName("dummy");
-		SpellRegistry.registerSpell(this);
 	}
 	
 	public boolean onStrike(World world, MovingObjectPosition target, EntityLivingBase caster, float modifier ) {

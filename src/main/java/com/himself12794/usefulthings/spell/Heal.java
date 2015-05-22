@@ -16,7 +16,6 @@ public class Heal extends Spell {
 		this.setCoolDown(1);
 		this.setType(SpellType.BUFF);
 		setUnlocalizedName("heal");
-		SpellRegistry.registerSpell(this);
 	} 
 	
 	public boolean onCast(World world, EntityLivingBase caster, ItemStack stack, float modifier) {
