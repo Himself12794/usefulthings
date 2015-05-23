@@ -16,7 +16,7 @@ import com.google.common.collect.Maps;
 import com.himself12794.usefulthings.UsefulThings;
 import com.himself12794.usefulthings.util.Reference;
 
-public class Spell {
+public abstract class Spell {
 	
 	private String displayName;
 	//private SpellType type = SpellType.INSTANT;
@@ -36,7 +36,7 @@ public class Spell {
 	 * @param modifier
 	 * @return success
 	 */
-	public boolean cast(World world, EntityLivingBase caster, ItemStack tome, float modifier) {return true;}
+	public abstract boolean cast(World world, EntityLivingBase caster, ItemStack tome, float modifier);
 	
 	/**
 	 * Called when the spell affects a target.
@@ -221,8 +221,8 @@ public class Spell {
 	
 	public static void registerSpells() {
 
-		registerSpell(new Spell().setUnlocalizedName("damage"));	
-		registerSpell(new Spell().setUnlocalizedName("death").setDuration(100).setPower(1000.0F).setCoolDown(178));	
+		registerSpell(new SpellInstant().setUnlocalizedName("damage"));	
+		registerSpell(new SpellInstant().setUnlocalizedName("death").setDuration(100).setPower(1000.0F).setCoolDown(178));	
 		registerSpell(new Incinerate());
 		registerSpell(new Lightning());
 		registerSpell(new Heal());
