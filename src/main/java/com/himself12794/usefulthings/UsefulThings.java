@@ -1,3 +1,4 @@
+
 package com.himself12794.usefulthings;
 
 import org.apache.logging.log4j.Logger;
@@ -32,6 +33,13 @@ import com.himself12794.usefulthings.proxy.CommonProxy;
 import com.himself12794.usefulthings.util.Reference;
 import com.himself12794.usefulthings.worldgen.WorldGen;
 
+/**
+ * This is a mod for any random things I feel to add, though recently it's taken a turn to
+ * be a powers/spells oriented mod/API.
+ * 
+ * @author Philip
+ *
+ */
 @Mod(modid = Reference.MODID, version = Reference.VERSION, name = Reference.NAME)
 public class UsefulThings {    
 

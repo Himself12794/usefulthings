@@ -30,6 +30,8 @@ spell.dummy.name=Dummy
 spell.dummy.description=Does no damage. For testing.
 spell.immortalize.name=Immortalize
 spell.immortalize.description=Makes the caster immortal
+spell.flames.name=Flames
+spell.flames.description=Like a flame thrower
 
 key.eagleVision=Eagle Vision
 key.categories.usefulthings=Useful Things

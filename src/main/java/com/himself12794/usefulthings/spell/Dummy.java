@@ -1,21 +1,16 @@
 package com.himself12794.usefulthings.spell;
 
-import com.himself12794.usefulthings.UsefulThings;
-import com.himself12794.usefulthings.entity.EntitySpell;
-
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 
 public class Dummy extends SpellRanged {
 	
 	public Dummy() {
-		setPower(0.0F);
+		setPower(2.0F);
 		setCoolDown(20);
 		setDuration(0);
-		//setType(SpellType.RANGED);
 		setUnlocalizedName("dummy");
 	}
 	
@@ -27,13 +22,7 @@ public class Dummy extends SpellRanged {
 		return true;
 	}
 	
-	public float getSpellSpeed(){
-		return 0.1F;
-	}
-	
-	@Override
-	public void onUpdate(EntitySpell spell) {
-		World world = spell.worldObj;
-		world.spawnParticle(EnumParticleTypes.FLAME, spell.posX, spell.posY, spell.posZ, 0.0D, 0.0D, 0.0D, new int[0]);
+	public float getSpellVelocity(){
+		return 2.0F;
 	}
 }

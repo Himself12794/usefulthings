@@ -44,6 +44,14 @@ public class SpellEffect {
 		return true;
 	}
 	
+	/**
+	 * Applies the spell effect to the specific entity, for a specific time.
+	 * <p>
+	 * Setting the duration to less than 0 makes it last until removed.
+	 * 
+	 * @param target 
+	 * @param duration
+	 */
 	public final void addTo(EntityLivingBase target, int duration) {
 		NBTTagCompound activeEffects = target.getEntityData().getCompoundTag(Reference.MODID + ".spell.spellEffects");
 		activeEffects.setInteger(Integer.toString(id), duration);
@@ -51,6 +59,13 @@ public class SpellEffect {
 		
 	}
 	
+	/**
+	 * Clears any traces of the effect from the entity, if they have it.
+	 * <p>
+	 * If the duration left is not 0, also triggers {@link SpellEffect#onRemoval(EntityLivingBase)}
+	 * 
+	 * @param target
+	 */
 	public final void clearFrom(EntityLivingBase target) {
 		NBTTagCompound activeEffects = target.getEntityData().getCompoundTag(Reference.MODID + ".spell.spellEffects");
 		
@@ -59,12 +74,25 @@ public class SpellEffect {
 		activeEffects.removeTag(Integer.toString(id));
 	}
 	
+	/**
+	 * Returns the time remaining for this effect on the target. If the target does not 
+	 * have the effect, it returns 0.
+	 * 
+	 * @param target
+	 * @return
+	 */
 	public final int getEffectTimeRemainingOn(EntityLivingBase target){
 		NBTTagCompound activeEffects = target.getEntityData().getCompoundTag(Reference.MODID + ".spell.spellEffects");
 		//System.out.println(activeEffects);
 		return activeEffects.getInteger(String.valueOf(id));
 	}
 	
+	/**
+	 * Checks if the effect is on the target
+	 * 
+	 * @param entity
+	 * @return
+	 */
 	public final boolean isEffecting(EntityLivingBase entity) {
 		//System.out.println(getEffectTimeRemaining(entity, id));
 		return getEffectTimeRemainingOn(entity) != 0;

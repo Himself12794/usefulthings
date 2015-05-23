@@ -11,15 +11,10 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 
 import com.google.common.collect.Maps;
-import com.himself12794.usefulthings.Spells;
 import com.himself12794.usefulthings.UsefulThings;
-import com.himself12794.usefulthings.entity.EntitySpell;
-import com.himself12794.usefulthings.network.CastSpellServer;
 import com.himself12794.usefulthings.util.Reference;
-import com.himself12794.usefulthings.util.UsefulMethods;
 
 public class Spell {
 	
@@ -27,7 +22,7 @@ public class Spell {
 	//private SpellType type = SpellType.INSTANT;
 	private float power = 2.0F;
 	/**Duration in ticks*/
-	private int duration = 20;
+	private int duration = 0;
 	private int coolDown = 4;
 	private int maxConcentrationTime = 0;
 	
@@ -45,8 +40,10 @@ public class Spell {
 	
 	/**
 	 * Called when the spell affects a target.
-	 * Used by types HIT_SCAN and RANGED, HIT_SCAN when it impacts an entity, and
-	 * RANGED when it impacts anything. Return determines whether the stack should be damaged.
+	 * For instances of SpellInstant, when a target has been successfully acquired, and for instances of
+	 * SpellRanged when it impacts anything. 
+	 * <p>
+	 * For instances of SpellInstant, returning true will mark the spell as a success, allowing the cooldown to be triggered.
 	 * 
 	 * @param world
 	 * @param target
@@ -231,6 +228,7 @@ public class Spell {
 		registerSpell(new Heal());
 		registerSpell(new Dummy());
 		registerSpell(new Immortalize());
+		registerSpell(new Flames());
 		
 		UsefulThings.logger.info("Registered [" + Spell.getSpellCount() + "] spells");
 		
@@ -293,8 +291,8 @@ public class Spell {
 	}
 	
 	public final void triggerCooldown( EntityPlayer player ) {
-		UsefulThings.print("Triggering cooldown");
-		setCoolDown(player, getCoolDown());
+		//UsefulThings.print("Triggering cooldown");
+		if (!player.capabilities.isCreativeMode) setCoolDown(player, getCoolDown());
 	}
 	
 	public static boolean hasSpell(ItemStack stack) {

@@ -1,6 +1,7 @@
 package com.himself12794.usefulthings;
 
 import com.himself12794.usefulthings.spell.Dummy;
+import com.himself12794.usefulthings.spell.Flames;
 import com.himself12794.usefulthings.spell.Heal;
 import com.himself12794.usefulthings.spell.Immortalize;
 import com.himself12794.usefulthings.spell.Incinerate;
@@ -16,6 +17,7 @@ public class Spells {
 	public static final Spell death;
 	public static final Dummy dummy;
 	public static final Immortalize immortalize;
+	public static final Flames flames;
 	
 	static {
 		
@@ -26,6 +28,7 @@ public class Spells {
 		heal = (Heal) Spell.lookupSpell("heal");
 		dummy = (Dummy) Spell.lookupSpell("dummy");
 		immortalize = (Immortalize) Spell.lookupSpell("immortalize");
+		flames = (Flames) Spell.lookupSpell("flames");
 		
 	}
 }
