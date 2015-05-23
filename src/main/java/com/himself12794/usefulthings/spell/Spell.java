@@ -11,21 +11,28 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 
 import com.google.common.collect.Maps;
+import com.himself12794.usefulthings.Spells;
 import com.himself12794.usefulthings.UsefulThings;
+import com.himself12794.usefulthings.entity.EntitySpell;
+import com.himself12794.usefulthings.network.CastSpellServer;
 import com.himself12794.usefulthings.util.Reference;
+import com.himself12794.usefulthings.util.UsefulMethods;
 
 public class Spell {
 	
 	private String displayName;
-	private SpellType type = SpellType.HIT_SCAN;
+	//private SpellType type = SpellType.INSTANT;
 	private float power = 2.0F;
+	/**Duration in ticks*/
 	private int duration = 20;
 	private int coolDown = 4;
+	private int maxConcentrationTime = 0;
 	
 	/**
-	 * This casts the spell.
+	 * This determines how the spell is cast, then casts it.
 	 * Returning true will trigger the cool down.
 	 * 
 	 * @param world
@@ -34,12 +41,11 @@ public class Spell {
 	 * @param modifier
 	 * @return success
 	 */
-	public final boolean cast(World world, EntityLivingBase caster, ItemStack tome, float modifier) {
-		return type.action(this, world, caster, tome, modifier);
-	}
+	public boolean cast(World world, EntityLivingBase caster, ItemStack tome, float modifier) {return true;}
+	
 	/**
 	 * Called when the spell affects a target.
-	 * Used only by types HIT_SCAN and RANGED, HIT_SCAN when it impacts an entity, and
+	 * Used by types HIT_SCAN and RANGED, HIT_SCAN when it impacts an entity, and
 	 * RANGED when it impacts anything. Return determines whether the stack should be damaged.
 	 * 
 	 * @param world
@@ -52,6 +58,7 @@ public class Spell {
 	public boolean onStrike(World world, MovingObjectPosition target, EntityLivingBase caster, float modifier ) {
 		boolean flag = false;
 		if (target.entityHit != null) {
+			UsefulThings.print("Attacking " + target.entityHit.getName());
 			flag = target.entityHit.attackEntityFrom(DamageSource.magic, getPower() * modifier);
 			((EntityLivingBase)target.entityHit).setRevengeTarget(caster);
 		} 
@@ -129,33 +136,22 @@ public class Spell {
 	 * @return
 	 */
 	public String getInfo(ItemStack stack, EntityPlayer player) {
-		return "Deals damage to an enemy";
+		String info = ("" + StatCollector.translateToLocal(getUnlocalizedName() + ".description")).trim();
+		if (info.equals(getUnlocalizedName() + ".description")) info = "";
+		
+		return info;
 	}
 	
-	public String getDisplayName() {
-		return ("" + StatCollector.translateToLocal(getUnlocalizedName() + ".name")).trim();
+	/**
+	 * Gets the information to be shown under the "Type" tag on the magic tome.
+	 * 
+	 * @param stack
+	 * @param player
+	 * @return
+	 */
+	public String getTypeDescriptor(ItemStack stack, EntityPlayer player) {
+		return null;
 	}
-	protected Spell setType(SpellType type) { this.type = type; return this; }
-	
-	public SpellType getType() { return type; }
-	
-	protected Spell setPower(float value) { power = value; return this; }
-
-	public float getPower() { return power; }
-	
-	protected Spell setCoolDown(int amount) { coolDown = amount; return this; }
-	
-	public int getCoolDown() { return coolDown; }
-	
-	protected Spell setUnlocalizedName( String name ) { displayName = name; return this; }
-	
-	public String getUnlocalizedName() { return "spell." + displayName; }
-	
-	protected Spell setDuration(int time) { duration = time; return this; }
-	
-	public int getDuration() { return duration; }
-
-	public float getBrightness() { return 5.0F; }
 	
 	/**
 	 * Location for model if the default Magic Tome one is not desired.
@@ -186,6 +182,41 @@ public class Spell {
 		return stack;
 	}
 	
+	public boolean isSpellOnStack(ItemStack stack) {
+		return Spell.hasSpell(stack) && lookupSpell(stack) == this;
+	}
+	
+	public String getDisplayName() {
+		return ("" + StatCollector.translateToLocal(getUnlocalizedName() + ".name")).trim();
+	}
+	//protected Spell setType(SpellType type) { this.type = type; return this; }
+	
+	//public SpellType getType() { return type; }
+	
+	protected Spell setPower(float value) { power = value; return this; }
+
+	public float getPower() { return power; }
+	
+	protected Spell setCoolDown(int amount) { coolDown = amount; return this; }
+	
+	public int getCoolDown() { return coolDown; }
+	
+	protected Spell setUnlocalizedName( String name ) { displayName = name; return this; }
+	
+	public String getUnlocalizedName() { return "spell." + displayName; }
+	
+	protected Spell setDuration(int time) { duration = time; return this; }
+	
+	public int getDuration() { return duration; }
+	
+	protected void setMaxConcentrationTime(int time) {maxConcentrationTime = time;}
+	
+	public int getMaxConcentrationTime() {return maxConcentrationTime;}
+	
+	public boolean isConcentrationSpell() {return maxConcentrationTime > 0;}
+
+	public float getBrightness() { return 5.0F; }
+	
 	/*================================= Begin Spell Registration Section ===============================*/ 
 	
 	private static Map<String, Spell> spellRegistry = Maps.newHashMap();
@@ -199,6 +230,7 @@ public class Spell {
 		registerSpell(new Lightning());
 		registerSpell(new Heal());
 		registerSpell(new Dummy());
+		registerSpell(new Immortalize());
 		
 		UsefulThings.logger.info("Registered [" + Spell.getSpellCount() + "] spells");
 		
@@ -216,10 +248,6 @@ public class Spell {
 		return null;
 	}
 	
-	public static boolean isSpellOnStack(ItemStack stack, String spell) {
-		return Spell.hasSpell(stack) && lookupSpell(stack).getUnlocalizedName().equals(spell);
-	}
-	
 	public static Map<String, Spell> getSpells() {
 		return spellRegistry;
 	}
@@ -228,7 +256,7 @@ public class Spell {
 		String name = spell.getUnlocalizedName();
 		if (!Spell.spellExists(name)) {
 			spellRegistry.put(name, spell);
-			UsefulThings.print("Registered spell " + name);
+			//UsefulThings.print("Registered spell " + name);
 			++spells;
 		} else {
 			UsefulThings.logger.error("Could not register spell " + spell + " under name \"" + name + "\", name has already been registered for " + lookupSpell(name));
@@ -268,7 +296,7 @@ public class Spell {
 		UsefulThings.print("Triggering cooldown");
 		setCoolDown(player, getCoolDown());
 	}
-
+	
 	public static boolean hasSpell(ItemStack stack) {
 		return stack.hasTagCompound() && stack.getTagCompound().hasKey(Reference.MODID + ".spell.currentSpell");
 	}

@@ -1,26 +1,25 @@
 package com.himself12794.usefulthings.spell;
 
-import com.himself12794.usefulthings.SpellEffects;
-import com.himself12794.usefulthings.UsefulThings;
-
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 
-public class Heal extends Spell {
+import com.himself12794.usefulthings.spellfx.SpellEffect;
+
+public class Heal extends SpellBuff {
 	
 	public Heal() {
-		this.setDuration(0);
-		this.setPower(0.25F);
-		this.setCoolDown(1);
-		this.setType(SpellType.BUFF);
+		setDuration(0);
+		setPower(0.25F);
+		setCoolDown(1);
+		//setType(SpellType.BUFF);
 		setUnlocalizedName("heal");
 	} 
 	
 	public boolean onCast(World world, EntityLivingBase caster, ItemStack stack, float modifier) {
 		boolean flag = false;
-		SpellEffects.setSpellEffect(caster, SpellEffects.spontaneousRegeneration, -1);
+		SpellEffect.spontaneousRegeneration.addTo(caster, -1);
 		if (caster.getHealth() < caster.getMaxHealth()) {
 			flag = true;
 			caster.heal(getPower() * modifier);

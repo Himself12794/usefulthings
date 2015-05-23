@@ -17,11 +17,21 @@ item.usefulthings_gunStock.name=Gun Stock
 item.usefulthings_magicTome.name=Magic Tome
 
 spell.damage.name=Damage
+spell.damage.description=Damages Enemies
 spell.incinerate.name=Incinerate
+spell.incinerate.description=Lights enemies on fire
 spell.lightning.name=Lightning
+spell.lightning.description=Strikes enemies with lightning
 spell.heal.name=Heal
+spell.heal.description=Heals the caster
 spell.death.name=Death
+spell.death.description=Kills the target
 spell.dummy.name=Dummy
+spell.dummy.description=Does no damage. For testing.
+spell.immortalize.name=Immortalize
+spell.immortalize.description=Makes the caster immortal
+
 key.eagleVision=Eagle Vision
 key.categories.usefulthings=Useful Things
+
 itemGroup.usefulThings=Useful Things

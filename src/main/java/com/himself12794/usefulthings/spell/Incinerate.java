@@ -9,12 +9,12 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 
-public class Incinerate extends Spell {
+public class Incinerate extends SpellInstant {
 	
 	public Incinerate() {
 		setPower(0.0F);
 		setCoolDown(60);
-		setDuration(15);
+		setDuration(10 * 20);
 		setUnlocalizedName("incinerate");
 	}
 	
@@ -22,16 +22,12 @@ public class Incinerate extends Spell {
 	public boolean onStrike(World world, MovingObjectPosition target, EntityLivingBase caster, float modifier ) {
 		boolean flag = false;
 		if (!target.entityHit.isImmuneToFire()) {
+			UsefulThings.print("Setting " + target.entityHit.getName() + " on fire");
 			flag = true;
-			target.entityHit.setFire(MathHelper.ceiling_float_int(10 * modifier));
-			if (!target.entityHit.isDead) ((EntityLivingBase)target.entityHit).setRevengeTarget(caster);
+			target.entityHit.setFire(MathHelper.ceiling_float_int(( getDuration() / 20 ) * modifier));
+			if (!target.entityHit.isDead) ((EntityLivingBase)target.entityHit).setLastAttacker(caster);
 		}
 		return flag;
 	}
-	
-	public String getInfo() {
-		return "Sets an enemy on fire";
-	}
-	
 
 }

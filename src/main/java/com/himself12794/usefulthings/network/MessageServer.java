@@ -50,7 +50,7 @@ public class MessageServer implements IMessage {
         		ctx.getServerHandler().playerEntity.worldObj.addWeatherEffect(bolt);
         	} 
         	
-        	if (message.value.getBoolean(prefix + "hitScanSpell")) {
+        	/*if (message.value.getBoolean(prefix + "hitScanSpell")) {
         		boolean valid = false;
         		
 	        	EntityLivingBase caster = ctx.getServerHandler().playerEntity;
@@ -61,7 +61,7 @@ public class MessageServer implements IMessage {
 	        	valid = (caster != null && target != null && spellName != ""  );
 	        		
         		ItemStack currentItem = ((EntityPlayer)caster).getCurrentEquippedItem();
-        		boolean hasSpell = Spell.isSpellOnStack(currentItem, spellName);
+        		boolean hasSpell = spellName.isSpellOnStack(currentItem);
         		
         		Spell spell = Spell.lookupSpell(spellName);
         		
@@ -71,7 +71,7 @@ public class MessageServer implements IMessage {
         		
         		
         		caster.getEntityData().setBoolean("hitScanOutcome", valid);
-        	}
+        	}*/
         	
         	boolean isEagleVisionActivated = message.value.getBoolean("eagleVision");
 	        if (isEagleVisionActivated) {

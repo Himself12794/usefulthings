@@ -5,14 +5,14 @@ import net.minecraft.world.World;
 
 public class SpontaneousRegeneration extends SpellEffect {
 	
-	public SpontaneousRegeneration(int id) {
-		this.id = id;
+	SpontaneousRegeneration(int id) {
+		super(id);
 	}
 	
 	public void onUpdate(EntityLivingBase entity, int timeRemaining ) {
 		
 		if (entity.getHealth() < entity.getMaxHealth()) {
-			entity.heal(10.0F);
+			entity.heal(entity.getMaxHealth() / 10);
 		}
 	}
 	

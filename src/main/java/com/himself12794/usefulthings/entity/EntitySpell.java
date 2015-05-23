@@ -1,56 +1,66 @@
 package com.himself12794.usefulthings.entity;
 
-import com.himself12794.usefulthings.Spells;
-import com.himself12794.usefulthings.spell.Spell;
-import com.himself12794.usefulthings.spell.SpellType;
-
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.projectile.EntityEgg;
 import net.minecraft.entity.projectile.EntityThrowable;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.BlockPos;
-import net.minecraft.util.DamageSource;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import com.himself12794.usefulthings.Spells;
+import com.himself12794.usefulthings.UsefulThings;
+import com.himself12794.usefulthings.spell.Spell;
+import com.himself12794.usefulthings.spell.SpellRanged;
+
 public class EntitySpell extends EntityThrowable {
 
-	private Spell spell;
+	private SpellRanged spell;
 	private float modifier;
 	
 	public EntitySpell(World worldIn){
 		super(worldIn);
-		this.spell = Spells.damage;
+		this.spell = Spells.dummy;
 		this.modifier = 1.0F;
 	}
 	
-	public EntitySpell(World worldIn, Spell spell) {
+	public EntitySpell(World worldIn, SpellRanged spell) {
 		super(worldIn);
 		this.spell = spell;
 		this.modifier = 1.0F;
 		// TODO Auto-generated constructor stub
 	}
 	
-	public EntitySpell(World worldIn, EntityLivingBase throwerIn, Spell spell, float modifier) {
+	public EntitySpell(World worldIn, EntityLivingBase throwerIn, SpellRanged spell, float modifier) {
 		super(worldIn, throwerIn);
 		this.spell = spell;
 		this.modifier = modifier;
 		// TODO Auto-generated constructor stub
 	}
 
-	public EntitySpell(World worldIn, double x, double y, double p_i1778_6_, Spell spell) {
+	public EntitySpell(World worldIn, double x, double y, double p_i1778_6_, SpellRanged spell) {
 		super(worldIn, x, y, p_i1778_6_);
 		this.spell = spell;
 		this.modifier = 1.0F;
 		// TODO Auto-generated constructor stub
 	}
+	
+	@Override
+	public void onUpdate() {
+		if (spell != null) spell.onUpdate(this);
+		super.onUpdate();		
+	}
 
 	@Override
 	protected void onImpact(MovingObjectPosition movingObject) {
-		spell.onStrike(this.worldObj, movingObject, this.getThrower(), 1);
+		UsefulThings.print("Attacking the entity");
+		if (spell != null ) {
+			spell.onStrike(this.worldObj, movingObject,	getThrower(), 1);
+			if (spell.getPower() > 0 && movingObject.entityHit != null ) ((EntityLivingBase)movingObject.entityHit)
+			.setLastAttacker(
+					getThrower());
+		}
 		this.setDead();
 
 	}    
@@ -73,6 +83,7 @@ public class EntitySpell extends EntityThrowable {
     }
     
     protected float getVelocity() {
+    	if (spell != null) return spell.getSpellSpeed();
     	return 2.0F;
     }
 

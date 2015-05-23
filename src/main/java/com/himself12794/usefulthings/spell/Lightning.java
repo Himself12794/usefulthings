@@ -7,7 +7,7 @@ import net.minecraft.entity.effect.EntityLightningBolt;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 
-public class Lightning extends Spell {
+public class Lightning extends SpellInstant {
 	
 	public Lightning() {
 		setPower(5.0F);
