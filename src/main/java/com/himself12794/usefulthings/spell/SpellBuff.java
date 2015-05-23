@@ -11,7 +11,7 @@ public class SpellBuff extends Spell {
 		return onCast(world, caster, tome, modifier);
 	}
 	
-	public String getTypeDescriptor(ItemStack stack, EntityPlayer player) {
+	public final String getTypeDescriptor(ItemStack stack, EntityPlayer player) {
 		return "Buff";
 	}
 	

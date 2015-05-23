@@ -18,19 +18,14 @@ public class Lightning extends SpellInstant {
 	
 	@Override
 	public boolean onStrike(World world, MovingObjectPosition target, EntityLivingBase caster, float modifier ) {
-		boolean flag = false;
-		EntityLivingBase entity = null;
-		if (target.entityHit instanceof EntityLivingBase ) {
-			 entity = (EntityLivingBase) target.entityHit;
-			 EntityLightningBolt bolt = new EntityLightningBolt(world, entity.posX, entity.posY, entity.posZ);
-			 flag = world.addWeatherEffect(bolt);
-			 if (flag && !entity.isDead) entity.setRevengeTarget(caster); 
-		}// else if (target.entityHit instanceof EntityLivingBase && world.isRemote)
+		
+		EntityLivingBase entity = (EntityLivingBase) target.entityHit;
+		EntityLightningBolt bolt = new EntityLightningBolt(world, entity.posX, entity.posY, entity.posZ);
+		boolean flag = world.addWeatherEffect(bolt);
+		
+		if (flag && !entity.isDead) entity.setLastAttacker(caster);
+		
 		return flag;
-	}
-	
-	public String getInfo() {
-		return "Strikes an enemy with thunder";
 	}
 
 }

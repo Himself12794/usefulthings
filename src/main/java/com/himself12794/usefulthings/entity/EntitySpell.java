@@ -70,7 +70,8 @@ public class EntitySpell extends Entity implements IProjectile
         this.spell = spell;
         this.modifier = modifier;
         this.thrower = throwerIn;
-        this.setSize(0.25F, 0.25F);
+        //this.setSize(0.25F, 0.25F);
+        this.setSize(2.0F, 2.0F);
         this.setLocationAndAngles(throwerIn.posX, throwerIn.posY + (double)throwerIn.getEyeHeight(), throwerIn.posZ, throwerIn.rotationYaw, throwerIn.rotationPitch);
         this.posX -= (double)(MathHelper.cos(this.rotationYaw / 180.0F * (float)Math.PI) * 0.16F);
         this.posY -= 0.10000000149011612D;
@@ -308,13 +309,14 @@ public class EntitySpell extends Entity implements IProjectile
     protected void onImpact(MovingObjectPosition movingObject) {
 		if (spell != null) {
 			//UsefulThings.print("Attacking the entity " + spell.getSpellSpeed());
-			if (movingObject.entityHit != null && movingObject.entityHit != getThrower())
+			if (movingObject.entityHit != null && movingObject.entityHit != getThrower()) {
 				spell.onStrike(worldObj, movingObject,	getThrower(), 1);
 				if (spell.getPower() > 0 && movingObject.entityHit != null ) ((EntityLivingBase)movingObject.entityHit).setLastAttacker(getThrower());
 				if (!spell.isPiercingSpell() && movingObject.entityHit != null) setDead();
 				else if (spell.isPiercingSpell() && movingObject.entityHit == null) setDead();
 				else if (spell.isPiercingSpell() && movingObject.entityHit != null) ;
 				else setDead();
+			} else spell.onStrike(worldObj, movingObject, getThrower(), modifier);
 		}
 		else setDead();
 	}

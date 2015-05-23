@@ -46,5 +46,9 @@ public class SpellRanged extends Spell {
 	public boolean isPiercingSpell() {
 		return piercingSpell;
 	}
+	
+	protected void setPiercingSpell(boolean status){
+		piercingSpell = status;
+	}
 
 }

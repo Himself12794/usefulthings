@@ -1,8 +1,16 @@
 package com.himself12794.usefulthings.spell;
 
 import com.himself12794.usefulthings.entity.EntitySpell;
+import com.himself12794.usefulthings.util.Reference;
+import com.himself12794.usefulthings.util.UsefulMethods;
 
+import net.minecraft.block.Block;
+import net.minecraft.block.material.Material;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.BlockPos;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.MovingObjectPosition;
@@ -11,6 +19,7 @@ import net.minecraft.world.World;
 public class Flames extends SpellRanged {
 	
 	Flames() {
+		setPiercingSpell(true);
 		setPower(0.5F);
 		setCoolDown(20);
 		setDuration(5 * 20);
@@ -25,27 +34,64 @@ public class Flames extends SpellRanged {
 				target.entityHit.setFire(getDuration() / 20 );
 			}
 			
+		} else {
+			
+			BlockPos blockPos = UsefulMethods.getBlockFromSide( target.getBlockPos(), target.sideHit);
+			Block block = UsefulMethods.getBlockAtPos(blockPos, world);
+			//System.out.println(block.getMaterial().getCanBurn());
+			
+			if (/*block.getMaterial() == Material.grass || block.getMaterial() == Material.vine || block.getMaterial() == Material.leaves || block.getMaterial() == Material.plants*/ block.getMaterial().getCanBurn()) 
+				//block.breakBlock(world, target.getBlockPos(), block.getDefaultState());
+				world.setBlockState(blockPos, Blocks.fire.getDefaultState());
 		}
 		return true;
+	}	
+	
+	public boolean onPrepareSpell(ItemStack stack, World worldIn, EntityPlayer playerIn) {
+		boolean flag = !playerIn.isInsideOfMaterial(Material.water);
+		if (flag) playerIn.playSound(Reference.MODID + ":flamethrower", 1, 1);
+		return flag;
 	}
 	
 	public void onUpdate(EntitySpell spell) {
-		World world = spell.worldObj;
-		float distTraveled = getSpellVelocity() * spell.getTicksInAir();
-		//float distPerTick = ;
-		
-		//for (float i = 0.0F; i < getSpellSpeed(); i += getSpellSpeed() * 0.1)
-			//world.spawnParticle(EnumParticleTypes.FLAME, spell.posX - spell.motionX + i, spell.posY - spell.motionY + i, spell.posZ - spell.motionZ + i, 0.0D, 0.0D, 0.0D, new int[0]);		
-		world.spawnParticle(EnumParticleTypes.FLAME, spell.posX, spell.posY, spell.posZ, 0.0D, 0.0D, 0.0D, new int[0]);
-		
-		if (distTraveled > 3) spell.setDead();
-		if (spell.getTicksInGround() > 0) spell.setDead();
-		
+		if (!spell.isInWater()) {
+			
+			World world = spell.worldObj;
+			float distTraveled = getSpellVelocity() * spell.getTicksInAir();		
+			//world.spawnParticle(EnumParticleTypes.FLAME, spell.posX, spell.posY, spell.posZ, 0.0D, 0.0D, 0.0D, new int[0]);
+			boolean cont = true;
+			if (cont) {
+				
+				for (float j = 0.0F; j < 1.0F; j += 0.05F) {
+					
+					for (int i = 0; i < 10; ++i) {
+						
+						BlockPos pos = new BlockPos(
+								spell.prevPosX + (spell.motionX * j),
+								spell.prevPosY + (spell.motionY * j),
+								spell.prevPosZ + (spell.motionZ * j));
+						
+						if (UsefulMethods.getBlockAtPos(pos, world).getMaterial() != Material.air ) cont = false;
+						
+						if (cont)
+							world.spawnParticle(EnumParticleTypes.FLAME,
+								spell.prevPosX + (spell.motionX * j) - world.rand.nextFloat() * 0.5F,
+								spell.prevPosY + (spell.motionY * j) - world.rand.nextFloat() * 0.5F,
+								spell.prevPosZ + (spell.motionZ * j) - world.rand.nextFloat() * 0.5F,
+								0, 0, 0);
+					}
+				}
+			}
+			
+			if (distTraveled > 5) spell.setDead();
+			if (spell.getTicksInGround() > 0) spell.setDead();
+			
+		} else spell.setDead();
 		
 	}
 	
 	public float getSpellVelocity(){
-		return 0.2F;
+		return 10.0F;
 	}
 
 }

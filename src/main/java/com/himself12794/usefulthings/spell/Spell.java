@@ -79,6 +79,8 @@ public abstract class Spell {
 	
 	/**
 	 * The action to be performed when the spell is being prepared, before it is actually cast.
+	 * <p>
+	 * This is used primarily to check if the player should be allowed to cast the spell or not.
 	 * 
 	 * @return whether or not casting should continue.
 	 */
@@ -179,16 +181,13 @@ public abstract class Spell {
 		return stack;
 	}
 	
-	public boolean isSpellOnStack(ItemStack stack) {
+	public final boolean isSpellOnStack(ItemStack stack) {
 		return Spell.hasSpell(stack) && lookupSpell(stack) == this;
 	}
 	
 	public String getDisplayName() {
 		return ("" + StatCollector.translateToLocal(getUnlocalizedName() + ".name")).trim();
 	}
-	//protected Spell setType(SpellType type) { this.type = type; return this; }
-	
-	//public SpellType getType() { return type; }
 	
 	protected Spell setPower(float value) { power = value; return this; }
 
@@ -234,6 +233,17 @@ public abstract class Spell {
 		
 	}
 	
+	private static void registerSpell(Spell spell) {
+		String name = spell.getUnlocalizedName();
+		if (!Spell.spellExists(name)) {
+			spellRegistry.put(name, spell);
+			//UsefulThings.print("Registered spell " + name);
+			++spells;
+		} else {
+			UsefulThings.logger.error("Could not register spell " + spell + " under name \"" + name + "\", name has already been registered for " + lookupSpell(name));
+		}
+	}
+	
 	public static Spell lookupSpell(ItemStack stack) {
 		if (Spell.hasSpell(stack)) {
 			return spellRegistry.get(stack.getTagCompound().getString( Reference.MODID + ".spell.currentSpell"));
@@ -248,17 +258,6 @@ public abstract class Spell {
 	
 	public static Map<String, Spell> getSpells() {
 		return spellRegistry;
-	}
-	
-	private static void registerSpell(Spell spell) {
-		String name = spell.getUnlocalizedName();
-		if (!Spell.spellExists(name)) {
-			spellRegistry.put(name, spell);
-			//UsefulThings.print("Registered spell " + name);
-			++spells;
-		} else {
-			UsefulThings.logger.error("Could not register spell " + spell + " under name \"" + name + "\", name has already been registered for " + lookupSpell(name));
-		}
 	}
 
 	public static int getSpellCount() {

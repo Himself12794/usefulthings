@@ -17,6 +17,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.stats.StatList;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.BlockPos;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.Vec3;
@@ -237,5 +238,21 @@ public class UsefulMethods {
 			return stack.getTagCompound().getInteger(Reference.MODID + ".spell.owner");
 		}
 		return 0;
+	}
+	
+	public static BlockPos getBlockFromSide( BlockPos pos, EnumFacing side) {
+
+		switch(side) {
+		
+		case DOWN: 	pos.up();
+		case UP:	pos.down();
+		case NORTH:	pos.south();
+		case SOUTH:	pos.north();
+		case EAST:  pos.west();
+		case WEST:  pos.east();
+		}
+		
+		return pos;
+		
 	}
 }
