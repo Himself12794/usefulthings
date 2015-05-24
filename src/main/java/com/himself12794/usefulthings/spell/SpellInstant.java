@@ -8,7 +8,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 
 import com.himself12794.usefulthings.UsefulThings;
-import com.himself12794.usefulthings.network.CastSpellServer;
+import com.himself12794.usefulthings.network.CastSpellInstantServer;
 import com.himself12794.usefulthings.util.Reference;
 import com.himself12794.usefulthings.util.UsefulMethods;
 
@@ -31,7 +31,7 @@ public class SpellInstant extends Spell {
 				
 				if(successful) {
 					
-					IMessage msg = new CastSpellServer( pos.entityHit.getEntityId(), modifier, this, tome);
+					IMessage msg = new CastSpellInstantServer( pos.entityHit.getEntityId(), modifier, this, tome);
 					UsefulThings.proxy.network.sendToServer(msg);
 					
 				}

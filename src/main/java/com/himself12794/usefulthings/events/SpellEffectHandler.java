@@ -23,21 +23,23 @@ public class SpellEffectHandler {
 			
 			for (Object i : activeEffectKeys ) {
 				int id = Integer.parseInt((String)i);
-				int timeRemaining = activeEffects.getInteger((String) i);
+				int timeRemaining = activeEffects.getIntArray((String) i)[0];
+				EntityLivingBase caster = (EntityLivingBase) target.worldObj.getEntityByID(activeEffects.getIntArray((String) i)[1]);
 				SpellEffect spfx = SpellEffect.getEffectById(id);
+				
 				//UsefulThings.print(spfx);
 				if (spfx != null) {
 					//UsefulThings.print(spfx);
 					
 					if (timeRemaining > 0) {
 						
-						spfx.onUpdate(target, timeRemaining);
-						spfx.addTo(target, --timeRemaining);
+						spfx.onUpdate(target, timeRemaining, caster);
+						spfx.addTo(target, --timeRemaining, caster);
 						
 					} 
 					
 					else if (timeRemaining == 0) spfx.clearFrom(target);
-					else if (timeRemaining < 0) spfx.onUpdate(target, timeRemaining);
+					else if (timeRemaining < 0) spfx.onUpdate(target, timeRemaining, caster);
 				}
 			}
 		}

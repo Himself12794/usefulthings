@@ -9,15 +9,20 @@ import net.minecraft.world.World;
 
 import com.himself12794.usefulthings.entity.EntitySpell;
 
-public class SpellRanged extends Spell {
+public class SpellRanged extends Spell implements IProjectileSpell {
 	
-	protected boolean piercingSpell = false;
-	
-	public final boolean cast(World world, EntityLivingBase caster, ItemStack tome, float modifier) {
+	@Override
+	public boolean cast(World world, EntityLivingBase caster, ItemStack tome, float modifier) {
 		boolean flag1 = onCast(world, caster, tome, modifier);
 		EntitySpell casting = new EntitySpell(world, caster, this, modifier );
 		boolean flag2 = world.spawnEntityInWorld(casting);
 		return flag1 && flag2;
+	}
+
+	@Override
+	public void onUpdate(EntitySpell entitySpell, MovingObjectPosition target) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 	public boolean onStrike(World world, MovingObjectPosition target, EntityLivingBase caster, float modifier) {
@@ -27,28 +32,23 @@ public class SpellRanged extends Spell {
 	public String getTypeDescriptor(ItemStack stack, EntityPlayer player) {
 		return "Ranged";
 	}
-	
-	/**
-	 * Called for ranged spells while they are traveling through the world, before striking anything.
-	 * 
-	 * @param entitySpell
-	 */
-	public void onUpdate(EntitySpell entitySpell) {
-		World world = entitySpell.worldObj;
-		world.spawnParticle(EnumParticleTypes.SPELL, entitySpell.posX, entitySpell.posY, entitySpell.posZ, 0.0D, 0.0D, 0.0D, new int[0]);
-		
+
+	@Override
+	public MovingObjectPosition getTarget(World world, EntityLivingBase caster) {
+		// TODO Auto-generated method stub
+		return null;
 	}
-	
+
+	@Override
 	public float getSpellVelocity() {
+		// TODO Auto-generated method stub
 		return 2.0F;
 	}
-	
+
+	@Override
 	public boolean isPiercingSpell() {
-		return piercingSpell;
-	}
-	
-	protected void setPiercingSpell(boolean status){
-		piercingSpell = status;
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 }

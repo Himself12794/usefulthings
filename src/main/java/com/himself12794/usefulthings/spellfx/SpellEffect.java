@@ -30,19 +30,17 @@ public class SpellEffect {
 	 * @param timeLeft
 	 * @return
 	 */
-	public void onUpdate(EntityLivingBase entity, int timeLeft){}
+	public void onUpdate(EntityLivingBase entity, int timeLeft, EntityLivingBase caster){}
 	
 	/**
-	 * Called if the effect is removed before the time remaining is complete.
+	 * Called when the effect is removed.
+	 * <p>
+	 * Intended mostly for cleanup after effect removal. 
 	 * 
 	 * @param entity
 	 * @param world
-	 * @return
 	 */
-	public boolean onRemoval(EntityLivingBase entity){
-		
-		return true;
-	}
+	public void onRemoval(EntityLivingBase entity){}
 	
 	/**
 	 * Applies the spell effect to the specific entity, for a specific time.
@@ -52,9 +50,10 @@ public class SpellEffect {
 	 * @param target 
 	 * @param duration
 	 */
-	public final void addTo(EntityLivingBase target, int duration) {
+	public final void addTo(EntityLivingBase target, int duration, EntityLivingBase caster) {
 		NBTTagCompound activeEffects = target.getEntityData().getCompoundTag(Reference.MODID + ".spell.spellEffects");
-		activeEffects.setInteger(Integer.toString(id), duration);
+		int[] data = {duration, caster.getEntityId()};
+		activeEffects.setIntArray(Integer.toString(id), data);
 		target.getEntityData().setTag(Reference.MODID + ".spell.spellEffects", activeEffects);
 		
 	}
@@ -69,7 +68,7 @@ public class SpellEffect {
 	public final void clearFrom(EntityLivingBase target) {
 		NBTTagCompound activeEffects = target.getEntityData().getCompoundTag(Reference.MODID + ".spell.spellEffects");
 		
-		if (getEffectTimeRemainingOn(target) != 0) onRemoval(target);
+		onRemoval(target);
 		
 		activeEffects.removeTag(Integer.toString(id));
 	}
@@ -84,7 +83,7 @@ public class SpellEffect {
 	public final int getEffectTimeRemainingOn(EntityLivingBase target){
 		NBTTagCompound activeEffects = target.getEntityData().getCompoundTag(Reference.MODID + ".spell.spellEffects");
 		//System.out.println(activeEffects);
-		return activeEffects.getInteger(String.valueOf(id));
+		return activeEffects.getIntArray(String.valueOf(id))[0];
 	}
 	
 	/**

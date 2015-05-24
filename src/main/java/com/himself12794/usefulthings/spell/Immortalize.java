@@ -14,7 +14,7 @@ public class Immortalize extends SpellBuff {
 	}
 	
 	public boolean onCast(World world, EntityLivingBase caster, ItemStack stack, float modifier) {
-		SpellEffect.spontaneousRegeneration.addTo(caster, -1);
+		SpellEffect.spontaneousRegeneration.addTo(caster, -1, caster);
 		EntityPlayer player = (EntityPlayer)caster;
 		
 		return true;

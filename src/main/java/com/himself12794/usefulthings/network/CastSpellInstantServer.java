@@ -15,16 +15,16 @@ import com.himself12794.usefulthings.UsefulThings;
 import com.himself12794.usefulthings.spell.Spell;
 import com.himself12794.usefulthings.util.Reference;
 
-public class CastSpellServer implements IMessage {
+public class CastSpellInstantServer implements IMessage {
 	
 	private int id;
 	private String spell;
 	private ItemStack stack;
 	private NBTTagCompound modifier;
 
-    public CastSpellServer() {  }
+    public CastSpellInstantServer() {  }
 	
-	public CastSpellServer(int entity, float modifier, Spell spell, ItemStack stack) {
+	public CastSpellInstantServer(int entity, float modifier, Spell spell, ItemStack stack) {
 		this.id = entity;
 		
 		NBTTagCompound nbt = new NBTTagCompound();
@@ -53,12 +53,12 @@ public class CastSpellServer implements IMessage {
 
 	}
 	
-	public static class Handler implements IMessageHandler<CastSpellServer, IMessage> {
+	public static class Handler implements IMessageHandler<CastSpellInstantServer, IMessage> {
     	
 		String prefix = Reference.MODID + ".";
        
         @Override
-        public IMessage onMessage(CastSpellServer message, MessageContext ctx) {
+        public IMessage onMessage(CastSpellInstantServer message, MessageContext ctx) {
         	
         	if (ctx.side.isServer()) {
         		

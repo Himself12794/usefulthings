@@ -19,11 +19,16 @@ import net.minecraft.world.World;
 public class Flames extends SpellRanged {
 	
 	Flames() {
-		setPiercingSpell(true);
+		setMaxConcentrationTime(5 * 20);
 		setPower(0.5F);
 		setCoolDown(20);
 		setDuration(5 * 20);
 		setUnlocalizedName("flames");
+	}
+	
+	public boolean onCast(World world, EntityLivingBase caster, ItemStack stack, float modifier) {
+		caster.playSound(Reference.MODID + ":flamethrower", 1, 1);
+		return true;
 	}
 	
 	public boolean onStrike(World world, MovingObjectPosition target, EntityLivingBase caster, float modifier ) {
@@ -49,11 +54,11 @@ public class Flames extends SpellRanged {
 	
 	public boolean onPrepareSpell(ItemStack stack, World worldIn, EntityPlayer playerIn) {
 		boolean flag = !playerIn.isInsideOfMaterial(Material.water);
-		if (flag) playerIn.playSound(Reference.MODID + ":flamethrower", 1, 1);
+		
 		return flag;
 	}
 	
-	public void onUpdate(EntitySpell spell) {
+	public void onUpdate(EntitySpell spell, MovingObjectPosition target) {
 		if (!spell.isInWater()) {
 			
 			World world = spell.worldObj;
@@ -83,11 +88,15 @@ public class Flames extends SpellRanged {
 				}
 			}
 			
-			if (distTraveled > 5) spell.setDead();
+			if (distTraveled > 4) spell.setDead();
 			if (spell.getTicksInGround() > 0) spell.setDead();
 			
 		} else spell.setDead();
 		
+	}
+	
+	public boolean isPiercingSpell() {
+		return true;
 	}
 	
 	public float getSpellVelocity(){

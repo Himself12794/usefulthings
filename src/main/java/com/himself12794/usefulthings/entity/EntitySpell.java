@@ -3,6 +3,9 @@ package com.himself12794.usefulthings.entity;
 import java.util.List;
 
 import com.himself12794.usefulthings.Spells;
+import com.himself12794.usefulthings.spell.IProjectileSpell;
+import com.himself12794.usefulthings.spell.Spell;
+import com.himself12794.usefulthings.spell.SpellHoming;
 import com.himself12794.usefulthings.spell.SpellRanged;
 
 import net.minecraft.block.Block;
@@ -33,12 +36,13 @@ public class EntitySpell extends Entity implements IProjectile
     private Block inTile;
     protected boolean inGround;
     public int throwableShake;
-    /** The entity that threw this throwable item. */
+    /** The entity that cast this spell. */
     private EntityLivingBase thrower;
+    public MovingObjectPosition target;
     private String throwerName;
     private int ticksInGround;
     private int ticksInAir;
-	protected SpellRanged spell = Spells.dummy;
+	protected IProjectileSpell spell = Spells.dummy;
 	protected float modifier = 1.0F;
 
     public EntitySpell(World worldIn)
@@ -47,24 +51,7 @@ public class EntitySpell extends Entity implements IProjectile
         this.setSize(0.25F, 0.25F);
     }
 
-    protected void entityInit() {}
-
-    /**
-     * Checks if the entity is in range to render by using the past in distance and comparing it to its average edge
-     * length * 64 * renderDistanceWeight Args: distance
-     */
-    @SideOnly(Side.CLIENT)
-    public boolean isInRangeToRenderDist(double distance)
-    {
-
-    	//double d1 = this.getEntityBoundingBox().getAverageEdgeLength() * 4.0D;
-    	//d1 *= 64.0D;
-    	//return distance < d1 * d1;
-    	return false;
-
-    }
-
-    public EntitySpell(World worldIn, EntityLivingBase throwerIn, SpellRanged spell, float modifier)
+    public EntitySpell(World worldIn, EntityLivingBase throwerIn, IProjectileSpell spell, float modifier)
     {
         super(worldIn);
         this.spell = spell;
@@ -83,8 +70,13 @@ public class EntitySpell extends Entity implements IProjectile
         this.motionY = (double)(-MathHelper.sin((this.rotationPitch + this.getInaccuracy()) / 180.0F * (float)Math.PI) * f);
         this.setThrowableHeading(this.motionX, this.motionY, this.motionZ, this.getVelocity(), 1.0F);
     }
+    
+    public EntitySpell(World worldIn, EntityLivingBase throwerIn, IProjectileSpell spell, float modifier, MovingObjectPosition target) {
+    	this(worldIn, throwerIn, spell, modifier);
+    	this.target = target;
+    }
 
-    public EntitySpell(World worldIn, double x, double y, double p_i1778_6_, SpellRanged spell)
+    public EntitySpell(World worldIn, double x, double y, double p_i1778_6_, IProjectileSpell spell)
     {
         super(worldIn);
         this.ticksInGround = 0;
@@ -92,10 +84,28 @@ public class EntitySpell extends Entity implements IProjectile
         this.setPosition(x, y, p_i1778_6_);
 		this.spell = spell;
     }
+
+    protected void entityInit() {}
+
+    /**
+     * Checks if the entity is in range to render by using the past in distance and comparing it to its average edge
+     * length * 64 * renderDistanceWeight Args: distance
+     */
+    @SideOnly(Side.CLIENT)
+    public boolean isInRangeToRenderDist(double distance)
+    {
+
+    	//double d1 = this.getEntityBoundingBox().getAverageEdgeLength() * 4.0D;
+    	//d1 *= 64.0D;
+    	//return distance < d1 * d1;
+    	return false;
+
+    }
     
     protected float getVelocity() {
-    	
-    	return spell.getSpellVelocity();
+    	if (spell instanceof SpellRanged || spell instanceof SpellHoming )
+    		return spell.getSpellVelocity();
+    	return 2.0F;
 
     }
 
@@ -153,7 +163,7 @@ public class EntitySpell extends Entity implements IProjectile
      */
     public void onUpdate() {
     	
-    	if (spell != null) spell.onUpdate(this);
+    	if (spell != null) spell.onUpdate(this, spell.getTarget(worldObj, thrower));
         this.lastTickPosX = this.posX;
         this.lastTickPosY = this.posY;
         this.lastTickPosZ = this.posZ;
@@ -310,13 +320,13 @@ public class EntitySpell extends Entity implements IProjectile
 		if (spell != null) {
 			//UsefulThings.print("Attacking the entity " + spell.getSpellSpeed());
 			if (movingObject.entityHit != null && movingObject.entityHit != getThrower()) {
-				spell.onStrike(worldObj, movingObject,	getThrower(), 1);
-				if (spell.getPower() > 0 && movingObject.entityHit != null ) ((EntityLivingBase)movingObject.entityHit).setLastAttacker(getThrower());
+				((Spell) spell).onStrike(worldObj, movingObject,	getThrower(), 1);
+				if (((Spell) spell).getPower() > 0 && movingObject.entityHit != null ) ((EntityLivingBase)movingObject.entityHit).setLastAttacker(getThrower());
 				if (!spell.isPiercingSpell() && movingObject.entityHit != null) setDead();
 				else if (spell.isPiercingSpell() && movingObject.entityHit == null) setDead();
 				else if (spell.isPiercingSpell() && movingObject.entityHit != null) ;
 				else setDead();
-			} else spell.onStrike(worldObj, movingObject, getThrower(), modifier);
+			} else ((Spell) spell).onStrike(worldObj, movingObject, getThrower(), modifier);
 		}
 		else setDead();
 	}
