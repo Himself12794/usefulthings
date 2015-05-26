@@ -1,0 +1,8 @@
+{
+    "eagleVisionActivate":{"sounds":[{"name":"eagleVisionActivate","stream":false}],"category":"player"},
+    "eagleVision":{"sounds":[{"name":"eagleVision","stream":false}],"category":"player"},
+    "windLoop":{"sounds":[{"name":"windLoop","stream":false}],"category":"player"},
+    "eagleVisionDeactivate":{"sounds":[{"name":"eagleVisionDeactivate","stream":false}],"category":"player"},
+    "flamethrower":{"sounds":[{"name":"flamethrower","stream":false}],"category":"master"},
+    "flamethrower2":{"sounds":[{"name":"flamethrower2","stream":false}],"category":"master"}
+}
