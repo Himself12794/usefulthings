@@ -7,7 +7,7 @@ import net.minecraft.world.World;
 
 public class Dummy extends SpellRanged {
 	
-	public Dummy() {
+	Dummy() {
 		setPower(2.0F);
 		setCoolDown(20);
 		setDuration(0);

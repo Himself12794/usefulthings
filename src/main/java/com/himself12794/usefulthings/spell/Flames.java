@@ -58,11 +58,13 @@ public class Flames extends SpellRanged {
 		return flag;
 	}
 	
-	public void onUpdate(EntitySpell spell, MovingObjectPosition target) {
+	public void onUpdate(EntitySpell spell) {
 		if (!spell.isInWater()) {
 			
 			World world = spell.worldObj;
-			float distTraveled = getSpellVelocity() * spell.getTicksInAir();		
+			float distTraveled = getSpellVelocity() * spell.getTicksInAir();
+			
+			if (distTraveled > 4) spell.setDead();		
 			//world.spawnParticle(EnumParticleTypes.FLAME, spell.posX, spell.posY, spell.posZ, 0.0D, 0.0D, 0.0D, new int[0]);
 			boolean cont = true;
 			if (cont) {
@@ -87,8 +89,6 @@ public class Flames extends SpellRanged {
 					}
 				}
 			}
-			
-			if (distTraveled > 4) spell.setDead();
 			if (spell.getTicksInGround() > 0) spell.setDead();
 			
 		} else spell.setDead();

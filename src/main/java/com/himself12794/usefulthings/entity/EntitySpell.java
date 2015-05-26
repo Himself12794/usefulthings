@@ -3,10 +3,11 @@ package com.himself12794.usefulthings.entity;
 import java.util.List;
 
 import com.himself12794.usefulthings.Spells;
-import com.himself12794.usefulthings.spell.IProjectileSpell;
+import com.himself12794.usefulthings.spell.IHomingSpell;
 import com.himself12794.usefulthings.spell.Spell;
 import com.himself12794.usefulthings.spell.SpellHoming;
 import com.himself12794.usefulthings.spell.SpellRanged;
+import com.himself12794.usefulthings.util.UsefulMethods;
 
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
@@ -20,6 +21,7 @@ import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.MovingObjectPosition;
+import net.minecraft.util.MovingObjectPosition.MovingObjectType;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
@@ -42,7 +44,7 @@ public class EntitySpell extends Entity implements IProjectile
     private String throwerName;
     private int ticksInGround;
     private int ticksInAir;
-	protected IProjectileSpell spell = Spells.dummy;
+	protected SpellRanged spell = Spells.dummy;
 	protected float modifier = 1.0F;
 
     public EntitySpell(World worldIn)
@@ -51,7 +53,7 @@ public class EntitySpell extends Entity implements IProjectile
         this.setSize(0.25F, 0.25F);
     }
 
-    public EntitySpell(World worldIn, EntityLivingBase throwerIn, IProjectileSpell spell, float modifier)
+    public EntitySpell(World worldIn, EntityLivingBase throwerIn, SpellRanged spell, float modifier)
     {
         super(worldIn);
         this.spell = spell;
@@ -71,12 +73,12 @@ public class EntitySpell extends Entity implements IProjectile
         this.setThrowableHeading(this.motionX, this.motionY, this.motionZ, this.getVelocity(), 1.0F);
     }
     
-    public EntitySpell(World worldIn, EntityLivingBase throwerIn, IProjectileSpell spell, float modifier, MovingObjectPosition target) {
+    public EntitySpell(World worldIn, EntityLivingBase throwerIn, SpellRanged spell, float modifier, MovingObjectPosition target) {
     	this(worldIn, throwerIn, spell, modifier);
     	this.target = target;
     }
 
-    public EntitySpell(World worldIn, double x, double y, double p_i1778_6_, IProjectileSpell spell)
+    public EntitySpell(World worldIn, double x, double y, double p_i1778_6_, SpellRanged spell)
     {
         super(worldIn);
         this.ticksInGround = 0;
@@ -95,15 +97,15 @@ public class EntitySpell extends Entity implements IProjectile
     public boolean isInRangeToRenderDist(double distance)
     {
 
-    	//double d1 = this.getEntityBoundingBox().getAverageEdgeLength() * 4.0D;
-    	//d1 *= 64.0D;
-    	//return distance < d1 * d1;
-    	return false;
+    	double d1 = this.getEntityBoundingBox().getAverageEdgeLength() * 4.0D;
+    	d1 *= 64.0D;
+    	return distance < d1 * d1;
+    	//return false;
 
     }
     
     protected float getVelocity() {
-    	if (spell instanceof SpellRanged || spell instanceof SpellHoming )
+    	if ( spell != null )
     		return spell.getSpellVelocity();
     	return 2.0F;
 
@@ -163,7 +165,29 @@ public class EntitySpell extends Entity implements IProjectile
      */
     public void onUpdate() {
     	
-    	if (spell != null) spell.onUpdate(this, spell.getTarget(worldObj, thrower));
+    	if (spell != null) {
+
+    		if (spell instanceof IHomingSpell) {
+    			
+    			target = ((IHomingSpell) spell).getTarget(this, target);
+    			
+    			if (target != null) {
+
+    	    		if (target.typeOfHit == MovingObjectType.ENTITY && target.entityHit != null) {
+    	    			
+		    			double dx = target.entityHit.posX - this.posX;
+		    			double dy = target.entityHit.getBoundingBox().minY + (double)(target.entityHit.height) - this.posY;
+		    			double dz = target.entityHit.posZ - this.posZ;
+		    			setThrowableHeading(dx, dy, dz, getVelocity(), 0.0F);
+		    			
+    	    		} 
+    			}
+    		}
+    		
+    		spell.onUpdate(this);
+
+    	}
+    	
         this.lastTickPosX = this.posX;
         this.lastTickPosY = this.posY;
         this.lastTickPosZ = this.posZ;

@@ -20,7 +20,8 @@ import com.himself12794.usefulthings.events.SpellCoolDownHook;
 import com.himself12794.usefulthings.events.SpellEffectHandler;
 import com.himself12794.usefulthings.items.ModItems;
 import com.himself12794.usefulthings.network.CastSpellClient;
-import com.himself12794.usefulthings.network.CastSpellHomingServer;
+import com.himself12794.usefulthings.network.SetHomingSpellTargetServer;
+import com.himself12794.usefulthings.network.CastSpellHomingServer2;
 import com.himself12794.usefulthings.network.CastSpellInstantServer;
 import com.himself12794.usefulthings.network.MessageClient;
 import com.himself12794.usefulthings.network.MessageServer;
@@ -39,8 +40,8 @@ public class CommonProxy {
 		network = NetworkRegistry.INSTANCE.newSimpleChannel("[" + Reference.MODID + "] NetChannel");
 		network.registerMessage(MessageServer.Handler.class, MessageServer.class, 0, Side.SERVER);
 		network.registerMessage(MessageClient.Handler.class, MessageClient.class, 1, Side.CLIENT);
-		network.registerMessage(CastSpellInstantServer.Handler.class, CastSpellInstantServer.class, 2, Side.SERVER);
-		network.registerMessage(CastSpellHomingServer.Handler.class, CastSpellHomingServer.class, 3, Side.SERVER);
+		network.registerMessage(SetHomingSpellTargetServer.Handler.class, SetHomingSpellTargetServer.class, 2, Side.SERVER);
+		network.registerMessage(CastSpellInstantServer.Handler.class, CastSpellInstantServer.class, 3, Side.SERVER);
 	
 		// register items
 		ModItems.addItems();

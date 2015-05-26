@@ -9,7 +9,7 @@ import net.minecraft.world.World;
 
 import com.himself12794.usefulthings.entity.EntitySpell;
 
-public class SpellRanged extends Spell implements IProjectileSpell {
+public class SpellRanged extends Spell {
 	
 	@Override
 	public boolean cast(World world, EntityLivingBase caster, ItemStack tome, float modifier) {
@@ -19,8 +19,7 @@ public class SpellRanged extends Spell implements IProjectileSpell {
 		return flag1 && flag2;
 	}
 
-	@Override
-	public void onUpdate(EntitySpell entitySpell, MovingObjectPosition target) {
+	public void onUpdate(EntitySpell entitySpell) {
 		// TODO Auto-generated method stub
 		
 	}
@@ -33,19 +32,11 @@ public class SpellRanged extends Spell implements IProjectileSpell {
 		return "Ranged";
 	}
 
-	@Override
-	public MovingObjectPosition getTarget(World world, EntityLivingBase caster) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public float getSpellVelocity() {
 		// TODO Auto-generated method stub
 		return 2.0F;
 	}
 
-	@Override
 	public boolean isPiercingSpell() {
 		// TODO Auto-generated method stub
 		return false;

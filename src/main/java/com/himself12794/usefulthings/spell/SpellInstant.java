@@ -26,24 +26,22 @@ public class SpellInstant extends Spell {
 			MovingObjectPosition pos = UsefulMethods.getMouseOverExtended(50);
 			
 			if (pos.entityHit != null && pos.entityHit instanceof EntityLivingBase) {
-				
-				successful = onStrike(world, pos, caster, modifier);
-				
-				if(successful) {
 					
-					IMessage msg = new CastSpellInstantServer( pos.entityHit.getEntityId(), modifier, this, tome);
-					UsefulThings.proxy.network.sendToServer(msg);
-					
-				}
+				IMessage msg = new CastSpellInstantServer( pos.entityHit.getEntityId(), modifier, this, tome);
+				UsefulThings.proxy.network.sendToServer(msg);
+				
+				successful = true;
+				
+				//successful = onStrike(world, pos, caster, modifier);
 				
 			} 
 			
-			UsefulThings.print("Spell success client side: " + successful);
+			//UsefulThings.print("Spell success client side: " + successful);
 			
 		} else  {
 			
 			successful = caster.getEntityData().getBoolean(Reference.MODID + ".spell.success");
-			UsefulThings.print("Spell success server side: " + successful);
+			//UsefulThings.print("Spell success server side: " + successful);
 			caster.getEntityData().setBoolean(Reference.MODID + ".spell.success", false);
 			
 		}

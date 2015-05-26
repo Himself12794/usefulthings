@@ -55,9 +55,9 @@ public abstract class Spell {
 	public boolean onStrike(World world, MovingObjectPosition target, EntityLivingBase caster, float modifier ) {
 		boolean flag = false;
 		if (target.entityHit != null) {
-			UsefulThings.print("Attacking " + target.entityHit.getName());
+			//UsefulThings.print("Attacking " + target.entityHit.getName());
 			flag = target.entityHit.attackEntityFrom(DamageSource.magic, getPower() * modifier);
-			((EntityLivingBase)target.entityHit).setRevengeTarget(caster);
+			((EntityLivingBase)target.entityHit).setLastAttacker(caster);
 		} 
 		return flag;
 	}
@@ -228,6 +228,7 @@ public abstract class Spell {
 		registerSpell(new Dummy());
 		registerSpell(new Immortalize());
 		registerSpell(new Flames());
+		registerSpell(new DummyHoming());
 		
 		UsefulThings.logger.info("Registered [" + Spell.getSpellCount() + "] spells");
 		

@@ -21,19 +21,21 @@ public class SpellCoolDownHook {
 			for (ItemStack stack : itemStacks) {
 				if (stack != null && Spell.hasSpell(stack) ) {
 					Spell spell = Spell.getSpell(stack);
-					//UsefulThings.print("Updating cooldown timer on " + player.getName() + " for spell " + spell.getUnlocalizedName());
-					int remaining = 0;
-					if (spell.getCoolDown() > 0) {
-						
-						
-						
-						remaining  = spell.getCoolDownRemaining(player);
-						if (remaining > 0) { 
-							--remaining;
-							//event.setCanceled(true);
+					if (spell != null) {
+						//UsefulThings.print("Updating cooldown timer on " + player.getName() + " for spell " + spell.getUnlocalizedName());
+						int remaining = 0;
+						if (spell.getCoolDown() > 0) {
+							
+							
+							
+							remaining  = spell.getCoolDownRemaining(player);
+							if (remaining > 0) { 
+								--remaining;
+								//event.setCanceled(true);
+							}
+							
+							spell.setCoolDown(player, remaining);
 						}
-						
-						spell.setCoolDown(player, remaining);
 					}
 				}
 					

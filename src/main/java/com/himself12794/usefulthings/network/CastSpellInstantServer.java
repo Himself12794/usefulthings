@@ -59,10 +59,12 @@ public class CastSpellInstantServer implements IMessage {
        
         @Override
         public IMessage onMessage(CastSpellInstantServer message, MessageContext ctx) {
+    		
+    		//UsefulThings.print("Got message from client to cast a spell");
         	
         	if (ctx.side.isServer()) {
         		
-        		UsefulThings.print("Got message from client to cast a spell");
+        		//UsefulThings.print("Got message from client to cast a spell");
         		
         		Spell spell = Spell.lookupSpell(message.spell);
         		float modifier = message.modifier.getFloat("modifier");
