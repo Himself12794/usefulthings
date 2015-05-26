@@ -71,6 +71,7 @@ public class ModRecipes {
 		GameRegistry.addShapelessRecipe(new ItemStack(ModItems.coalDust), Items.coal, Blocks.cobblestone);
 		GameRegistry.addShapelessRecipe(new ItemStack(ModItems.lightningGun), ModItems.gunBarrel, ModItems.gunStock);
 		GameRegistry.addSmelting(ModBlocks.oreAnimus, new ItemStack(ModItems.ingotAnimus,1), 5);
+		System.out.println("Generic change");
 		
 	}
 }
